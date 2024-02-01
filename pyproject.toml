@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "smpl"
+version = "0.1.0"
+description = ""
+authors = ["Anders Bredgaard Thuesen <andersbthuesen@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+numpy = "^1.26.3"
+matplotlib = "^3.8.2"
+pyrender = "^0.1.45"
+trimesh = "^4.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
