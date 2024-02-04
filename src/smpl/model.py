@@ -82,8 +82,7 @@ class SMPLModel:
 
         """
         # how beta affect body shape
-
-        v_shaped = self.v_template + self.shapedirs @ self.beta
+        v_shaped = self.v_template + self.shapedirs[..., :self.beta.shape[-1]] @ self.beta
         # joints location
         self.J = self.J_regressor @ v_shaped
         pose_cube = self.pose.reshape((-1, 1, 3))
