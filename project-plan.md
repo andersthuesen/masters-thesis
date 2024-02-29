@@ -30,43 +30,21 @@ It is an open question whether it is possible to automate some of the documentat
 
 In recent years generative models like Variational Auto Encoders (VAEs), Generative Adverserial Networks (GANs) and Denoising Diffusion Models (DDMs) have shown incredible results in generating highly realistic images and videos from text. One might ask the question whether these models could enable the learning of this kind of simulator. However, due to the high dimensionality of images and videos, large amounts of data is required to train such models, defeating its own purpose. Instead, representing the humans in the scene explicitly using e.g. the SMPL model combined with realistic computer rendering could provide a feasible alternative.
 
-## Plan
+## Project description
 
-- **February:** Reading papers, data exploration, filtering, smoothing and visualisation and general preparation
-- **March:** Training diffusion model and condition on action
-- **April:** Condition diffusion model on the scene
-- **May & June**: Write thesis
+The goal of this project is investigate generative methods for synthesizing realistic 3D human movements and interactions in order to augment the data used to improve the performance of action recognition models in a hospital or care home environment.
 
-## Engineering plan
+## Project plan
 
-- Generate dataset by filtering pseudo ground truth on different criteria
+### Overview
 
-  - Movement in scene
-  - Multiple people preset (classified as patient and staff)
+1. Train a diffusion model from 3D human pose sequences of healthcare workers and patients to conditionally synthesize new scenarios constrained by the room geometry.
+2. Render scenes of the generated pose sequences in a 3D reconstruction (NeRFs / 3DGs) of varying hospital rooms.
+3. Examine the effect on performance of introducing synthetic data in training action recognition models.
 
-- Train an unconditional diffusion model on pseudo ground truth 3D SMPL poses
-  - Maybe include public data
-- Condition diffusion model on actions using classifier free guidance
-- Condition diffusion model on scene
-  - Maybe using pretrained depth anything model
-- Render poses in novel scene reconstructions
+![Gantt chart](./gantt.png)
 
-## Other ideas / obs
-
-### Initial pose
-
-Initial pose could have any rotation. What is a good way to parameterise this?
-Subsequent changes in pose is relative to the viewing/forward direction?
-
-### How to handle out-of-view poses?
-
-Poses might dynamically come in and out of the scene. Might just assume that poses are always just in scene.
-
-### Noisy pseudo labels
-
-Probably have to do some smoothing
-
-## Links
+## References
 
 https://khanhha.github.io/posts/SMPL-model-introduction/
 http://files.is.tue.mpg.de/black/papers/SMPL2015.pdf
