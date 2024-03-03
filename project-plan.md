@@ -43,9 +43,3 @@ The goal of this project is investigate generative methods for synthesizing real
 3. Examine the effect on performance of introducing synthetic data in training action recognition models.
 
 ![Gantt chart](./gantt.png)
-
-## References
-
-https://khanhha.github.io/posts/SMPL-model-introduction/
-http://files.is.tue.mpg.de/black/papers/SMPL2015.pdf
-https://openaccess.thecvf.com/content_CVPR_2019/papers/Zhou_On_the_Continuity_of_Rotation_Representations_in_Neural_Networks_CVPR_2019_paper.pdf
