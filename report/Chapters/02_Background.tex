@@ -1,0 +1,82 @@
+\chapter{Background} \label{sec:methods}
+\section{SMPL \& Human Mesh Reconstruction }
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{figures/smpl.png}
+    \caption{SMPL model}
+\end{figure}
+The Skinned Multi-Person Linear (SMPL) model is a parametric body shape model that accurately represents a wide range of human bodies and poses. It is built upon a foundation of linear blend skinning enhanced with corrective blend shapes, which are derived from a large dataset of body scans. The model captures the subtle deformations that occur with different body shapes and poses and can easily be rendered due to its compatibility with existing graphics pipelines. Since its publication, several extensions such as DMPL, incorporating dynamic soft-tissue deformation and SMPL-X, also modelling hands and facial expressions have been introduced. The model is parameterized by $\vec{\beta}$, capturing the variations from a mean body shape and $\vec{\theta}$, specifying the axis-angle rotation of 23 of the template skeleton joints. Mathematically, the model can be expressed as:
+\begin{equation}
+    M(\vec{\beta}, \vec{\theta}) = W(T_P(\vec{\beta}, \vec{\theta}), J(\vec{\beta}), \vec{\theta}, \mathcal{W})
+\end{equation}
+where $T_P(\vec{\beta}, \vec{\theta})$ returns the vertices of the rest pose, incorporating the deformations from the body shape and pose and is given by:
+\begin{equation}
+    T_P(\vec{\beta}, \vec{\theta}) = \mathbf{\bar{T}} + B_S(\vec{\beta}) + B_P(\vec{\theta})
+\end{equation}
+$J(\vec{\beta})$ returns the 3D joint locations from the shaped template vertices using a learned regression matrix $\mathcal{J}$ and is given by:
+\begin{equation}
+    J(\vec{\beta}) = \mathcal{J}(\mathbf{\bar{T}} + B_S(\vec{\beta}))
+\end{equation}
+$W$ is the skinning function (e.g. Linear Blend Skinning (LBS) or Dual-Quaternion Blend Skinning (DQBS)) and $\mathcal{W}$ is the blend weights. 
+
+
+\section{Tracking \& Matching}
+We track the predicted staff and patients across multiple frames, indicated by $t = 1 \ldots T$, by iteratively assigning the predictions, $\{ P_i^{(t)} \}_{i=1}^{M_t}$, to the latest known tracks, $\{ Q^{(t)}_{j} \}_{j=1}^{N_t}$ by greedily picking the assignment with the minimum cost:
+\begin{equation}
+    \argmin_{i,j} \mathcal{L}_\text{track}(P^{(t)}_i, Q^{(t-1)}_j),
+\end{equation}
+until either all predictions or latest tracks have been assigned exactly once. In the case of any unassigned predictions, a new track is initialized. After tracks have been assigned, the latest track $Q^{(t)}_j$ is updated with the assigned predictions. We choose the following composite loss function:
+\begin{equation}
+    \mathcal{L}_\text{track}(P, Q) = \alpha \norm{P_\text{3D kpts} - Q_\text{3D kpts}}{2} + \beta \norm{P_\text{class} - Q_\text{class}}{\infty},
+\end{equation}
+incorporating both the Euclidean distance between the 3D joint keypoints as well as the predicted person class (staff/patient), with $\alpha$ and $\beta$ weighting the influence of each term. The tracks, $T_i$, are then greedily matched to the ground truth annotations $G_j$, minimizing the loss:
+\begin{equation}
+    \mathcal{L}_\text{match}(T, G) = \sum_t^{T} \begin{cases}
+        \norm{a^{(t)}_{\text{track}, \text{2D kpts}} - b^{(t)}_{\text{track}, \text{2D kpts}}}{2} & \text{if}\ a^{(t)}_\text{track} \in a_\text{track} \\
+        \gamma & \text{otherwise}
+    \end{cases}
+\end{equation}
+over the trajectory time horizon $t = 1,2,\ldots,T$ where $\gamma$ is the punishment for not detecting the person.
+
+
+\section{Denoising Diffusion Probabilistic Models}
+
+In recent years, several types of generative models such as Variational Autoencoders (VAEs), Generative Adverserial Networks (GANs), autoregressive models and flow-based models have shown remarkable results in data generation of varying data modalities, such as images, audio, videos and text. Most recently, Denoising Diffusion Probabilistic Models (DDPMs) have gained large popularity especially within the field of image generation due to several reasons such as high-quality data generation, versitility in several data domains as well as controllability, allowing one to steer the generation towards desired outputs.
+A DDPM is a parametarized ($\theta$) Markov chain trained using variational inference to reverse a (forward) diffusion process, $q(\mathbf{x}_{1:T} \vert \mathbf{x}_0)$ wherein the signal of the data, $\mathbf{x}_0$, is gradually destroyed by adding gaussian noise according to predefined noise schedule $\{\beta_t  \in (0,1) \}_{t=1}^T$ giving rise to increasingly noisy samples, $\mathbf{x}_1 \ldots \mathbf{x}_T$:
+\begin{equation}    
+    q(\mathbf{x}_{t} \vert \mathbf{x}_{t-1}) = \mathcal{N}(x_{t}; \sqrt{1 - \beta_t}\mathbf{x}_t,\beta_t \mathbf{I} ), \quad  q(\mathbf{x}_{1:T} \vert \mathbf{x}_{0}) = \prod_{t=1}^T q(\mathbf{x}_{t} \vert \mathbf{x}_{t-1})
+\end{equation}
+with $T$ being the discritized number of diffusion steps before all original information is completely discarded. The goal of the inverse or backwards process then becomes to iteratively remove the noise, in order to arrivate at the original data. More formally, the process is defined as:
+\begin{equation}
+    p_\theta(\mathbf{x}_{0:T}) = p(\mathbf{x}_T) \prod_{t=1}^T p_\theta(\mathbf{x}_{t-1} \vert x_{t}), \quad p_\theta(\mathbf{x}_{t-1} \vert x_{t}) = \mathcal{N}(\mathbf{x}_{t-1}; \mathbf{\mu}_\theta(\mathbf{x}_t, t), \mathbf{\Sigma}_\theta(\mathbf{x}_t, t))
+\end{equation}
+taking starting point in pure noise $p(\mathbf{x}_T) = \mathcal{N}(\mathbf{x}_T; \mathbf{0}, \mathbf{I})$, incrementally removing the noise through the learned functions, $\mathbf{\mu}_\theta(\mathbf{x}_t, t)$ and $\mathbf{\Sigma}_\theta(\mathbf{x}_t, t)$ commonly parameterized by a deep neural network.
+Using the reparameterization trick, we are able to sample any noisy version of our data, $\mathbf{x}_t$, at time step $t$ given our original data $\mathbf{x}_0$. Recall our forward transition probability function, $q(\mathbf{x}_t \vert \mathbf{x}_{t-1})$. Letting $\alpha_t = 1 - \beta_t$, $\bar{\alpha}_t = \prod_{i=1}^t \alpha_i$ and using the reparameterization trick the expression can be rewritten as:
+\begin{equation}
+    \mathbf{x}_t = \sqrt{\alpha_t} \mathbf{x}_{t-1} + \sqrt{1 - \alpha_t} \epsilon_{t-1}
+\end{equation}
+where $\epsilon_{t-1} \sim \mathcal{N}(0,1)$. Expanding the recursive definition then gives:
+\begin{align}
+    \mathbf{x}_t    & = \sqrt{\alpha_t} \mathbf{x}_{t-1} + \sqrt{1 - \alpha_t} \epsilon_{t-1} \\
+                    & = \sqrt{\alpha_t} \left(
+    \sqrt{\alpha_{t-1}} \mathbf{x}_{t-2} + \sqrt{1 - \alpha_{t-1}} \epsilon_{t-2}
+    \right) + \sqrt{1 - \alpha_t} \epsilon_{t-1} \\
+                    & = \sqrt{\alpha_t \alpha_{t-1}} \mathbf{x}_{t-2} + \sqrt{\alpha_t(1 - \alpha_{t-1})}\epsilon_{t-2} + \sqrt{1 - \alpha_{t}} \epsilon_{t-1} \\
+                    & = \sqrt{\alpha_t \alpha_{t-1}} \mathbf{x}_{t-2} + \sqrt{1 - \alpha_{t}\alpha_{t-1}}\bar{\epsilon}_{t-2}
+\end{align}
+where $\bar{\epsilon}_{t-2}$ merges the two independent Gaussians $\epsilon_{t-1}$ and $\epsilon_{t-2}$ into a single Gaussian with new variance as the sum of variances $\alpha_t (1 - \alpha_{t-1}) + (1 - \alpha_{t}) = 1 - \alpha_t \alpha_{t-1}$. Recursively applying the definition of $\mathbf{x}_t$ and merging the gaussian noise terms results in the simplified expression referred to as the \textit{neat property}:
+\begin{equation}
+    \mathbf{x}_t = \sqrt{\bar{\alpha}}\mathbf{x}_0 + \sqrt{1 - \bar{\alpha}} \mathbf{\epsilon}, \quad \mathbf{\epsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})
+\end{equation}
+or by undoing the reparameterization:
+\begin{equation}
+    q(\mathbf{x}_t \vert \mathbf{x}_0) = \mathcal{N}(\mathbf{x}_t; \sqrt{\bar{\alpha}_t} \mathbf{x}_0, (1 - \bar{\alpha}_t)\mathbf{I})
+\end{equation}
+The model is trained by minimizing the Evidence Lower Bound (ELBO) on the negative likelihood:
+\begin{equation}
+    \mathcal{L}_{VLB}
+        = \mathbb{E}_q\left[ - \log \frac{p_\theta(\mathbf{x}_{0:T})}{q(\mathbf{x}_{1:T} \vert \mathbf{x}_0)}\right]
+        = \mathbb{E}_q\left[- \log p(\mathbf{x_T}) - \sum_{t \geq 1} \log \frac{p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_{t})}{q(\mathbf{x}_t \vert \mathbf{x}_{t-1})}
+        \right]
+        \leq \mathbb{E}\left[- \log p_\theta(\mathbf{x}_0)\right]
+\end{equation}
