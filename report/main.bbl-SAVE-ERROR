@@ -1,0 +1,196 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{liang2024intergen}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=9b7a1da9dd2069d09ee00eee405685f6}{%
+           family={Liang},
+           familyi={L\bibinitperiod},
+           given={Han},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3091616efd8b574d4862f9a19e6b6e73}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Wenqian},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3f6e303a287b6759cd4acb5831c6aa77}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Wenxuan},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9ea1d9e37fc3923b18dd07695731cd48}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Jingyi},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=80b6349fec838a6d4bf8080ad3418556}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Lan},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{5236d4b72e12f93a715c8ec5d6f53690}
+      \strng{fullhash}{5a981828ae2d3592d8799e1e1e875de0}
+      \strng{fullhashraw}{5a981828ae2d3592d8799e1e1e875de0}
+      \strng{bibnamehash}{5236d4b72e12f93a715c8ec5d6f53690}
+      \strng{authorbibnamehash}{5236d4b72e12f93a715c8ec5d6f53690}
+      \strng{authornamehash}{5236d4b72e12f93a715c8ec5d6f53690}
+      \strng{authorfullhash}{5a981828ae2d3592d8799e1e1e875de0}
+      \strng{authorfullhashraw}{5a981828ae2d3592d8799e1e1e875de0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Computer Vision}
+      \field{title}{Intergen: Diffusion-based multi-human motion generation under complex interactions}
+      \field{year}{2024}
+      \field{pages}{1\bibrangedash 21}
+      \range{pages}{21}
+    \endentry
+    \entry{Zhou_2019_CVPR}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=3625efaf108a2751cfdacddd7a073c3d}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4e74e92ac258a7344d22dd0661d08dd2}{%
+           family={Barnes},
+           familyi={B\bibinitperiod},
+           given={Connelly},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9a64d1979f9fa1623a9a5a325aa738df}{%
+           family={Jingwan},
+           familyi={J\bibinitperiod},
+           given={Lu},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=45933939ac90b9f390b4769602e6b881}{%
+           family={Jimei},
+           familyi={J\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1f2d8bded0cccc97b77327f839ecddd2}{%
+           family={Hao},
+           familyi={H\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5486ce563fc3f3125c46603bf0d2b79c}
+      \strng{fullhash}{8684bf21b41ccded7d266832a3c31284}
+      \strng{fullhashraw}{8684bf21b41ccded7d266832a3c31284}
+      \strng{bibnamehash}{5486ce563fc3f3125c46603bf0d2b79c}
+      \strng{authorbibnamehash}{5486ce563fc3f3125c46603bf0d2b79c}
+      \strng{authornamehash}{5486ce563fc3f3125c46603bf0d2b79c}
+      \strng{authorfullhash}{8684bf21b41ccded7d266832a3c31284}
+      \strng{authorfullhashraw}{8684bf21b41ccded7d266832a3c31284}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}
+      \field{month}{6}
+      \field{title}{On the Continuity of Rotation Representations in Neural Networks}
+      \field{year}{2019}
+    \endentry
+    \entry{tevet2023human}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=59e9283208cfbcbfd943ddd1e8f13774}{%
+           family={Tevet},
+           familyi={T\bibinitperiod},
+           given={Guy},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=07d524b186bef0b9f3bf0ac5ec06a1be}{%
+           family={Raab},
+           familyi={R\bibinitperiod},
+           given={Sigal},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e2036c998b78bbf7334c65f646eef785}{%
+           family={Gordon},
+           familyi={G\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c048abcfe7364294c14b2fe06b66933f}{%
+           family={Shafir},
+           familyi={S\bibinitperiod},
+           given={Yoni},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4539f8f461f319bb340bc1cc64c6415f}{%
+           family={Cohen-or},
+           familyi={C\bibinithyphendelim o\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=22d4d76bb85b5b30b0f93dde4c8bee30}{%
+           family={Bermano},
+           familyi={B\bibinitperiod},
+           given={Amit\bibnamedelima Haim},
+           giveni={A\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{3c714d138b30a8eca4a1a68d1ef67450}
+      \strng{fullhash}{f57314c95607132ab361c016c60c5211}
+      \strng{fullhashraw}{f57314c95607132ab361c016c60c5211}
+      \strng{bibnamehash}{3c714d138b30a8eca4a1a68d1ef67450}
+      \strng{authorbibnamehash}{3c714d138b30a8eca4a1a68d1ef67450}
+      \strng{authornamehash}{3c714d138b30a8eca4a1a68d1ef67450}
+      \strng{authorfullhash}{f57314c95607132ab361c016c60c5211}
+      \strng{authorfullhashraw}{f57314c95607132ab361c016c60c5211}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The Eleventh International Conference on Learning Representations}
+      \field{title}{Human Motion Diffusion Model}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://openreview.net/forum?id=SJ1kSyO2jwu
+      \endverb
+      \verb{url}
+      \verb https://openreview.net/forum?id=SJ1kSyO2jwu
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

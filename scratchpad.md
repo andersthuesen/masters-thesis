@@ -81,6 +81,8 @@ $$
 
 which can be rewritten as the sum of KL-divergences
 
+## Classifier Free Guidance
+
 <!--
 
     Writ stuff here
