@@ -2,18 +2,38 @@
 
 \section{Derivation of posterior distribution} \label{appendix:q-posterior-derivation}
 \begin{align*}
-    q(\mathbf{x}_{t-1} \vert \mathbf{x}_t, \mathbf{x}_0) &= q(\mathbf{x}_t \vert \mathbf{x}_{t-1}, \mathbf{x}_0) \frac{q(\mathbf{x}_{t-1} \vert \mathbf{x}_0)}{q(\mathbf{x}_t \vert \mathbf{x}_0)} \\
-    \Leftrightarrow \log q(\mathbf{x}_{t-1} \vert \mathbf{x}_t, \mathbf{x}_0) &= \log q(\mathbf{x}_t \vert \mathbf{x}_{t-1}, \mathbf{x}_0) + 
-    \log q(\mathbf{x}_{t-1} \vert \mathbf{x}_0) - \log q(\mathbf{x}_t \vert \mathbf{x}_0) \\
+    q(\vect{x}_{t-1} \vert \vect{x}_t, \vect{x}_0) &= q(\vect{x}_t \vert \vect{x}_{t-1}, \vect{x}_0) \frac{q(\vect{x}_{t-1} \vert \vect{x}_0)}{q(\vect{x}_t \vert \vect{x}_0)} \\
+    \Leftrightarrow \log q(\vect{x}_{t-1} \vert \vect{x}_t, \vect{x}_0) &= \log q(\vect{x}_t \vert \vect{x}_{t-1}, \vect{x}_0) + 
+    \log q(\vect{x}_{t-1} \vert \vect{x}_0) - \log q(\vect{x}_t \vert \vect{x}_0) \\
     &= \frac{1}{2} \left( 
-        \frac{\left( \mathbf{x}_t - \sqrt{\alpha_t} \mathbf{x}_{t-1} \right)^2}{\beta_t} +
-        \frac{\left( \mathbf{x}_{t-1} - \sqrt{\bar{\alpha}_{t-1}} \mathbf{x}_0 \right)^2}{1 - \bar{\alpha}_{t-1}} + 
-        \frac{\left( \mathbf{x}_{t} - \sqrt{\bar{\alpha}_{t}} \mathbf{x}_0 \right)^2}{1 - \bar{\alpha}_{t}}
+        \frac{\left( \vect{x}_t - \sqrt{\alpha_t} \vect{x}_{t-1} \right)^2}{\beta_t} +
+        \frac{\left( \vect{x}_{t-1} - \sqrt{\bar{\alpha}_{t-1}} \vect{x}_0 \right)^2}{1 - \bar{\alpha}_{t-1}} + 
+        \frac{\left( \vect{x}_{t} - \sqrt{\bar{\alpha}_{t}} \vect{x}_0 \right)^2}{1 - \bar{\alpha}_{t}}
     \right) + K \\
     &= \frac{1}{2} \left(
-        \frac{\mathbf{x}_t^2 - 2 \sqrt{\alpha_t}\mathbf{x}_t \mathbf{x}_{t-1} + \alpha_t \mathbf{x}_{t-1}^2}{\beta_t} +
-        \frac{\mathbf{x}_{t-1}^2 - 2  \sqrt{\bar{\alpha}_{t-1}} \mathbf{x}_{t-1} \mathbf{x}_0 + \bar{\alpha}_{t-1}\mathbf{x}_0^2  }{1 - \bar{\alpha}_{t-1}} + C(x_t, x_0)
+        \frac{\vect{x}_t^2 - 2 \sqrt{\alpha_t}\vect{x}_t \vect{x}_{t-1} + \alpha_t \vect{x}_{t-1}^2}{\beta_t} +
+        \frac{\vect{x}_{t-1}^2 - 2  \sqrt{\bar{\alpha}_{t-1}} \vect{x}_{t-1} \vect{x}_0 + \bar{\alpha}_{t-1}\vect{x}_0^2  }{1 - \bar{\alpha}_{t-1}} + C(x_t, x_0)
     \right) + K
 \end{align*}
 
-We collect all terms for $\mathbf{x}_{t-1}$ and $\mathbf{x}_{t-1}^2$. 
+We collect all terms for $\vect{x}_{t-1}$ and $\vect{x}_{t-1}^2$. 
+
+
+\section{$L_{t-1}$ closed form derivation} \label{appendix:L-closed-form}
+The closed form of the KL-divergence between two Gaussians $\mathcal{N}_0(\vect{\mu}_0, \Sigma_0)$, $\mathcal{N}_1(\vect{\mu}_1, \Sigma_1)$ is given as:
+\begin{equation}
+    D_\mathrm{KL}(\mathcal{N}_0 \| \mathcal{N}_1) = \frac{1}{2} \left(
+        \mathrm{tr}(\Sigma_1^{-1} \Sigma_0) - k + (\mu_1 - \mu_0)^T \Sigma_1^{-1} (\mu_1 - \mu_0) + \ln \frac{\det \Sigma_1}{\det \Sigma_0}
+    \right)
+\end{equation}
+Inserting $q(\vect{x}_{t-1} \mid \vect{x}_t, \vect{x}_0) = \mathcal{N}\left(\vect{x}_{t-1}; \tilde{\mu}_t(\vect{x}_t, \vect{x}_0), \tilde{\beta}_t \vect{I}\right)$ and $p(\vect{x}_t \mid \vect{x}_{t-1}) = \mathcal{N}\left( \vect{x}_{t-1} ; \mu_\theta(\vect{x}_t, t), \sigma_t^2 \vect{I} \right)$ yields:
+\begin{equation}
+    D_\mathrm{KL}(q \| p) = \frac{1}{2} \left(
+        k\frac{\tilde{\beta}_t}{\sigma_t^2} - k + \frac{1}{\sigma_t^2} \| \tilde{\mu}_t(\vect{x}_t, \vect{x}_0) - \mu_\theta(\vect{x}_t, t) \|^2 + \ln(\sigma_t^2) - \ln(\tilde{\beta}_t)
+    \right)
+\end{equation}
+Letting $\sigma_t^2 = \tilde{\beta}_t \ (= \beta_t = \frac{ 1-\bar{\alpha}_t}{1-\bar{\alpha}_{t-1}} \tilde{\beta}_t)$ simplifies the above to:
+\begin{equation}
+    D_\mathrm{KL}(q \| p) = \frac{1}{2\sigma_t^2} \| \tilde{\mu}_t(\vect{x}_t, \vect{x}_0) - \mu_\theta(\vect{x}_t, t) \|^2 \ (+ \ C_t)
+\end{equation}
+where $C_t$ is a constant depending only on the noise schedule.

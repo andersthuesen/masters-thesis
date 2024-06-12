@@ -7,9 +7,10 @@
 \contentsline {section}{\numberline {2.1}Skinned Multi-Person Linear Model (SMPL)}{3}{section.0.2.1}%
 \contentsline {section}{\numberline {2.2}Human Mesh Reconstruction (HMR)}{3}{section.0.2.2}%
 \contentsline {section}{\numberline {2.3}Denoising Diffusion Probabilistic Models (DDPM)}{3}{section.0.2.3}%
-\contentsline {section}{\numberline {2.4}Classifier-free Guidance (CFG)}{5}{section.0.2.4}%
-\contentsline {section}{\numberline {2.5}Tranformer architecture}{5}{section.0.2.5}%
-\contentsline {section}{\numberline {2.6}Human Motion Generation}{5}{section.0.2.6}%
+\contentsline {subsection}{\numberline {2.3.1}Cosine variance schedule}{5}{subsection.0.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Classifier-free Guidance (CFG)}{5}{subsection.0.2.3.2}%
+\contentsline {section}{\numberline {2.4}Tranformer architecture}{5}{section.0.2.4}%
+\contentsline {section}{\numberline {2.5}Human Motion Generation}{5}{section.0.2.5}%
 \contentsline {chapter}{\numberline {3}Data}{7}{chapter.0.3}%
 \contentsline {section}{\numberline {3.1}HumanML3D}{7}{section.0.3.1}%
 \contentsline {section}{\numberline {3.2}InterHuman}{7}{section.0.3.2}%
@@ -22,5 +23,7 @@
 \contentsline {section}{\numberline {4.5}Diffusion model}{10}{section.0.4.5}%
 \contentsline {chapter}{\numberline {5}Results}{11}{chapter.0.5}%
 \contentsline {chapter}{\numberline {6}Discussion \& Conclusion}{13}{chapter.0.6}%
-\contentsline {chapter}{\numberline {A}Appendices}{15}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Derivation of posterior distribution}{15}{section.A.1}%
+\contentsline {chapter}{Bibliography}{15}{chapter*.3}%
+\contentsline {chapter}{\numberline {A}Appendices}{17}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Derivation of posterior distribution}{17}{section.A.1}%
+\contentsline {section}{\numberline {A.2}$L_{t-1}$ closed form derivation}{17}{section.A.2}%
