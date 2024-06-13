@@ -23,9 +23,17 @@ $W$ is the skinning function (e.g. Linear Blend Skinning (LBS) or Dual-Quaternio
 Recovering the mesh of humans have several applications\dots
 
 \section{Denoising Diffusion Probabilistic Models (DDPM)}
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/pgm_diagram_xarrow_small.pdf}
+    \caption{Diffusion forward and backward process (taken from \cite{ho2020denoising})}
+    \label{fig:diffusion-process}
+\end{figure}
 In recent years, several types of generative models such as Variational Autoencoders (VAEs), Generative Adverserial Networks (GANs), autoregressive models and flow-based models have shown remarkable results in data generation of varying data modalities, such as images, audio, videos and text. Most recently, Denoising Diffusion Probabilistic Models (DDPMs) have gained large popularity especially within the field of image generation due to several reasons such as high-quality data generation, versitility in several data domains as well as controllability, allowing one to steer the generation towards desired outputs.
-A DDPM is a parametarized ($\theta$) Markov chain trained using variational inference to reverse a (forward) diffusion process, $q(\vect{x}_{1:T} \mid \vect{x}_0)$ wherein the signal of the data, $\vect{x}_0$, is gradually destroyed by adding gaussian noise according to predefined noise schedule $\{\beta_t  \in (0,1) \}_{t=1}^T$ giving rise to increasingly noisy samples, $\vect{x}_1 \ldots \vect{x}_T$. The forward process is defined as follows:
+
+A DDPM is a parametarized Markov chain trained using variational inference to reverse a (forward) diffusion process, $q(\vect{x}_{1:T} \mid \vect{x}_0)$, as seen in \cref{fig:diffusion-process} wherein the signal of the data, $\vect{x}_0$, is gradually destroyed by adding gaussian noise according to predefined noise schedule $\{\beta_t  \in (0,1) \}_{t=1}^T$ giving rise to increasingly noisy samples, $\vect{x}_1 \ldots \vect{x}_T$. 
+
+The forward process is defined as follows:
 \begin{equation}    
     q(\vect{x}_{1:T} \mid \vect{x}_{0}) = \prod_{t=1}^T q(\vect{x}_{t} \mid \vect{x}_{t-1}), \quad q(\vect{x}_{t} \mid \vect{x}_{t-1}) = \mathcal{N}(x_{t}; \sqrt{1 - \beta_t}\vect{x}_t,\beta_t \vect{I} )
 \end{equation}
@@ -77,10 +85,10 @@ which in practice means minimizing the negative variational lower bound.
 \cite{ho2020denoising} rewrites this into a sum of KL-divergences:
 \begin{equation}
     L_{VLB} = \mathbb{E}_q \left[ \underbrace{D_{\mathrm{KL}} \left(
-            q\left(\vect{x}_T \mid \vect{x}_0\right) \| p_\theta\left(\vect{x}_T\right)
+            q\left(\vect{x}_T \mid \vect{x}_0\right) \| p\left(\vect{x}_T\right)
             \right)}_{L_T} + \sum_{t=2}^T \underbrace{D_{\mathrm{KL}}\left(q\left(\vect{x}_{t-1} \mid \vect{x}_t, \vect{x}_0\right) \| p_\theta\left(\vect{x}_{t-1} \mid \vect{x}_t\right)\right)}_{L_{t-1}} - \underbrace{\log p_\theta\left(\vect{x}_0 \mid \vect{x}_1\right)}_{L_0} \right]
 \end{equation}
-where $L_0$ is modelled from a seperate discrete decoder. The rest of the terms can be efficiently computed in the closed form, by fixing the variance $\vect{\Sigma}_\theta(\vect{x}_t, t) = \sigma_t^2 \vect{I}$ to only depend on the current timestep (authors propose $\sigma_t^2 = \beta_t$ or $\sigma_t^2 = \tilde{\beta}_t$). $L_{t-1}$ can then be written in closed form (derivation in \cref{appendix:L-closed-form}) as:
+where the authors model $L_0$ from seperate discrete decoder. As $L_T$ doesn't depend on our parameters, $\theta$, and is therefore constant, it can be ignored during optimization. The rest of the $L_{t-1}$ terms can be efficiently computed in the closed form, by fixing the variance $\vect{\Sigma}_\theta(\vect{x}_t, t) = \sigma_t^2 \vect{I}$ to only depend on the current timestep (authors propose $\sigma_t^2 = \beta_t$ or $\sigma_t^2 = \tilde{\beta}_t$). $L_{t-1}$ can then be written in closed form (derivation in \cref{appendix:L-closed-form}) as:
 \begin{equation}
     L_{t-1} = \mathbb{E}_q \left[ \frac{1}{2\sigma_t^2} \| \vect{\tilde{\mu}}_t(\vect{x}_t, \vect{x}_0) - \vect{\mu}_\theta(\vect{x}_t, t) \|^2 \right] + C_t
 \end{equation}
@@ -99,11 +107,92 @@ as they find it leads to better unconditional sample quality when training on th
     \right]
 \end{equation}
 
+The final training and sampling scheme, as outlined in \cref{alg:training} and \cref{alg:sampling} can be summarized as follows. The training algorithm optimizes the model to predict and remove noise from data, while the sampling algorithm uses the trained model to iteratively transform random noise into structured data.
 
-\subsection{Cosine variance schedule}
-As an alternative to the linear variance schedule introduced by \cite{ho2020denoising}... 
+\algrenewcommand\algorithmicindent{0.5em}%
+\begin{figure}[t]
+\begin{minipage}[t]{0.495\textwidth}
+\begin{algorithm}[H]
+  \caption{Training} \label{alg:training}
+  \small
+  \begin{algorithmic}[1]
+    \Repeat
+      \State $\vect{x}_0 \sim q(\vect{x}_0)$
+      \State $t \sim \mathrm{Uniform}(\{1, \dotsc, T\})$
+      \State $\vect{\epsilon}\sim\mathcal{N}(\vect{0},\vect{I})$
+      \State Take gradient descent step on
+      \Statex $\qquad \grad_\theta \left\| \vect{\epsilon} - \vect{\epsilon}_\theta(\sqrt{\bar\alpha_t} \vect{x}_0 + \sqrt{1-\bar\alpha_t}\vect{\epsilon}, t) \right\|^2$
+    \Until{converged}
+  \end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.495\textwidth}
+\begin{algorithm}[H]
+  \caption{Sampling} \label{alg:sampling}
+  \small
+  \begin{algorithmic}[1]
+    \vspace{.04in}
+    \State $\vect{x}_T \sim \mathcal{N}(\vect{0}, \vect{I})$
+    \For{$t=T, \dotsc, 1$}
+      \State $\vect{z} \sim \mathcal{N}(\vect{0}, \vect{I})$ if $t > 1$, else $\vect{z} = \vect{0}$
+      \State $\vect{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left( \vect{x}_t - \frac{1-\alpha_t}{\sqrt{1-\bar\alpha_t}} \vect{\epsilon}_\theta(\vect{x}_t, t) \right) + \sigma_t \vect{z}$
+    \EndFor
+    \State \textbf{return} $\vect{x}_0$
+    \vspace{.04in}
+  \end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\vspace{-1em}
+\end{figure}
 
-\subsection{Classifier-free Guidance (CFG)}
+To summarize, diffusion models are generative models that create data by reversing a diffusion process. They are trained using a simplified version of the variational lower bound on the log-likelihood. Starting from pure noise, the model iteratively removes the predicted noise through a step-by-step denoising process, effectively reconstructing the original data. This approach allows DDPMs to produce high-quality and diverse outputs.
+
+\subsection{Variance schedules}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/schedule.pdf}    
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/snr.pdf}    
+    \end{subfigure}
+    \caption{Linear and cosine schedule and logSNR.}
+    \label{fig:schedule}
+\end{figure}
+In the DDPM paper \cite{ho2020denoising} choose a variance schedule with $\beta_t$ linearly increasing from $\beta_1 = 10^{-4}$ to $\beta_T = 0.02$. However, this results in $\vect{x}_t$ almost entirely losing its signal in the last quarter of the schedule as shown by \cite{pmlrv139nichol21a}. The authors instead propose a cosine variance schedule, where the squared signal proportion is given by:
+\begin{equation}
+    \bar{\alpha}_t=\frac{f(t)}{f(0)}, \quad f(t)=\cos \left(\frac{t / T+s}{1+s} \cdot \frac{\pi}{2}\right)^2
+\end{equation}
+where $s$ controls the offset of the noise schedule. The authors set $s=0.008$ as they found that $s=0$ resulted in minuscule noise near $t=0$ making it hard for the model to predict $\epsilon$. From $\bar{\alpha}_t$ one can then compute $\beta_t = \min\left( 1 - \frac{\bar{\alpha}_t}{\bar{\alpha}_{t-1}}, 0.999 \right)$ with the $\min$ to prevent singularities. A comparison of the cosine and linear schedules can be seen in \cref{fig:schedule}.
+
+
+\subsection{Classifier and Classifier-free Guidance (CFG)}
+When sampling from generative models, one often wants to conditionally generate samples from the data distribution of different sub categories. One method for doing so with diffusion models is classifier guidance. Here the generation process relies on an external model guiding the reverse diffusion process towards the sub category date manifold. We first define the score-function as the gradient of the log-likelihood:
+\begin{equation}
+    s_\theta(\vect{x}) = \grad_{\vect{x}} \log p_\text{data}(\vect{x})
+\end{equation}
+
+\begin{equation}
+    \dot{\vect{x}} = 
+\end{equation}
+
+\begin{equation}
+    \grad_{\vect{x}_t} \log p_\theta\left(\vect{x}_t\right)=-\frac{1}{\sqrt{1-\bar{\alpha}_t}} \vect{\epsilon}_\theta\left(\vect{x}_t\right)
+\end{equation}
+
+\cite{dharial2021diffusion}
+
+When sampling from generative models, one often wants to conditionally generate samples from the data distribution of different sub categories. \cite{dharial2021diffusion} trains a classifier $p_\phi(y \mid \mathbf{x}_t, t)$ on noisy images and uses its gradient $\grad_{\vect{x}_t} p_\phi(y \mid \mathbf{x}_t, t)$ in order to guide the reverse diffusion process.
+
+
+
+
+
+In order to control the diffusion process, one can introduce a drift term in the sampling process as follows:
 
 
 \section{Tranformer architecture}

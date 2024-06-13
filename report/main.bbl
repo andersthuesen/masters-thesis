@@ -61,6 +61,149 @@
       \field{pages}{6840\bibrangedash 6851}
       \range{pages}{12}
     \endentry
+    \entry{pmlrv139nichol21a}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{un=1,uniquepart=given,hash=c180e7ad472124431829b0b6178afa25}{%
+           family={Nichol},
+           familyi={N\bibinitperiod},
+           given={Alexander\bibnamedelima Quinn},
+           giveni={A\bibinitperiod\bibinitdelim Q\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=4164e43d8cf919f5e3f8d80f5ea23f36}{%
+           family={Dhariwal},
+           familyi={D\bibinitperiod},
+           given={Prafulla},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=065ea1322a46302df9762ba792037807}{%
+           family={Meila},
+           familyi={M\bibinitperiod},
+           given={Marina},
+           giveni={M\bibinitperiod}}}%
+        {{hash=55926e2ed0c54f92266d978954a4cdc3}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Tong},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{fullhash}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{fullhashraw}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{bibnamehash}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{authorbibnamehash}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{authornamehash}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{authorfullhash}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{authorfullhashraw}{40e004b1d5a70b280a2d6129010c6e7a}
+      \strng{editorbibnamehash}{66052b963da76b05d2a1aa8c85cacd62}
+      \strng{editornamehash}{66052b963da76b05d2a1aa8c85cacd62}
+      \strng{editorfullhash}{66052b963da76b05d2a1aa8c85cacd62}
+      \strng{editorfullhashraw}{66052b963da76b05d2a1aa8c85cacd62}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Denoising diffusion probabilistic models (DDPM) are a class of generative models which have recently been shown to produce excellent samples. We show that with a few simple modifications, DDPMs can also achieve competitive log-likelihoods while maintaining high sample quality. Additionally, we find that learning variances of the reverse diffusion process allows sampling with an order of magnitude fewer forward passes with a negligible difference in sample quality, which is important for the practical deployment of these models. We additionally use precision and recall to compare how well DDPMs and GANs cover the target distribution. Finally, we show that the sample quality and likelihood of these models scale smoothly with model capacity and training compute, making them easily scalable. We release our code and pre-trained models at https://github.com/openai/improved-diffusion.}
+      \field{booktitle}{Proceedings of the 38th International Conference on Machine Learning}
+      \field{month}{18--24 Jul}
+      \field{series}{Proceedings of Machine Learning Research}
+      \field{title}{Improved Denoising Diffusion Probabilistic Models}
+      \field{volume}{139}
+      \field{year}{2021}
+      \field{pages}{8162\bibrangedash 8171}
+      \range{pages}{10}
+      \verb{file}
+      \verb http://proceedings.mlr.press/v139/nichol21a/nichol21a.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v139/nichol21a.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v139/nichol21a.html
+      \endverb
+    \endentry
+    \entry{dharial2021diffusion}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=4164e43d8cf919f5e3f8d80f5ea23f36}{%
+           family={Dhariwal},
+           familyi={D\bibinitperiod},
+           given={Prafulla},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=f1942691d8be7ae0f29eeb3d36bc7eb0}{%
+           family={Nichol},
+           familyi={N\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod},
+           givenun=1}}%
+      }
+      \name{editor}{5}{}{%
+        {{hash=6cb5af0e649387de5bbfdb150cc7a786}{%
+           family={Ranzato},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=02854da982edf66ffa27f4fc1c738779}{%
+           family={Beygelzimer},
+           familyi={B\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5e4dc483044b6dbd4496a818b8b6c67a}{%
+           family={Dauphin},
+           familyi={D\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=12f9558e0c25864defe6eaed94a9011b}{%
+           family={Liang},
+           familyi={L\bibinitperiod},
+           given={P.S.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=3d379bd6370f69ebc79dc5337ed96d13}{%
+           family={Vaughan},
+           familyi={V\bibinitperiod},
+           given={J.\bibnamedelimi Wortman},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Curran Associates, Inc.}%
+      }
+      \strng{namehash}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{fullhash}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{fullhashraw}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{bibnamehash}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{authorbibnamehash}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{authornamehash}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{authorfullhash}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{authorfullhashraw}{10c6b0d638397c4dc022be283ae5ea35}
+      \strng{editorbibnamehash}{6013a44c5dec47e5e51fdd72b3f8b5eb}
+      \strng{editornamehash}{6013a44c5dec47e5e51fdd72b3f8b5eb}
+      \strng{editorfullhash}{ad1ea98aa644fe4cbc55fbe24d1f78a9}
+      \strng{editorfullhashraw}{ad1ea98aa644fe4cbc55fbe24d1f78a9}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Advances in Neural Information Processing Systems}
+      \field{title}{Diffusion Models Beat GANs on Image Synthesis}
+      \field{volume}{34}
+      \field{year}{2021}
+      \field{pages}{8780\bibrangedash 8794}
+      \range{pages}{15}
+      \verb{urlraw}
+      \verb https://proceedings.neurips.cc/paper_files/paper/2021/file/49ad23d1ec9fa4bd8d77d02681df5cfa-Paper.pdf
+      \endverb
+      \verb{url}
+      \verb https://proceedings.neurips.cc/paper_files/paper/2021/file/49ad23d1ec9fa4bd8d77d02681df5cfa-Paper.pdf
+      \endverb
+    \endentry
     \entry{Zhou_2019_CVPR}{inproceedings}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=3625efaf108a2751cfdacddd7a073c3d}{%
@@ -102,8 +245,8 @@
       \strng{authornamehash}{5486ce563fc3f3125c46603bf0d2b79c}
       \strng{authorfullhash}{8684bf21b41ccded7d266832a3c31284}
       \strng{authorfullhashraw}{8684bf21b41ccded7d266832a3c31284}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}

@@ -2376,7 +2376,12 @@
     <bcf:citekey order="1" intorder="1">ho2020denoising</bcf:citekey>
     <bcf:citekey order="2" intorder="1">ho2020denoising</bcf:citekey>
     <bcf:citekey order="3" intorder="1">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">Zhou_2019_CVPR</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">ho2020denoising</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">ho2020denoising</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">pmlrv139nichol21a</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">dharial2021diffusion</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">dharial2021diffusion</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">Zhou_2019_CVPR</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
