@@ -48,11 +48,9 @@ Using the reparameterization trick, we are able to sample any noisy version of o
 \end{equation}
 where $\epsilon_{t-1} \sim \mathcal{N}(0,1)$. Expanding the recursive definition then gives:
 \begin{align*}
-    \vect{x}_t    & = \sqrt{\alpha_t} \vect{x}_{t-1} + \sqrt{1 - \alpha_t} \vect{\epsilon_{t-1}} \\
-                    & = \sqrt{\alpha_t} \left(
-    \sqrt{\alpha_{t-1}} \vect{x}_{t-2} + \sqrt{1 - \alpha_{t-1}} \vect{\epsilon}_{t-2}
-    \right) + \sqrt{1 - \alpha_t} \vect{\epsilon_{t-1}} \\
-                    & = \sqrt{\alpha_t \alpha_{t-1}} \vect{x}_{t-2} + \sqrt{\alpha_t(1 - \alpha_{t-1})} \vect{\epsilon_{t-2}} + \sqrt{1 - \alpha_{t}} \vect{\epsilon_{t-1}} \\
+    \vect{x}_t    % & = \sqrt{\alpha_t} \vect{x}_{t-1} + \sqrt{1 - \alpha_t} \vect{\epsilon_{t-1}} \\
+                    & = \sqrt{\alpha_t} \left( \sqrt{\alpha_{t-1}} \vect{x}_{t-2} + \sqrt{1 - \alpha_{t-1}} \vect{\epsilon}_{t-2} \right) + \sqrt{1 - \alpha_t} \vect{\epsilon_{t-1}} \\
+                    % & = \sqrt{\alpha_t \alpha_{t-1}} \vect{x}_{t-2} + \sqrt{\alpha_t(1 - \alpha_{t-1})} \vect{\epsilon_{t-2}} + \sqrt{1 - \alpha_{t}} \vect{\epsilon_{t-1}} \\
                     & = \sqrt{\alpha_t \alpha_{t-1}} \vect{x}_{t-2} + \sqrt{1 - \alpha_{t}\alpha_{t-1}} \vect{\bar{\epsilon}}_{t-2}
 \end{align*}
 where $\vect{\bar{\epsilon}}_{t-2}$ merges the two independent Gaussians $\vect{\epsilon}_{t-1}$ and $\vect{\epsilon}_{t-2}$ into a single Gaussian with new variance as the sum of variances $\alpha_t (1 - \alpha_{t-1}) + (1 - \alpha_{t}) = 1 - \alpha_t \alpha_{t-1}$. Recursively applying the definition of $\vect{x}_t$ and merging the gaussian noise terms results in the simplified expression:
@@ -64,7 +62,7 @@ where $\vect{\bar{\epsilon}}_{t-2}$ merges the two independent Gaussians $\vect{
 %     q(\vect{x}_t \vert \vect{x}_0) = \mathcal{N}(\vect{x}_t; \sqrt{\bar{\alpha}_t} \vect{x}_0, (1 - \bar{\alpha}_t)\vect{I})
 % \end{equation}
 %This result enables sampling of any noisy version of $\vect{x}_t$ at time $t$ given "clean" data $\vect{x}_0$. 
-Conversely, given $\vect{x}_0$ the reverse conditional probability:
+Conversely, given $\vect{x}_0$, the reverse conditional probability:
 \begin{equation*}
     q(\vect{x}_{t-1} \vert \vect{x}_t, \vect{x}_0) = \mathcal{N}\left( \vect{x}_{t-1}; \vect{\tilde{\mu}}_t(\vect{x}_t, \vect{x}_0), \tilde{\beta}_t \vect{I} \right)
 \end{equation*}
@@ -146,7 +144,7 @@ The final training and sampling scheme, as outlined in \cref{alg:training} and \
 \vspace{-1em}
 \end{figure}
 
-To summarize, diffusion models are generative models that create data by reversing a diffusion process. They are trained using a simplified version of the variational lower bound on the log-likelihood. Starting from pure noise, the model iteratively removes the predicted noise through a step-by-step denoising process, effectively reconstructing the original data. This approach allows DDPMs to produce high-quality and diverse outputs.
+% To summarize, diffusion models are generative models that create data by reversing a diffusion process. They are trained using a simplified version of the variational lower bound on the log-likelihood. Starting from pure noise, the model iteratively removes the predicted noise through a step-by-step denoising process, effectively reconstructing the original data. This approach allows DDPMs to produce high-quality and diverse outputs.
 
 \subsection{Variance schedules}
 \begin{figure}[H]
@@ -160,42 +158,93 @@ To summarize, diffusion models are generative models that create data by reversi
         \centering
         \includegraphics[width=\linewidth]{figures/snr.pdf}    
     \end{subfigure}
-    \caption{Linear and cosine schedule and logSNR.}
+    \caption{Linear and cosine schedule and signal-to-noise ratio.}
     \label{fig:schedule}
 \end{figure}
-In the DDPM paper \cite{ho2020denoising} choose a variance schedule with $\beta_t$ linearly increasing from $\beta_1 = 10^{-4}$ to $\beta_T = 0.02$. However, this results in $\vect{x}_t$ almost entirely losing its signal in the last quarter of the schedule as shown by \cite{pmlrv139nichol21a}. The authors instead propose a cosine variance schedule, where the squared signal proportion is given by:
+In the DDPM paper \cite{ho2020denoising} choose a variance schedule with $\beta_t$ linearly increasing from $\beta_1 = 10^{-4}$ to $\beta_T = 0.02$. However, this results in $\vect{x}_t$ almost entirely losing its signal in the last quarter of the schedule as problematized by \cite{pmlrv139nichol21a}. The authors instead propose a cosine variance schedule, where the squared signal proportion is given by:
 \begin{equation}
     \bar{\alpha}_t=\frac{f(t)}{f(0)}, \quad f(t)=\cos \left(\frac{t / T+s}{1+s} \cdot \frac{\pi}{2}\right)^2
 \end{equation}
-where $s$ controls the offset of the noise schedule. The authors set $s=0.008$ as they found that $s=0$ resulted in minuscule noise near $t=0$ making it hard for the model to predict $\epsilon$. From $\bar{\alpha}_t$ one can then compute $\beta_t = \min\left( 1 - \frac{\bar{\alpha}_t}{\bar{\alpha}_{t-1}}, 0.999 \right)$ with the $\min$ to prevent singularities. A comparison of the cosine and linear schedules can be seen in \cref{fig:schedule}.
+where $s$ controls the offset of the noise schedule. The authors set $s=0.008$ as they found that $s=0$ resulted in minuscule noise near $t=0$ making it hard for the model to predict $\epsilon$. From $\bar{\alpha}_t$ one can then compute $\beta_t = \min\left( 1 - \frac{\bar{\alpha}_t}{\bar{\alpha}_{t-1}}, 0.999 \right)$ with the $\min$ to prevent singularities. A comparison of the cosine and linear schedules can be seen in \cref{fig:schedule}. 
 
 
-\subsection{Classifier and Classifier-free Guidance (CFG)}
-When sampling from generative models, one often wants to conditionally generate samples from the data distribution of different sub categories. One method for doing so with diffusion models is classifier guidance. Here the generation process relies on an external model guiding the reverse diffusion process towards the sub category date manifold. We first define the score-function as the gradient of the log-likelihood:
+\subsection{Classifier and Classifier-Free Guidance (CFG)}
+% When sampling from generative models, one often wants to conditionally generate samples from the data distribution of different sub categories. One method for doing so with diffusion models is classifier guidance. Here the generation process relies on an external model guiding the reverse diffusion process towards the sub category date manifold. We first define the score-function as the gradient of the log-likelihood:
+% \begin{equation}
+%     s_\theta(\vect{x}) = \grad_{\vect{x}} \log p_\text{data}(\vect{x})
+% \end{equation}
+
+% \begin{equation}
+%     \dot{\vect{x}} = 
+% \end{equation}
+
+% \begin{equation}
+%     \grad_{\vect{x}_t} \log p_\theta\left(\vect{x}_t\right)=-\frac{1}{\sqrt{1-\bar{\alpha}_t}} \vect{\epsilon}_\theta\left(\vect{x}_t\right)
+% \end{equation}
+
+% \cite{dharial2021diffusion}
+In practice, it is often desirable to steer the generation process in order to output data belonging to a specific class, such as cats or dogs in the context of image generation, or incorporating some other information relevant for the output. This process can be framed within the context of probability theory as conditional generation, where the aim is to maximize the probability of the data, $\vect{x}$, given some conditioning signal, $y$, (e.g. a class label. According to Bayes' rule, the conditional probability can be expressed as:
 \begin{equation}
-    s_\theta(\vect{x}) = \grad_{\vect{x}} \log p_\text{data}(\vect{x})
+    p(\vect{x} \mid y) = \frac{p(\vect{x}, y)}{p(y)} \propto p(y \mid \vect{x}) p(\vect{x})
 \end{equation}
-
+Hence, it is proportional to the joint probability of the data and label, which from basic probability theory is equal to the product of the unconditional probability of the data, $p(\vect{x})$, and the probability of the conditioning signal given the data, $p(y \mid \vect{x})$ (for labels; that the data belonging to the given class). In the DDPM paper \cite{ho2020denoising} establishes connection between diffusion models and Noise-Conditioned Score Networks (NCSN) and shows how the reverse diffusion process can be seen as a temporal discritized type of annealed Langevin dynamics given by the stochastic differential equation:
 \begin{equation}
-    \dot{\vect{x}} = 
+    \frac{d}{dt} \log p(\vect{x}_t) = \sqrt{\bar{\alpha}_t} s(\vect{x}_t, t) + \sqrt{1 - \bar{\alpha}_t} \vect{z}_t
 \end{equation}
-
+where $z_t \sim \mathcal{N}(0, 1)$ and $s(\vect{x}_t, t) = \grad_{\vect{x}_t} \log p(\vect{x}_t)$ is referred to as the score function. It turns out that the denoising network can be used to approximate the score function:
 \begin{equation}
-    \grad_{\vect{x}_t} \log p_\theta\left(\vect{x}_t\right)=-\frac{1}{\sqrt{1-\bar{\alpha}_t}} \vect{\epsilon}_\theta\left(\vect{x}_t\right)
+    s(\vect{x}_t, t) \approx -\frac{1}{\sqrt{1 - \bar{\alpha}_t}} \vect{\epsilon}_\theta(\vect{x}_t, t)
 \end{equation}
+Returning to the factorization of the conditional probability, taking the gradient of the log of both sides reveals the relationship with the score function:
+\begin{equation}
+    \grad_{\vect{x}_t} \log p(\vect{x}_t \mid y ) = \grad_{\vect{x}_t} \log p(y \mid \vect{x}_t) + \underbrace{\grad_{\vect{x}_t} \log p(\vect{x}_t)}_{s(\vect{x}_t, t)}
+\end{equation}
+\cite{dharial2021diffusion} trains a classifier, $f_\phi(y \mid \vect{x}_t) \approx p(y \mid \vect{x}_t)$, seperately to predict the class label of noisy images. By using the reformulated denoising function:
+\begin{equation}
+    \bar{\vect{\epsilon}}_{\theta}(\vect{x}_t, t) = \vect{\epsilon}_\theta(\vect{x}_t, t) - \sqrt{1 - \bar{\alpha}_t} \grad_{\vect{x}_t} \log f_\phi(y \mid \vect{x}_t)
+\end{equation}
+where $s$ controls guidance strength, it is possible to guide the diffusion sampling e.g. in order to generate images of a specific category, hence the name classifier guidance. 
 
-\cite{dharial2021diffusion}
-
-When sampling from generative models, one often wants to conditionally generate samples from the data distribution of different sub categories. \cite{dharial2021diffusion} trains a classifier $p_\phi(y \mid \mathbf{x}_t, t)$ on noisy images and uses its gradient $\grad_{\vect{x}_t} p_\phi(y \mid \mathbf{x}_t, t)$ in order to guide the reverse diffusion process.
 
 
+% Write about classifier-free guidance.
+% 
 
-
-
-In order to control the diffusion process, one can introduce a drift term in the sampling process as follows:
 
 
 \section{Tranformer architecture}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{figures/transformer.png}
+    \caption{The transformer (Image from \cite{transformer2017}.)}
+\end{figure}
+The transformer model, introduced by \cite{transformer2017}, revolutionized natural language processing (NLP) and machine translation. This model was designed as an alternative to the traditional recurrent sequence models, such as the seq2seq model by \cite{seq2seq}, which had been widely used in NLP tasks.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/seq2seq.eps}
+    \caption{The seq2seq model by \cite{seq2seq}.}
+    \label{fig:seq2seq}
+\end{figure}
+The seq2seq model (as illustrated in \cref{fig:seq2seq}) encodes an input sequence into a context vector and then decodes the output sequence from this vector in a sequential manner. This approach often results in an information bottleneck, particularly when dealing with long-range dependencies within the data.
+
+In contrast, the transformer model utilizes an attention mechanism, enabling more effective communication between tokens without relying on sequential processing of hidden states. The architecture comprises an encoder and a decoder. The encoder uses multi-headed self-attention to create semantic representations for each token in the input sequence, allowing the model to process the entire context simultaneously.
+
+The decoder then uses these representations through cross-attention and causal self-attention mechanisms. Cross-attention integrates information from the encoder's output, while causal self-attention ensures that the model only considers previously generated tokens, maintaining the autoregressive nature crucial for sequential generation tasks.
+
+One of the key strengths of the transformer model is its training efficiency, owing to the parallelizable nature of the attention mechanism. During the generation process, tokens are produced in an autoregressive fashion, with each generated token serving as context for the subsequent one.
+
+The transformer's attention mechanism is based on scaled dot-product attention, defined by the following equation:
+
+\begin{equation}
+    \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{Q K^T}{\sqrt{d_k}} \right) V
+\end{equation}
+$Q$, $K$ and $V$ are the query, key, and value matrices, respectively, and $d_k$ is the dimension of the key vectors.
+
+For causal self-attention, the model masks future tokens for each key to prevent information leakage, ensuring the model attends only to past and present tokens during both training and inference.
+
+Since the transformer architecture does not inherently encode positional information, Vaswani et al. introduced a sinusoidal positional encoding scheme. This scheme incorporates positional information into each element of the input sequence, defined as:
+
+
 
 \section{Human Motion Generation}
 Generating realistic human motion has several applications 
