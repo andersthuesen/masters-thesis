@@ -19,8 +19,9 @@
 \contentsline {section}{\numberline {4.1}Tracking \& Matching}{13}{section.0.4.1}%
 \contentsline {section}{\numberline {4.2}Human pose sequence optimization}{13}{section.0.4.2}%
 \contentsline {section}{\numberline {4.3}3D scene reconstruction}{13}{section.0.4.3}%
-\contentsline {section}{\numberline {4.4}Aligning datasets}{14}{section.0.4.4}%
-\contentsline {section}{\numberline {4.5}Motion and scene representation}{14}{section.0.4.5}%
+\contentsline {section}{\numberline {4.4}Unification of datasets}{14}{section.0.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Aligning floor with XY-plane}{14}{subsection.0.4.4.1}%
+\contentsline {section}{\numberline {4.5}Motion and scene representation}{15}{section.0.4.5}%
 \contentsline {section}{\numberline {4.6}Diffusion model}{15}{section.0.4.6}%
 \contentsline {chapter}{\numberline {5}Results}{17}{chapter.0.5}%
 \contentsline {chapter}{\numberline {6}Discussion \& Conclusion}{19}{chapter.0.6}%
