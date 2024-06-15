@@ -2387,7 +2387,10 @@
     <bcf:citekey order="12" intorder="1">seq2seq</bcf:citekey>
     <bcf:citekey order="13" intorder="1">seq2seq</bcf:citekey>
     <bcf:citekey order="14" intorder="1">seq2seq</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">Zhou_2019_CVPR</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">goel2023humans</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">depthanything</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">SilbermanECCV12</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">Zhou_2019_CVPR</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

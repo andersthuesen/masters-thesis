@@ -373,6 +373,150 @@
       \field{pages}{3104\bibrangedash 3112}
       \range{pages}{9}
     \endentry
+    \entry{goel2023humans}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=f66f05994d416b1661203e5ba82440c8}{%
+           family={Goel},
+           familyi={G\bibinitperiod},
+           given={Shubham},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=de9db189eb06492a91262a805d52dd63}{%
+           family={Pavlakos},
+           familyi={P\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f6613d71d734f21490b5361013226af9}{%
+           family={Rajasegaran},
+           familyi={R\bibinitperiod},
+           given={Jathushan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=95eed2d41a699ea0a0cb7f9f703800c2}{%
+           family={Kanazawa*},
+           familyi={K\bibinitperiod},
+           given={Angjoo},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3f69f988491acfc75e28026163999474}{%
+           family={Malik*},
+           familyi={M\bibinitperiod},
+           given={Jitendra},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b4dc8207418ee7288216a7468cc51387}
+      \strng{fullhash}{6b3fa33825e321ee6dc54ebbce33390f}
+      \strng{fullhashraw}{6b3fa33825e321ee6dc54ebbce33390f}
+      \strng{bibnamehash}{b4dc8207418ee7288216a7468cc51387}
+      \strng{authorbibnamehash}{b4dc8207418ee7288216a7468cc51387}
+      \strng{authornamehash}{b4dc8207418ee7288216a7468cc51387}
+      \strng{authorfullhash}{6b3fa33825e321ee6dc54ebbce33390f}
+      \strng{authorfullhashraw}{6b3fa33825e321ee6dc54ebbce33390f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Computer Vision (ICCV)}
+      \field{title}{Humans in 4{D}: Reconstructing and Tracking Humans with Transformers}
+      \field{year}{2023}
+    \endentry
+    \entry{depthanything}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=f1eeb2dd1fc5922091709e59023496f5}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Lihe},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f00adc70822a55eef709dcde125a234b}{%
+           family={Kang},
+           familyi={K\bibinitperiod},
+           given={Bingyi},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=800352834f20c08bfb9c71e2873d3d37}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Zilong},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=517d6a07fe7557d7f01c4e145ea3b2b6}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Xiaogang},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ee4de6563d3aa74999c7a69f8f345e56}{%
+           family={Feng},
+           familyi={F\bibinitperiod},
+           given={Jiashi},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b2c00b2ccbbe98f22709d2cb8ccc0bba}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Hengshuang},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0999263125149a3258b75c988279e7ac}
+      \strng{fullhash}{b747e9da8f05ff81e8ffd026c30db1d0}
+      \strng{fullhashraw}{b747e9da8f05ff81e8ffd026c30db1d0}
+      \strng{bibnamehash}{0999263125149a3258b75c988279e7ac}
+      \strng{authorbibnamehash}{0999263125149a3258b75c988279e7ac}
+      \strng{authornamehash}{0999263125149a3258b75c988279e7ac}
+      \strng{authorfullhash}{b747e9da8f05ff81e8ffd026c30db1d0}
+      \strng{authorfullhashraw}{b747e9da8f05ff81e8ffd026c30db1d0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{CVPR}
+      \field{title}{Depth Anything: Unleashing the Power of Large-Scale Unlabeled Data}
+      \field{year}{2024}
+    \endentry
+    \entry{SilbermanECCV12}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=c31b6774e4cb80c31f547e7cc0a75d55}{%
+           family={Nathan\bibnamedelima Silberman},
+           familyi={N\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Pushmeet\bibnamedelima Kohli},
+           giveni={P\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0,
+           suffix={Derek\bibnamedelima Hoiem},
+           suffixi={D\bibinitperiod\bibinitdelim H\bibinitperiod},
+           suffixun=0}}%
+        {{un=0,uniquepart=base,hash=a6784304d1cc890b2cb6c6c7f2f3fd76}{%
+           family={Fergus},
+           familyi={F\bibinitperiod},
+           given={Rob},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{667af4a3c2b9f36b20baf22667e30601}
+      \strng{fullhash}{667af4a3c2b9f36b20baf22667e30601}
+      \strng{fullhashraw}{667af4a3c2b9f36b20baf22667e30601}
+      \strng{bibnamehash}{667af4a3c2b9f36b20baf22667e30601}
+      \strng{authorbibnamehash}{667af4a3c2b9f36b20baf22667e30601}
+      \strng{authornamehash}{667af4a3c2b9f36b20baf22667e30601}
+      \strng{authorfullhash}{667af4a3c2b9f36b20baf22667e30601}
+      \strng{authorfullhashraw}{667af4a3c2b9f36b20baf22667e30601}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{ECCV}
+      \field{title}{Indoor Segmentation and Support Inference from RGBD Images}
+      \field{year}{2012}
+    \endentry
     \entry{Zhou_2019_CVPR}{inproceedings}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=3625efaf108a2751cfdacddd7a073c3d}{%
