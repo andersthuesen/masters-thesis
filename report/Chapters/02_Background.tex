@@ -1,4 +1,23 @@
 \chapter{Background} \label{sec:methods}
+
+
+\section{Human Pose Estimation and Mesh Recovery}
+Human Pose Estimation (HPE) and Mesh Recovery (HMR) are pivotal areas within computer vision and graphics, involving the inference of three-dimensional human body shapes and their articulated poses from images or videos. These tasks have widespread applications, including virtual reality, motion capture, animation, and human-computer interaction.
+
+HPE traditionally refers to predicting the positions of key joints in a human body. Advances in this field have transitioned from 2D pose estimation, where joint positions are determined in image space, to 3D pose estimation, which involves inferring joint positions in three-dimensional space. HMR extends beyond pose estimation by reconstructing a detailed 3D mesh of the human body, capturing the surface geometry and volume in addition to joint locations. The SMPL model is often used in this context, providing a standardized framework for representing human body shapes and poses, thereby enabling more accurate and consistent mesh recovery. Additionally, the SMPL model reduces the number of parameters required to represent the human body, simplifying the computational complexity while maintaining a high level of detail.
+
+One traditional approach to HPE involves fitting 3D models to 2D keypoints extracted from images. This method, exemplified by techniques such as SMPLify by \cite{BogoSMPLify2016}, first detects 2D joint positions (bottom-up) using a keypoint detector. These detected keypoints are then used (top-down) to fit a pre-defined 3D human body model, such as SMPL. This fitting process involves optimizing the model parameters to minimize the difference between the projected 3D keypoints and the detected 2D keypoints in the image. Such methods often require a strong prior to avoid generating highly implausible poses, as the optimization process can otherwise lead to unrealistic human body configurations. An example of such a prior is vPoser (\cite{SMPL-X:2019}), which uses a variational autoencoder to learn a latent space of plausible human poses, thereby helping to constrain the optimization process to more realistic pose configurations.
+
+More recent approaches bypass the intermediate step of 2D keypoint detection and directly regress the parameters of 3D models from images. This end-to-end regression is performed using deep convolutional neural networks (CNNs) that predict the 3D pose and shape parameters directly from input images. HMR (\cite{hmrKanazawa17}) represent this category, where the models are trained to predict the SMPL parameters directly, thereby streamlining the pipeline and potentially increasing the robustness to errors in 2D keypoint detection.
+
+Above methods perform HPE on a per-image basis without considering temporal information. Each frame is processed independently, which simplifies the modeling process but can lead to inconsistencies in predictions across consecutive frames.
+Temporal models, on the other hand, leverage information from multiple frames to ensure consistent and stable pose estimations over time. This is particularly important in video analysis where the continuity of human motion must be preserved. VIBE (\cite{kocabas2019vibe}) is an example of a temporal model that uses recurrent neural networks (GRUs) to incorporate temporal information, resulting in more stable and accurate pose estimations in videos.
+
+Deterministic models provide a single estimate of the human pose for a given input, without accounting for uncertainties. Most early HPE methods fall into this category, where the predicted 
+pose is a fixed output of the model's inference process.
+Probabilistic models, in contrast, explicitly model the uncertainty in pose estimation, providing a distribution over possible poses rather than a single deterministic output. This approach allows the model to capture ambiguities inherent in 2D-to-3D mapping. ProHMR (\cite{kolotouros2021prohmr}) is a representative of probabilistic models, where the network outputs a probability distribution over 3D poses, enabling it to better handle ambiguities and provide more informative predictions.
+
+
 \section{Skinned Multi-Person Linear Model (SMPL)}
 \begin{figure}[h]
     \centering
@@ -19,8 +38,11 @@ $J(\vec{\beta})$ returns the 3D joint locations from the shaped template vertice
 \end{equation}
 $W$ is the skinning function (e.g. Linear Blend Skinning (LBS) or Dual-Quaternion Blend Skinning (DQBS)) and $\mathcal{W}$ is the blend weights. 
 
-\section{Human Mesh Reconstruction (HMR)}
-Recovering the mesh of humans have several applications\dots
+
+
+\section{Human Motion Generation}
+Generating realistic human motion has several applications...
+% TODO
 
 \section{Denoising Diffusion Probabilistic Models (DDPM)}
 \begin{figure}[H]
@@ -205,12 +227,7 @@ Returning to the factorization of the conditional probability, taking the gradie
 \end{equation}
 where $s$ controls guidance strength, it is possible to guide the diffusion sampling e.g. in order to generate images of a specific category, hence the name classifier guidance. 
 
-
-
 % Write about classifier-free guidance.
-% 
-
-
 
 \section{Tranformer architecture}
 \begin{figure}[H]
@@ -246,11 +263,5 @@ Since the transformer architecture does not inherently encode positional informa
 
 
 
-\section{Human Motion Generation}
-Generating realistic human motion has several applications 
-
-
-- Human Motion Diffusion
-- 
 
 

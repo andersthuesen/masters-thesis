@@ -19,6 +19,261 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
+    \entry{BogoSMPLify2016}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=df9e1fe0b5d831b5ee84fb8d06c8baaf}{%
+           family={Bogo},
+           familyi={B\bibinitperiod},
+           given={Federica},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6739ae1219e43710a65f37e9a5b5e902}{%
+           family={Kanazawa},
+           familyi={K\bibinitperiod},
+           given={Angjoo},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e26d3dcb30749908728f9749436f6de4}{%
+           family={Lassner},
+           familyi={L\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=243792a2a91226fb9a96133dc17844be}{%
+           family={Gehler},
+           familyi={G\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=586007140096e6d78832f56de1edf859}{%
+           family={Romero},
+           familyi={R\bibinitperiod},
+           given={Javier},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54960bfd1d66de256b111681241131bb}{%
+           family={Black},
+           familyi={B\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{ba79e9c27328fa2d6edd480bc37250d8}
+      \strng{fullhash}{7917c8db4a76e5e090e96d4fc4f9ddf9}
+      \strng{fullhashraw}{7917c8db4a76e5e090e96d4fc4f9ddf9}
+      \strng{bibnamehash}{ba79e9c27328fa2d6edd480bc37250d8}
+      \strng{authorbibnamehash}{ba79e9c27328fa2d6edd480bc37250d8}
+      \strng{authornamehash}{ba79e9c27328fa2d6edd480bc37250d8}
+      \strng{authorfullhash}{7917c8db4a76e5e090e96d4fc4f9ddf9}
+      \strng{authorfullhashraw}{7917c8db4a76e5e090e96d4fc4f9ddf9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Computer Vision -- ECCV 2016}
+      \field{month}{10}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{Keep it {SMPL}: Automatic Estimation of {3D} Human Pose and Shape from a Single Image}
+      \field{year}{2016}
+    \endentry
+    \entry{SMPL-X:2019}{inproceedings}{}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=de9db189eb06492a91262a805d52dd63}{%
+           family={Pavlakos},
+           familyi={P\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ef406201d4ffa906e5739acfa2748f7b}{%
+           family={Choutas},
+           familyi={C\bibinitperiod},
+           given={Vasileios},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ebf742da48550de93872d810cd833b47}{%
+           family={Ghorbani},
+           familyi={G\bibinitperiod},
+           given={Nima},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c66ff93381cb614348e2b8fa98c0628f}{%
+           family={Bolkart},
+           familyi={B\bibinitperiod},
+           given={Timo},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=73718227d46e969ce7eedafbb3ab52e1}{%
+           family={Osman},
+           familyi={O\bibinitperiod},
+           given={Ahmed\bibnamedelimb A.\bibnamedelimi A.},
+           giveni={A\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1145e9e4e74a158049543500815b0525}{%
+           family={Tzionas},
+           familyi={T\bibinitperiod},
+           given={Dimitrios},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54960bfd1d66de256b111681241131bb}{%
+           family={Black},
+           familyi={B\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{aadf2b7c1dd90e4dab864d950f425ed6}
+      \strng{fullhash}{6700fc80f57ab0d2dfbc6e64f891a3a9}
+      \strng{fullhashraw}{6700fc80f57ab0d2dfbc6e64f891a3a9}
+      \strng{bibnamehash}{aadf2b7c1dd90e4dab864d950f425ed6}
+      \strng{authorbibnamehash}{aadf2b7c1dd90e4dab864d950f425ed6}
+      \strng{authornamehash}{aadf2b7c1dd90e4dab864d950f425ed6}
+      \strng{authorfullhash}{6700fc80f57ab0d2dfbc6e64f891a3a9}
+      \strng{authorfullhashraw}{6700fc80f57ab0d2dfbc6e64f891a3a9}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings IEEE Conf. on Computer Vision and Pattern Recognition (CVPR)}
+      \field{title}{Expressive Body Capture: 3D Hands, Face, and Body from a Single Image}
+      \field{year}{2019}
+    \endentry
+    \entry{hmrKanazawa17}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=6739ae1219e43710a65f37e9a5b5e902}{%
+           family={Kanazawa},
+           familyi={K\bibinitperiod},
+           given={Angjoo},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54960bfd1d66de256b111681241131bb}{%
+           family={Black},
+           familyi={B\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=511ec3d969f93eb32e7af0cb7094a371}{%
+           family={Jacobs},
+           familyi={J\bibinitperiod},
+           given={David\bibnamedelima W.},
+           giveni={D\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c75a5377b6dc5213831576e88ffe553c}{%
+           family={Malik},
+           familyi={M\bibinitperiod},
+           given={Jitendra},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a158e502ead4c9c9b5d65b80f367f6ae}
+      \strng{fullhash}{8e784a586d87963713a0b4d4be52831c}
+      \strng{fullhashraw}{8e784a586d87963713a0b4d4be52831c}
+      \strng{bibnamehash}{a158e502ead4c9c9b5d65b80f367f6ae}
+      \strng{authorbibnamehash}{a158e502ead4c9c9b5d65b80f367f6ae}
+      \strng{authornamehash}{a158e502ead4c9c9b5d65b80f367f6ae}
+      \strng{authorfullhash}{8e784a586d87963713a0b4d4be52831c}
+      \strng{authorfullhashraw}{8e784a586d87963713a0b4d4be52831c}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Computer Vision and Pattern Recognition (CVPR)}
+      \field{title}{End-to-end Recovery of Human Shape and Pose}
+      \field{year}{2018}
+    \endentry
+    \entry{kocabas2019vibe}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=35ad72a7ee1cc311c877dac2fe843ca1}{%
+           family={Kocabas},
+           familyi={K\bibinitperiod},
+           given={Muhammed},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9b905374325497defbd98c7ac173ec00}{%
+           family={Athanasiou},
+           familyi={A\bibinitperiod},
+           given={Nikos},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54960bfd1d66de256b111681241131bb}{%
+           family={Black},
+           familyi={B\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \strng{fullhash}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \strng{fullhashraw}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \strng{bibnamehash}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \strng{authorbibnamehash}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \strng{authornamehash}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \strng{authorfullhash}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \strng{authorfullhashraw}{fd25f1ab1b444a71f6ff2b9ed3dd5d7c}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}
+      \field{month}{6}
+      \field{title}{VIBE: Video Inference for Human Body Pose and Shape Estimation}
+      \field{year}{2020}
+    \endentry
+    \entry{kolotouros2021prohmr}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=5ac60ec41d78b99c6ac19f264b80d4f5}{%
+           family={Kolotouros},
+           familyi={K\bibinitperiod},
+           given={Nikos},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=de9db189eb06492a91262a805d52dd63}{%
+           family={Pavlakos},
+           familyi={P\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cd27d3d228b115c84bc1d88310a81f02}{%
+           family={Jayaraman},
+           familyi={J\bibinitperiod},
+           given={Dinesh},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=26789faf98e6ba54553cd620a8da71b2}{%
+           family={Daniilidis},
+           familyi={D\bibinitperiod},
+           given={Kostas},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e615bad169ad83430dc6d1298e1a5815}
+      \strng{fullhash}{22d0c36af6f3bf6b96c48baf709b0ffb}
+      \strng{fullhashraw}{22d0c36af6f3bf6b96c48baf709b0ffb}
+      \strng{bibnamehash}{e615bad169ad83430dc6d1298e1a5815}
+      \strng{authorbibnamehash}{e615bad169ad83430dc6d1298e1a5815}
+      \strng{authornamehash}{e615bad169ad83430dc6d1298e1a5815}
+      \strng{authorfullhash}{22d0c36af6f3bf6b96c48baf709b0ffb}
+      \strng{authorfullhashraw}{22d0c36af6f3bf6b96c48baf709b0ffb}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{ICCV}
+      \field{title}{Probabilistic Modeling for Human Mesh Recovery}
+      \field{year}{2021}
+    \endentry
     \entry{ho2020denoising}{article}{}{}
       \name{author}{3}{}{%
         {{un=0,uniquepart=base,hash=2ac2ca10b22e4d13af1767e87495412f}{%
@@ -48,8 +303,8 @@
       \strng{authornamehash}{1ef17e0fed8d834b029ebb1c6adf76b4}
       \strng{authorfullhash}{1ef17e0fed8d834b029ebb1c6adf76b4}
       \strng{authorfullhashraw}{1ef17e0fed8d834b029ebb1c6adf76b4}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -103,15 +358,15 @@
       \strng{editornamehash}{66052b963da76b05d2a1aa8c85cacd62}
       \strng{editorfullhash}{66052b963da76b05d2a1aa8c85cacd62}
       \strng{editorfullhashraw}{66052b963da76b05d2a1aa8c85cacd62}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Denoising diffusion probabilistic models (DDPM) are a class of generative models which have recently been shown to produce excellent samples. We show that with a few simple modifications, DDPMs can also achieve competitive log-likelihoods while maintaining high sample quality. Additionally, we find that learning variances of the reverse diffusion process allows sampling with an order of magnitude fewer forward passes with a negligible difference in sample quality, which is important for the practical deployment of these models. We additionally use precision and recall to compare how well DDPMs and GANs cover the target distribution. Finally, we show that the sample quality and likelihood of these models scale smoothly with model capacity and training compute, making them easily scalable. We release our code and pre-trained models at https://github.com/openai/improved-diffusion.}
       \field{booktitle}{Proceedings of the 38th International Conference on Machine Learning}
-      \field{month}{18--24 Jul}
+      \field{month}{7}
       \field{series}{Proceedings of Machine Learning Research}
       \field{title}{Improved Denoising Diffusion Probabilistic Models}
       \field{volume}{139}
@@ -185,8 +440,8 @@
       \strng{editornamehash}{6013a44c5dec47e5e51fdd72b3f8b5eb}
       \strng{editorfullhash}{ad1ea98aa644fe4cbc55fbe24d1f78a9}
       \strng{editorfullhashraw}{ad1ea98aa644fe4cbc55fbe24d1f78a9}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -307,8 +562,8 @@
       \strng{editornamehash}{7cffda9a379be8eb9063eee4eb0f58b3}
       \strng{editorfullhash}{1564f811a39f09a7400a11284c987926}
       \strng{editorfullhashraw}{1564f811a39f09a7400a11284c987926}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -368,7 +623,7 @@
       \field{abstract}{Deep Neural Networks (DNNs) are powerful models that have achieved excellent performance on difficult learning tasks. Although DNNs work well whenever large labeled training sets are available, they cannot be used to map sequences to sequences. In this paper, we present a general end-to-end approach to sequence learning that makes minimal assumptions on the sequence structure. Our method uses a multilayered Long Short-Term Memory (LSTM) to map the input sequence to a vector of a fixed dimensionality, and then another deep LSTM to decode the target sequence from the vector. Our main result is that on an English to French translation task from the WMT-14 dataset, the translations produced by the LSTM achieve a BLEU score of 34.8 on the entire test set, where the LSTM's BLEU score was penalized on out-of-vocabulary words. Additionally, the LSTM did not have difficulty on long sentences. For comparison, a phrase-based SMT system achieves a BLEU score of 33.3 on the same dataset. When we used the LSTM to rerank the 1000 hypotheses produced by the aforementioned SMT system, its BLEU score increases to 36.5, which is close to the previous state of the art. The LSTM also learned sensible phrase and sentence representations that are sensitive to word order and are relatively invariant to the active and the passive voice. Finally, we found that reversing the order of the words in all source sentences (but not target sentences) improved the LSTM's performance markedly, because doing so introduced many short term dependencies between the source and the target sentence which made the optimization problem easier.}
       \field{booktitle}{Proceedings of the 27th International Conference on Neural Information Processing Systems - Volume 2}
       \field{series}{NIPS'14}
-      \field{title}{Sequence to sequence learning with neural networks}
+      \field{title}{Sequence to Sequence Learning with Neural Networks}
       \field{year}{2014}
       \field{pages}{3104\bibrangedash 3112}
       \range{pages}{9}
@@ -414,8 +669,8 @@
       \strng{authornamehash}{b4dc8207418ee7288216a7468cc51387}
       \strng{authorfullhash}{6b3fa33825e321ee6dc54ebbce33390f}
       \strng{authorfullhashraw}{6b3fa33825e321ee6dc54ebbce33390f}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -471,8 +726,8 @@
       \strng{authornamehash}{0999263125149a3258b75c988279e7ac}
       \strng{authorfullhash}{b747e9da8f05ff81e8ffd026c30db1d0}
       \strng{authorfullhashraw}{b747e9da8f05ff81e8ffd026c30db1d0}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -507,8 +762,8 @@
       \strng{authornamehash}{667af4a3c2b9f36b20baf22667e30601}
       \strng{authorfullhash}{667af4a3c2b9f36b20baf22667e30601}
       \strng{authorfullhashraw}{667af4a3c2b9f36b20baf22667e30601}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -516,58 +771,6 @@
       \field{booktitle}{ECCV}
       \field{title}{Indoor Segmentation and Support Inference from RGBD Images}
       \field{year}{2012}
-    \endentry
-    \entry{Zhou_2019_CVPR}{inproceedings}{}{}
-      \name{author}{5}{}{%
-        {{un=0,uniquepart=base,hash=3625efaf108a2751cfdacddd7a073c3d}{%
-           family={Zhou},
-           familyi={Z\bibinitperiod},
-           given={Yi},
-           giveni={Y\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=4e74e92ac258a7344d22dd0661d08dd2}{%
-           family={Barnes},
-           familyi={B\bibinitperiod},
-           given={Connelly},
-           giveni={C\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=9a64d1979f9fa1623a9a5a325aa738df}{%
-           family={Jingwan},
-           familyi={J\bibinitperiod},
-           given={Lu},
-           giveni={L\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=45933939ac90b9f390b4769602e6b881}{%
-           family={Jimei},
-           familyi={J\bibinitperiod},
-           given={Yang},
-           giveni={Y\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=1f2d8bded0cccc97b77327f839ecddd2}{%
-           family={Hao},
-           familyi={H\bibinitperiod},
-           given={Li},
-           giveni={L\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{5486ce563fc3f3125c46603bf0d2b79c}
-      \strng{fullhash}{8684bf21b41ccded7d266832a3c31284}
-      \strng{fullhashraw}{8684bf21b41ccded7d266832a3c31284}
-      \strng{bibnamehash}{5486ce563fc3f3125c46603bf0d2b79c}
-      \strng{authorbibnamehash}{5486ce563fc3f3125c46603bf0d2b79c}
-      \strng{authornamehash}{5486ce563fc3f3125c46603bf0d2b79c}
-      \strng{authorfullhash}{8684bf21b41ccded7d266832a3c31284}
-      \strng{authorfullhashraw}{8684bf21b41ccded7d266832a3c31284}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}
-      \field{month}{6}
-      \field{title}{On the Continuity of Rotation Representations in Neural Networks}
-      \field{year}{2019}
     \endentry
   \enddatalist
 \endrefsection

@@ -2373,24 +2373,30 @@
     <bcf:datasource type="file" datatype="bibtex">bibliography.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="2" intorder="1">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="3" intorder="1">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">pmlrv139nichol21a</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">BogoSMPLify2016</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">SMPL-X:2019</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">hmrKanazawa17</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">kocabas2019vibe</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">kolotouros2021prohmr</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">ho2020denoising</bcf:citekey>
     <bcf:citekey order="7" intorder="1">ho2020denoising</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">dharial2021diffusion</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">transformer2017</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">transformer2017</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">transformer2017</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">seq2seq</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">seq2seq</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">seq2seq</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">goel2023humans</bcf:citekey>
-    <bcf:citekey order="16" intorder="1">depthanything</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">SilbermanECCV12</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">Zhou_2019_CVPR</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">ho2020denoising</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">ho2020denoising</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">ho2020denoising</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">pmlrv139nichol21a</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">ho2020denoising</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">dharial2021diffusion</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">transformer2017</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">transformer2017</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">transformer2017</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">seq2seq</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">seq2seq</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">seq2seq</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">goel2023humans</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">depthanything</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">SilbermanECCV12</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">goel2023humans</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">depthanything</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

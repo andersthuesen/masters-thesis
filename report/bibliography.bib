@@ -33,19 +33,19 @@
 }
 
 @inproceedings{pmlrv139nichol21a,
-  title = 	 {Improved Denoising Diffusion Probabilistic Models},
-  author =       {Nichol, Alexander Quinn and Dhariwal, Prafulla},
-  booktitle = 	 {Proceedings of the 38th International Conference on Machine Learning},
-  pages = 	 {8162--8171},
-  year = 	 {2021},
-  editor = 	 {Meila, Marina and Zhang, Tong},
-  volume = 	 {139},
-  series = 	 {Proceedings of Machine Learning Research},
-  month = 	 {18--24 Jul},
-  publisher =    {PMLR},
-  pdf = 	 {http://proceedings.mlr.press/v139/nichol21a/nichol21a.pdf},
-  url = 	 {https://proceedings.mlr.press/v139/nichol21a.html},
-  abstract = 	 {Denoising diffusion probabilistic models (DDPM) are a class of generative models which have recently been shown to produce excellent samples. We show that with a few simple modifications, DDPMs can also achieve competitive log-likelihoods while maintaining high sample quality. Additionally, we find that learning variances of the reverse diffusion process allows sampling with an order of magnitude fewer forward passes with a negligible difference in sample quality, which is important for the practical deployment of these models. We additionally use precision and recall to compare how well DDPMs and GANs cover the target distribution. Finally, we show that the sample quality and likelihood of these models scale smoothly with model capacity and training compute, making them easily scalable. We release our code and pre-trained models at https://github.com/openai/improved-diffusion.}
+  title = {Improved Denoising Diffusion Probabilistic Models},
+  author = {Nichol, Alexander Quinn and Dhariwal, Prafulla},
+  booktitle = {Proceedings of the 38th International Conference on Machine Learning},
+  pages = {8162--8171},
+  year = {2021},
+  editor = {Meila, Marina and Zhang, Tong},
+  volume = {139},
+  series = {Proceedings of Machine Learning Research},
+  month = {7},
+  publisher = {PMLR},
+  pdf = {http://proceedings.mlr.press/v139/nichol21a/nichol21a.pdf},
+  url = {https://proceedings.mlr.press/v139/nichol21a.html},
+  abstract = {Denoising diffusion probabilistic models (DDPM) are a class of generative models which have recently been shown to produce excellent samples. We show that with a few simple modifications, DDPMs can also achieve competitive log-likelihoods while maintaining high sample quality. Additionally, we find that learning variances of the reverse diffusion process allows sampling with an order of magnitude fewer forward passes with a negligible difference in sample quality, which is important for the practical deployment of these models. We additionally use precision and recall to compare how well DDPMs and GANs cover the target distribution. Finally, we show that the sample quality and likelihood of these models scale smoothly with model capacity and training compute, making them easily scalable. We release our code and pre-trained models at https://github.com/openai/improved-diffusion.}
 }
 
 @inproceedings{dharial2021diffusion,
@@ -70,12 +70,12 @@
 }
 
 @article{weng2021diffusion,
-  title   = "What are diffusion models?",
-  author  = "Weng, Lilian",
-  journal = "lilianweng.github.io",
-  year    = "2021",
-  month   = "Jul",
-  url     = "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/"
+  title = "What are diffusion models?",
+  author = {{Weng, Lilian}},
+  journal = {{lilianweng.github.io}},
+  year = "2021",
+  month = "Jul",
+  url = "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/"
 }
 
 @inproceedings{transformer2017,
@@ -90,17 +90,18 @@
   year = {2017}
 }
 
-@inproceedings{seq2seq, 
-  author = {Sutskever, Ilya and Vinyals, Oriol and Le, Quoc V.}, 
-  title = {Sequence to sequence learning with neural networks}, 
-  year = {2014}, publisher = {MIT Press}, 
-  address = {Cambridge, MA, USA}, 
-  abstract = {Deep Neural Networks (DNNs) are powerful models that have achieved excellent performance on difficult learning tasks. Although DNNs work well whenever large labeled training sets are available, they cannot be used to map sequences to sequences. In this paper, we present a general end-to-end approach to sequence learning that makes minimal assumptions on the sequence structure. Our method uses a multilayered Long Short-Term Memory (LSTM) to map the input sequence to a vector of a fixed dimensionality, and then another deep LSTM to decode the target sequence from the vector. Our main result is that on an English to French translation task from the WMT-14 dataset, the translations produced by the LSTM achieve a BLEU score of 34.8 on the entire test set, where the LSTM's BLEU score was penalized on out-of-vocabulary words. Additionally, the LSTM did not have difficulty on long sentences. For comparison, a phrase-based SMT system achieves a BLEU score of 33.3 on the same dataset. When we used the LSTM to rerank the 1000 hypotheses produced by the aforementioned SMT system, its BLEU score increases to 36.5, which is close to the previous state of the art. The LSTM also learned sensible phrase and sentence representations that are sensitive to word order and are relatively invariant to the active and the passive voice. Finally, we found that reversing the order of the words in all source sentences (but not target sentences) improved the LSTM's performance markedly, because doing so introduced many short term dependencies between the source and the target sentence which made the optimization problem easier.}, 
-  booktitle = {Proceedings of the 27th International Conference on Neural Information Processing Systems - Volume 2},
-  pages = {3104–3112}, 
-  numpages = {9}, 
-  location = {Montreal, Canada}, 
-  series = {NIPS'14} 
+@inproceedings{seq2seq,
+  author={Sutskever, Ilya and Vinyals, Oriol and Le, Quoc V.},
+  title={Sequence to Sequence Learning with Neural Networks},
+  year={2014},
+  publisher={MIT Press},
+  address={Cambridge, MA, USA},
+  abstract={Deep Neural Networks (DNNs) are powerful models that have achieved excellent performance on difficult learning tasks. Although DNNs work well whenever large labeled training sets are available, they cannot be used to map sequences to sequences. In this paper, we present a general end-to-end approach to sequence learning that makes minimal assumptions on the sequence structure. Our method uses a multilayered Long Short-Term Memory (LSTM) to map the input sequence to a vector of a fixed dimensionality, and then another deep LSTM to decode the target sequence from the vector. Our main result is that on an English to French translation task from the WMT-14 dataset, the translations produced by the LSTM achieve a BLEU score of 34.8 on the entire test set, where the LSTM's BLEU score was penalized on out-of-vocabulary words. Additionally, the LSTM did not have difficulty on long sentences. For comparison, a phrase-based SMT system achieves a BLEU score of 33.3 on the same dataset. When we used the LSTM to rerank the 1000 hypotheses produced by the aforementioned SMT system, its BLEU score increases to 36.5, which is close to the previous state of the art. The LSTM also learned sensible phrase and sentence representations that are sensitive to word order and are relatively invariant to the active and the passive voice. Finally, we found that reversing the order of the words in all source sentences (but not target sentences) improved the LSTM's performance markedly, because doing so introduced many short term dependencies between the source and the target sentence which made the optimization problem easier.},
+  booktitle={Proceedings of the 27th International Conference on Neural Information Processing Systems - Volume 2},
+  pages={3104--3112},
+  numpages={9},
+  location={Montreal, Canada},
+  series={NIPS'14}
 }
 
 @inproceedings{goel2023humans,
@@ -111,15 +112,54 @@
 }
 
 @inproceedings{depthanything,
-  title={Depth Anything: Unleashing the Power of Large-Scale Unlabeled Data}, 
+  title={Depth Anything: Unleashing the Power of Large-Scale Unlabeled Data},
   author={Yang, Lihe and Kang, Bingyi and Huang, Zilong and Xu, Xiaogang and Feng, Jiashi and Zhao, Hengshuang},
   booktitle={CVPR},
   year={2024}
 }
 
 @inproceedings{SilbermanECCV12,
-  author    = {Nathan Silberman, Derek Hoiem, Pushmeet Kohli and Rob Fergus},
-  title     = {Indoor Segmentation and Support Inference from RGBD Images},
+  author = {Nathan Silberman, Derek Hoiem, Pushmeet Kohli and Rob Fergus},
+  title = {Indoor Segmentation and Support Inference from RGBD Images},
   booktitle = {ECCV},
-  year      = {2012}
+  year = {2012}
+}
+
+@inproceedings{BogoSMPLify2016,
+  title={Keep it {SMPL}: Automatic Estimation of {3D} Human Pose and Shape from a Single Image},
+  author={Bogo, Federica and Kanazawa, Angjoo and Lassner, Christoph and Gehler, Peter and Romero, Javier and Black, Michael J.},
+  booktitle={Computer Vision -- ECCV 2016},
+  series={Lecture Notes in Computer Science},
+  publisher={Springer International Publishing},
+  month={10},
+  year={2016}
+}
+
+@InProceedings{hmrKanazawa17,
+  title = {End-to-end Recovery of Human Shape and Pose},
+  author = {Angjoo Kanazawa and Michael J. Black and David W. Jacobs and Jitendra Malik},
+  booktitle = {Computer Vision and Pattern Recognition (CVPR)},
+  year = {2018}
+}
+
+@inproceedings{kocabas2019vibe,
+  title = {VIBE: Video Inference for Human Body Pose and Shape Estimation},
+  author = {Kocabas, Muhammed and Athanasiou, Nikos and Black, Michael J.},
+  booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  month = {6},
+  year = {2020}
+}
+
+@Inproceedings{kolotouros2021prohmr,
+  title = {Probabilistic Modeling for Human Mesh Recovery},
+  author = {Kolotouros, Nikos and Pavlakos, Georgios and Jayaraman, Dinesh and Daniilidis, Kostas},
+  booktitle = {ICCV},
+  year = {2021}
+}
+
+@inproceedings{SMPL-X:2019,
+  title = {Expressive Body Capture: 3D Hands, Face, and Body from a Single Image},
+  author = {Pavlakos, Georgios and Choutas, Vasileios and Ghorbani, Nima and Bolkart, Timo and Osman, Ahmed A. A. and Tzionas, Dimitrios and Black, Michael J.},
+  booktitle = {Proceedings IEEE Conf. on Computer Vision and Pattern Recognition (CVPR)},
+  year = {2019}
 }
