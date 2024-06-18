@@ -1,5 +1,32 @@
 \chapter{Background} \label{sec:methods}
 
+\section{Skinned Multi-Person Linear Model (SMPL)}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{figures/smpl.png}
+    \caption{SMPL model (Image credit: \cite{SMPL:2015})}
+\end{figure}
+The Skinned Multi-Person Linear (SMPL) model (\cite{SMPL:2015}) is a parametric model designed to accurately represent a diverse array of human body shapes and poses. The model is constructed on the principles of Linear Blend Skinning (LBS), augmented with corrective blend shapes derived from an extensive dataset of body scans. This approach allows the SMPL model to capture the nuanced deformations associated with different body shapes and poses, ensuring high fidelity and realism in representation. Furthermore, the model is compatible with standard graphics pipelines, facilitating its easy integration and rendering.
+
+Since its inception, the SMPL model has been extended through various enhancements. Notable among these are SMPL-H (\cite{MANO:SIGGRAPHASIA:2017}), which models detailed hand movements, and SMPL-X (\cite{SMPL-X:2019}), which extends the model to include both detailed hand movements and facial expressions. Additionally, Dynamic-SMPL or DMPL (\cite{SMPL:2015}) incorporates dynamic soft-tissue deformations, which simulate the natural movement of soft tissues during movement.
+
+The SMPL model is parameterized by $\vec{\beta}$, which encapsulates the deviations from a mean body shape, and $\vec{\theta}$, which specifies the axis-angle rotations of the 23 joints in the template skeleton. These rotations are local and are applied using a kinematic tree structure, which ensures that the hierarchical relationships between body parts are accurately represented. Mathematically, the model can be expressed as:
+\begin{equation}
+    M(\vec{\beta}, \vec{\theta}) = W(T_P(\vec{\beta}, \vec{\theta}), J(\vec{\beta}), \vec{\theta}, \mathcal{W})
+\end{equation}
+where $T_P(\vec{\beta}, \vec{\theta})$ denotes the vertices of the rest pose, incorporating deformations due to body shape and pose, and is defined as:
+\begin{equation}
+    T_P(\vec{\beta}, \vec{\theta}) = \vect{\bar{T}} + B_S(\vec{\beta}) + B_P(\vec{\theta})
+\end{equation}
+Here, $\vect{\bar{T}}$ represents the template mesh, $B_S(\vec{\beta})$ accounts for shape-dependent deformations, and $B_P(\vec{\theta})$ represents pose-dependent deformations.
+
+The joint locations, $J(\vec{\beta})$, are derived from the shaped template vertices using a learned regression matrix $\mathcal{J}$, and can be formulated as:
+\begin{equation}
+    J(\vec{\beta}) = \mathcal{J}(\vect{\bar{T}} + B_S(\vec{\beta}))
+\end{equation}
+The skinning function, $W$, which can be either LBS or Dual-Quaternion Blend Skinning (DQBS), applies these deformations to the skeletal structure, with $\mathcal{W}$ representing the blend weights.
+
+Overall, the SMPL model's parametric nature and its capability to accurately represent a wide range of human anatomies and movements establish it as a valuable tool in the fields of computer graphics, animation, and related areas.
 
 \section{Human Pose Estimation and Mesh Recovery}
 Human Pose Estimation (HPE) and Mesh Recovery (HMR) are pivotal areas within computer vision and graphics, involving the inference of three-dimensional human body shapes and their articulated poses from images or videos. These tasks have widespread applications, including virtual reality, motion capture, animation, and human-computer interaction.
@@ -17,32 +44,6 @@ Deterministic models provide a single estimate of the human pose for a given inp
 pose is a fixed output of the model's inference process.
 Probabilistic models, in contrast, explicitly model the uncertainty in pose estimation, providing a distribution over possible poses rather than a single deterministic output. This approach allows the model to capture ambiguities inherent in 2D-to-3D mapping. ProHMR (\cite{kolotouros2021prohmr}) is a representative of probabilistic models, where the network outputs a probability distribution over 3D poses, enabling it to better handle ambiguities and provide more informative predictions.
 
-
-\section{Skinned Multi-Person Linear Model (SMPL)}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{figures/smpl.png}
-    \caption{SMPL model}
-\end{figure}
-The Skinned Multi-Person Linear (SMPL) model is a parametric body shape model that accurately represents a wide range of human bodies and poses. It is built upon a foundation of linear blend skinning enhanced with corrective blend shapes, which are derived from a large dataset of body scans. The model captures the subtle deformations that occur with different body shapes and poses and can easily be rendered due to its compatibility with existing graphics pipelines. Since its publication, several extensions such as DMPL, incorporating dynamic soft-tissue deformation and SMPL-X, also modelling hands and facial expressions have been introduced. The model is parameterized by $\vec{\beta}$, capturing the variations from a mean body shape and $\vec{\theta}$, specifying the axis-angle rotation of 23 of the template skeleton joints. Mathematically, the model can be expressed as:
-\begin{equation}
-    M(\vec{\beta}, \vec{\theta}) = W(T_P(\vec{\beta}, \vec{\theta}), J(\vec{\beta}), \vec{\theta}, \mathcal{W})
-\end{equation}
-where $T_P(\vec{\beta}, \vec{\theta})$ returns the vertices of the rest pose, incorporating the deformations from the body shape and pose and is given by:
-\begin{equation}
-    T_P(\vec{\beta}, \vec{\theta}) = \vect{\bar{T}} + B_S(\vec{\beta}) + B_P(\vec{\theta})
-\end{equation}
-$J(\vec{\beta})$ returns the 3D joint locations from the shaped template vertices using a learned regression matrix $\mathcal{J}$ and is given by:
-\begin{equation}
-    J(\vec{\beta}) = \mathcal{J}(\vect{\bar{T}} + B_S(\vec{\beta}))
-\end{equation}
-$W$ is the skinning function (e.g. Linear Blend Skinning (LBS) or Dual-Quaternion Blend Skinning (DQBS)) and $\mathcal{W}$ is the blend weights. 
-
-
-
-\section{Human Motion Generation}
-Generating realistic human motion has several applications...
-% TODO
 
 \section{Denoising Diffusion Probabilistic Models (DDPM)}
 \begin{figure}[H]
@@ -227,7 +228,18 @@ Returning to the factorization of the conditional probability, taking the gradie
 \end{equation}
 where $s$ controls guidance strength, it is possible to guide the diffusion sampling e.g. in order to generate images of a specific category, hence the name classifier guidance. 
 
-% Write about classifier-free guidance.
+In contrast to classifier guidance, an alternative method known as classifier-free guidance, proposed by \cite{ho2021classifierfree}, eliminates the need for a separate guidance network. This method leverages the same generative model to perform conditional generation by incorporating the conditioning signal, $y$, during the training process. Specifically, the model is trained with the conditioning signal but occasionally discards it with a certain probability, $p$. This technique allows the model to learn both the conditional and unconditional generation processes.
+
+During the forward diffusion process, the model is trained to predict the noise added to the data both conditionally, $\vect{\epsilon}_\theta(\vect{x}_t, t, y)$, and unconditionally, $\vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset)$. The conditional prediction uses the conditioning signal $y$ (e.g., class labels), while the unconditional prediction is made without any conditioning.
+
+At inference time, classifier-free guidance combines these predictions to steer the generation process towards the desired condition. This is achieved by interpolating between the conditional and unconditional predictions:
+\begin{equation}
+\bar{\vect{\epsilon}}_\theta(\vect{x}_t, t, y) = \vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset) + s \cdot (\vect{\epsilon}_\theta(\vect{x}_t, t, y) - \vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset))
+\end{equation}
+Here, $s$ is a scaling factor that controls the strength of the guidance. This formulation allows the model to flexibly adjust the influence of the conditioning signal on the generation process, effectively guiding the reverse diffusion towards samples that match the desired condition.
+
+By leveraging the same network for both conditional and unconditional noise predictions, classifier-free guidance simplifies the implementation and improves the efficiency of the conditional generation process. This method has demonstrated significant improvements in generating high-quality samples that adhere to the specified conditions, making it a powerful alternative to traditional classifier guidance approaches.
+
 
 \section{Tranformer architecture}
 \begin{figure}[H]
@@ -236,12 +248,12 @@ where $s$ controls guidance strength, it is possible to guide the diffusion samp
     \caption{The transformer (Image from \cite{transformer2017}.)}
 \end{figure}
 The transformer model, introduced by \cite{transformer2017}, revolutionized natural language processing (NLP) and machine translation. This model was designed as an alternative to the traditional recurrent sequence models, such as the seq2seq model by \cite{seq2seq}, which had been widely used in NLP tasks.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/seq2seq.eps}
-    \caption{The seq2seq model by \cite{seq2seq}.}
-    \label{fig:seq2seq}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{figures/seq2seq.eps}
+%     \caption{The seq2seq model by \cite{seq2seq}.}
+%     \label{fig:seq2seq}
+% \end{figure}
 The seq2seq model (as illustrated in \cref{fig:seq2seq}) encodes an input sequence into a context vector and then decodes the output sequence from this vector in a sequential manner. This approach often results in an information bottleneck, particularly when dealing with long-range dependencies within the data.
 
 In contrast, the transformer model utilizes an attention mechanism, enabling more effective communication between tokens without relying on sequential processing of hidden states. The architecture comprises an encoder and a decoder. The encoder uses multi-headed self-attention to create semantic representations for each token in the input sequence, allowing the model to process the entire context simultaneously.
@@ -264,4 +276,35 @@ Since the transformer architecture does not inherently encode positional informa
 
 
 
+\section{Human Motion Generation}
 
+
+
+% Generative models for human motion have many applications
+
+
+
+% Human Motion Diffusion Model
+% Single person text conditioned (CLIP) motion generation model
+
+
+% InterGen
+% Two person text conditioned (CLIP) motion diffusion model
+% Introduces new pairwise losses to help the model learn human interactions
+% Model architecture is inflexible only supporting exactly two person generation.
+
+
+% Human interact with their environment
+% We include a point cloud of objects
+
+
+
+Generating realistic human motion has several applications...
+% TODO
+
+\subsection{Human Motion Diffusion Model (MDM)}
+
+
+
+
+\subsection{InterGen}

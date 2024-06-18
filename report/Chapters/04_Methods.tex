@@ -84,10 +84,10 @@ We combine both metric and relative variants of the Depth Anything model (\cite{
 Due to poses being predicted independently per frame, the combined pose sequences often lack temporal consistency, resulting in janky or erratic movements. To address this issue, we refine the pose sequences by optimizing for smooth trajectories across all $1 \dots T$ frames by minimizing a composite smooth loss objective assuming constant velocity:
 
 \begin{equation}
-    \mathcal{L}_\text{smooth} = \sum_t{\| \hat{\vect{\tau}}^{(t)} - \vect{\tau}^{(t)} \|_2} + \lambda_{\hat{\tau}} \sum_t{\mathcal{R}_{\bar{\tau}}^{(t)}}
+    \mathcal{L}_\text{smooth} = \sum_t{\| \hat{\vect{j}}^{(t)} - \vect{j}^{(t)} \|_2} + \lambda_{\hat{j}} \sum_t{\mathcal{R}_{\bar{j}}^{(t)}}
 \end{equation}
 
-where $\hat{\vect{\tau}}^{(t)} = \vect{\tau}^{(t-1)} + \vect{v}^{(t-1)}$ is the predicted location at time $t$ assuming constant velocity $\vect{v}^{(t)} = \vect{\tau}^{(t)} - \vect{\tau}^{(t-1)}$, and $\mathcal{R}_{\bar{\tau}}^{(t)} = \| \vect{\tau}^{(t)} - \bar{\vect{\tau}}^{(t)} \|_2$ a regularization term preventing the optimized location $\mathbf{\tau}^{(t)}$ to not diverge too far from the initially predicted location $\bar{\vect{\tau}}^{(t)}$.
+where $\hat{\vect{j}}^{(t)} = \vect{j}^{(t-1)} + \vect{v}^{(t-1)}$ is the predicted joint location at time $t$ assuming constant velocity $\vect{v}^{(t)} = \vect{j}^{(t)} - \vect{j}^{(t-1)}$, and $\mathcal{R}_{\bar{j}}^{(t)} = \| \vect{j}^{(t)} - \bar{\vect{j}}^{(t)} \|_2$ a regularization term preventing the optimized location $\mathbf{j}^{(t)}$ to not diverge too far from the initially predicted joint location $\bar{\vect{j}}^{(t)}$.
 
 
 
@@ -146,7 +146,14 @@ In a similar fashion, we transform our poses by applying \cref{eq:transform-poin
 The resulting transformation of the point cloud and poses in aligning the floor with the XY-plane is illustrated in \cref{fig:rotate-floor-planes}.
 
 \section{Motion and scene representation}
-Previous work on single human motion generation uses a canonical representation 
+We follow the work by \cite{liang2024intergen} and represent each pose in the motion sequence using their proposed non-canonical representation, but disregard the binary foot-ground contact features:
+\begin{equation}
+    \vect{x}_t = \left[\vect{j}_g^p,\ \vect{j}_g^v,\ \vect{j}^r \right]
+\end{equation}
+where $\vect{j}_g^p$ are the global joint positions, $\vect{j}_v^p$ the global joint velocities and $\vect{j}^r$ the relative SMPL 6D joint rotations.
+
+
+% Previous work on single human motion generation uses a canonical representation 
 
 % We use a 6D continuous representation of the joint angles as according to \cite{Zhou_2019_CVPR}.
 % We represent the motion similar to 
@@ -154,5 +161,20 @@ Previous work on single human motion generation uses a canonical representation
 
 \section{Diffusion model}
 
+
+otion data for each person is flattened into a single array of poses. Each pose in the sequence is embedded using a linear layer. To embed the motion timestamp, we add positional encoding to the latent variables ($z_t$).
+
+Identity encoding is achieved by randomly selecting (without replacement) a learned ID embedding for each person and adding it to each pose embedding. Additionally, class information (such as medical staff, patients, etc.) is encoded by adding a learned class embedding.
+
+For textual descriptions, we use the CLIP model to encode the text, and the resulting output is embedded using a linear layer. This embedded text is then prepended to the input sequence for the transformer.
+
+Object point clouds are processed by clustering the coordinates into groups of 64, which are then embedded using a linear layer. These embeddings are integrated into the model to provide spatial context.
+
+\begin{figure}[H]
+    \hspace*{-3cm}
+    \includegraphics[width=\linewidth+3cm]{figures/diffusion-model.pdf}
+    \caption{Diffusion architecture}
+    \label{fig:diffusion-model}
+\end{figure}
 
 
