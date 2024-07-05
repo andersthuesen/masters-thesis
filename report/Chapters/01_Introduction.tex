@@ -1,23 +1,123 @@
 \chapter{Introduction}
+% Motivation
+Hospitals and care homes are facing pressure due to demographic changes, leading to fewer caregivers for an increasingly elderly population.
 
-In healthcare environments such as hospitals and care homes, data pertaining to critical incidents like falls are scarce due to their infrequent nature and the high privacy requirements surrounding such data. This scarcity poses significant challenges for training robust machine learning models, particularly in applications related to video classification where detailed understanding of such events is crucial. The primary goal of this thesis is to enhance the performance of video classification tasks by leveraging synthetic data, which is designed to closely mirror the underlying distribution of real-world incidents while enabling focused studies on specific, rare events.
+Teton \footnote{https://teton.ai} aims to alleviate this pressure by providing a privacy-preserving patient monitoring system that informs staff about current patient activities and alerts them to critical events, such as falls. The system consists of a camera sensor with built-in processing along with a mobile application. To preserve the privacy of patients, Teton has trained a deep neural network classification model on consensually obtained video footage from hospitals and care homes. This model runs on-device, ensuring that only the detections, and no video, ever leave the device. 
 
-To address the challenges inherent in collecting and utilizing real-world data from sensitive environments, this research proposes a novel approach using synthetic data generation. Synthetic data not only adheres to the distributional characteristics of genuine data but also provides flexibility to explore less common scenarios—specifically, those at the tail of the distribution which are typically underrepresented in available datasets.
+% Problem
+As nurses and care home staff increasingly rely on the system in their daily work, Teton bears growing responsibility for ensuring the system's reliability to maintain staff trust and ultimately ensure patient safety. Critical events in the tail of the distribution, such as falls, are particularly challenging to address due to their rare occurrence, making it difficult to obtain sufficient data for training purposes. 
 
-This work introduces a sophisticated framework for generating synthetic data by explicitly modeling three-dimensional (3D) environments. This includes detailed interactions both among humans and between humans and their surroundings. By integrating these complex interactions as a strong inductive bias, the proposed generative diffusion model enhances the realism and applicability of the synthetic data.
+% Possible solutions
+A possible solution is to train on synthetic data from simulated scenarios; however, directly generating video is a very high-dimensional problem that requires vast amounts of data.
 
-To construct and train this model, we utilize publicly available datasets such as HumanML3D and InterHuman. These datasets include motion capture data of individuals and pairs interacting, each accompanied by textual descriptions. These are combined with 3D scene reconstructions derived from video captures in actual hospital and care home settings. This integration of human motion and scene specifics forms the foundation for our synthetic data generation process.
+% Alternative solution
+An alternative approach is to reduce the dimensionality of the problem by explicitly modeling the 3D scene and environment. This method enables precise control of the scene, as well as efficient rendering from different angles and under various lighting conditions, but requires solving the inverse problem of "lifting" 2D videos into 3D.
 
-To effectively reconstruct 3D scenes from the captured videos, we employ state-of-the-art models such as ProHMR and Depth Anything. These models are instrumental in generating per-frame human pose estimations and scene depth labels. These outputs, along with 2D keypoint annotations, are fed into a joint optimization process. This process is critical as it unifies the coordinate systems of the human models and the environment, ensuring that the motion trajectories are smooth and coherent. The result is a highly accurate 3D representation of the scenes, which serves as a vital input for our synthetic data generation.
+Additionally, besides being able to synthesize realistic scenarios to augment the training data, accurate motion and scene understanding is crucial for applications like gait analysis, pressure ulcer detection, and automating much of the documentation burden by recognizing different human interactions such as changing diapers, intravenous injections, and more.
+
+% Scope of the thesis
+This thesis explores this approach in two parts. First, we investigate the use of monocular depth estimation and human pose estimation models to reconstruct the 3D scene, as well as 3D human locations and poses. Second, we train a generative diffusion model to conditionally sample new 3D sequences of humans interacting in a given 3D scene. Although essential for validating the approach, the final steps of "skinning", rendering, and evaluating the impact on model classification performance by training on these synthetically generated videos are left for future research.
+
+% Furthermore:
+% Gait analysis
+% Pressue ulcers
+% Documentation
+% - Human interaction
+% - Changing diapers
+
+
+\chapter{Related Work}
+\section{Human Pose Estimation}
+Accurately estimating human poses is key in understanding their spatial relationships and interactions with the surrounding environment. Advances in this field have transitioned from 2D pose estimation, where joint positions are determined in image space, to 3D pose estimation, which involves inferring joint positions in three-dimensional space. The SMPL model (\cite{SMPL:2015}) is often used in this context, providing a standardized framework for representing human body shapes and poses, thereby enabling more accurate and consistent mesh recovery. Additionally, the SMPL model reduces the number of parameters required to represent the human body, simplifying the computational complexity while maintaining a high level of detail.
+
+Traditional approaches typically involve fitting 3D models to 2D keypoints extracted from images. This method, exemplified by techniques such as SMPLify (\cite{BogoSMPLify2016}), first detects 2D joint positions (bottom-up) using a keypoint detector. These detected keypoints are then used (top-down) to fit a pre-defined 3D human body model, such as SMPL. This fitting process involves optimizing the model parameters to minimize the difference between the projected 3D keypoints and the detected 2D keypoints in the image. Such methods often require a strong prior to avoid generating highly implausible poses, as the optimization process can otherwise lead to unrealistic human body configurations. An example of such a prior is vPoser (\cite{SMPL-X:2019}), which uses a Variational Autoencoder (VAE) to learn a latent space of plausible human poses. Regularizing the latent pose space it is possible constrain the optimization process to more realistic pose configurations. Although these optimization-based methods provide accurate model-keypoint fits, they are often slow due to their iterative nature and sensitive to initialization. 
+
+Regression based methods such as HMR (\cite{hmrKanazawa17}) circumvent these issues by bypassing the intermediate 2D keypoint detection step, directly predicting the SMPL pose parameters from the input image. However, though the predicted poses are often fairly good, they fall short in terms of pixel-accuracy compared to optimization-based methods despite requiring large amounts of supervision. SPIN (\cite{kolotouros2019spin}) on the other hand, is a hybrid method that combines both paradigms. From the input image a pose estimate is directly regressed and used as initialization to the SMPLify optimization process. After optimizing the joints to align with the predicted 2D keypoints, the optimized pose is then used as supervision signal to the regression network leading to iterative self-improvement. This collaborative approach inherits the accuracy of optimization based methods while being reasonably fast and less sensitive to initialization.
+
+Despite these advancements, predicting poses frame-by-frame in video sequences poses significant limitations. Such methods often leads to temporal inconsistencies and jittery predictions because each frame is treated independently, ignoring the continuity and dynamics of human motion. To address these issues, VIBE (Video Inference for Body Estimation) (\cite{kocabas2019vibe}) incorporate both Gate Recurrent Units (GRUs) to improve temporal consistency and adversarial training using a discriminator model, exploting the large-scale AMASS motion capture dataset (\cite{AMASS:ICCV:2019}) to predict kinematically plausible, realistic motion sequences from the input video sequence. In 4D Humans (\cite{goel2023humans}) the authors "transformarize" the original HMR model and use the predicted poses and appearance features as input to the PHALP (\cite{rajasegaran2022tracking}) tracking system, predicting their future 3D representations (spatial and visual) which are used to associated people across frames.
+
+In common for above regression based methods is that they all only predict a single pose, assuming that the input image contains exactly one human. Hence, they rely on external bounding box annotations or object detection systems for extracing the relevant patches of the image, possibly leading to fragile detections. Recently, MultiHMR (\cite{multi-hmr2024}) based on a Visual Transformer (ViT) backbone has shown remarkable performance on single shot, multi-human pose estimation by predicting a 2D heatmaps of person centers used as input to a cross-attention module outputting the final estimated pose. 
+
+Deterministic models provide a single estimate of the human pose for a given input, without accounting for uncertainties. Above mentioned methods fall into this category, where the predicted pose is a fixed output of the model's inference process. Probabilistic models, in contrast, explicitly model the uncertainty in pose estimation, providing a distribution over possible poses rather than a single deterministic output. This approach allows the model to capture ambiguities inherent in 2D-to-3D mapping. Probabilistic models such as ProHMR (\cite{kolotouros2021prohmr}) based on Normalizing Flows instead output a probility distribution over 3D poses for sampling, enabling it to better handle ambiguities.
+
+
+
+
+% MotionBERT
+% "Can 3d pose be learned from 2d projections alone?" (Trains discriminator)
+% ElePose (Normalizing flows on 2D poses guides 3D lifting network that upon projection have high probability w.r.t. the normalizing flows model)
+% MAS 
+
+
+\section{Human Motion Generation}
+
+
+% text2motion
+% Human Motion Diffusion
+
+%This thesis explores three innovative models—Human Motion Diffusion, InterGen, and PhysDiff—that collectively enhance the state of the art in human motion generation.
+
+
+
+% History of motion generation
+
+
+
+% Generative models for human motion have many applications
+
+% The generation of realistic human motion is a pivotal area of research in fields such as computer graphics, animation, virtual reality, and human-computer interaction. With the advent of advanced machine learning techniques, particularly diffusion models, substantial progress has been made in synthesizing lifelike human movements. 
+
+
+The Human Motion Diffusion Model (MDM) (\cite{tevet2023human}) represents a significant advancement in single-person, text-conditioned motion generation. Utilizing the CLIP (Contrastive Language-Image Pre-training) framework, this model can generate detailed and contextually appropriate human motion sequences based on textual descriptions. Unlike traditional denoising diffusion models that predict noise, MDM innovatively predicts the motion signal directly. This approach simplifies the computation of geometric losses, such as foot-ground contact, which are crucial for ensuring the physical realism of generated motions. At the heart of this model lies a transformer-based denoising network, which iteratively refines motion sequences to achieve high fidelity. Additionally, the model is capable of motion inbetweening, generating intermediate frames between given start and end frames to ensure smooth and continuous motion trajectories.
+
+Building on the foundation of MDM, InterGen (\cite{liang2024intergen}) extends the capabilities of motion generation to interactions between two individuals. This two-person, text-conditioned motion diffusion model also leverages the CLIP framework, enabling it to generate coordinated motion sequences based on textual inputs. The architecture of InterGen features a dual transformer-like model with shared weights, allowing it to predict the motion signals for both individuals concurrently. This shared-weight mechanism ensures that the generated motions are synchronized and contextually consistent. InterGen introduces new pairwise loss functions, designed to help the model learn the intricacies of human interactions, making it particularly suitable for applications involving social dynamics and collaborative activities. However, it is important to note that the model is specifically designed for generating interactions between exactly two persons, which limits its flexibility in more complex multi-person scenarios.
+
+Addressing the critical challenge of physical plausibility in motion generation, PhysDiff \cite{yuan2023physdiff} incorporates a physical projection layer into the diffusion sampling process. This ensures that the generated motions conform to the laws of physics, which is essential for applications where physical realism is paramount. PhysDiff strategically applies these physical constraints later in the diffusion process, avoiding early imposition that could degrade motion quality. The primary concern is that constraining the diffusion process too much in the early steps can push it significantly off from the initial Gaussian distribution. Since the denoising network is not trained to handle these deviations, this can result in suboptimal motion quality. By applying physical constraints at a later stage, PhysDiff ensures that the generated motions remain within a plausible range while maintaining high fidelity and diversity.
+
+% \section{Human Scene Generation}
+% Generating 3d people in scenes
+% https://arxiv.org/pdf/1912.02923
+
+% Maybe not relevant
+% MIME: Human-Aware 3D Scene Generation
+% https://arxiv.org/pdf/2212.04360
+
+
+
+% "Guided Motion Diffusion for Controllable Human Motion Synthesis"
+
+% "Generating Human Interaction Motions in Scenes with Text Control"
+% https://research.nvidia.com/labs/toronto-ai/tesmo/
+
+
+
+\section{Synthetic data augmentation}
+Synthetic data augmentation has emerged as a pivotal technique in the machine learning landscape, offering significant advantages for enhancing model performance. By generating diverse and realistic data variations, synthetic data augmentation addresses the limitations of real-world datasets, such as scarcity and imbalance. This method has proven particularly effective in improving the accuracy and robustness of models across various applications, from image recognition, natural language processing and human action recognition.
+
+Studies like \cite{peng2017synthetic} and \cite{Zheng_2016} have underscored the value of synthetic data in aligning feature distributions and improving neural network stability. Additionally, techniques such as domain randomization discussed in \cite{Tremblay_2018} have shown significant improvements in model robustness by generating a wide range of data variations. 
+
+A key challenge when using synthetic data augmentation is domain adaptation, as synthetic data might not resemble the real data distribution well enough to yield any improvements in real world tasks. \cite{Shrivastava_2017} propose Simulated+Unsupervised learning to tackle this problem. Their method consists of adverserially training a refinement network to improve the realism of synthetic images while the discriminator's objective is to classify the refined and real input images as either synthetic or real. Employing S+U learning, the authors show significant improvements over training directly on synthetic images in the context of in-the-wild appearance-based gaze estimation. 
+
+Synthetic data generation methods can be roughly grouped into two categories: generation using handcoded simulators or using simulators learned from data. In the context of autonomous driving, hardcoded simulators, like CARLA (\cite{Dosovitskiy17}), meticulously replicate real-world environments, while simulators learned from data, such as Wayze's GAIA-1 model (\cite{hu2023gaia1generativeworldmodel}), use extensive driving data to create realistic traffic scenarios. 
+
+Work by \cite{Hwang_2020} introduce the ElderSim simulator for simulating elderlys daily activities in various environments from a variety of viewpoints in different lighting conditions. From evaluating three action recognition models trained on a mixture of real and synthetic data from the simulator, they find noticeable improvements in accuracy across subjects, viewpoints, age of subjects and datasets, demonstrating the effectiveness of synthetic data augmentation. However, the ElderSim simulator is inflexible as it is handcoded and depends on a static set of actions captured by an extensive motion capture setup. 
+
+\cite{PSI:2019} employ a Conditional Variational Auto-Encoder (CVAE) to generate realistic 3D human bodies integrated naturally within 3D scenes. This approach necessitates both a semantic understanding of the scene (e.g., placing a person sitting on a sofa) and adherence to physical constraints (such as ensuring human meshes do not intersect with objects). However, the method only supports generating static 3D placements and hence cannot be used synthetically augmenting action recognition tasks. 
+
+
+% Write about different appraoches
+
+
+% This work introduces a sophisticated framework for generating synthetic data by explicitly modeling three-dimensional (3D) environments. This includes detailed interactions both among humans and between humans and their surroundings. By integrating these complex interactions as a strong inductive bias, the proposed generative diffusion model enhances the realism and applicability of the synthetic data.
+
+% To construct and train this model, we utilize publicly available datasets such as HumanML3D and InterHuman. These datasets include motion capture data of individuals and pairs interacting, each accompanied by textual descriptions. These are combined with 3D scene reconstructions derived from video captures in actual hospital and care home settings. This integration of human motion and scene specifics forms the foundation for our synthetic data generation process.
+
+%To effectively reconstruct 3D scenes from the captured videos, we employ state-of-the-art models such as ProHMR and Depth Anything. These models are instrumental in generating per-frame human pose estimations and scene depth labels. These outputs, along with 2D keypoint annotations, are fed into a joint optimization process. This process is critical as it unifies the coordinate systems of the human models and the environment, ensuring that the motion trajectories are smooth and coherent. The result is a highly accurate 3D representation of the scenes, which serves as a vital input for our synthetic data generation.
 
 
 % Write some more things about the setup
 
 % Camera placement
-
-
-
-
 
 
 % This template complies with the DTU Design Guide \url{https://www.designguide.dtu.dk/}. DTU holds all rights to the design programme including all copyrights. It is intended for two-sided printing. The \textbackslash \texttt{cleardoublepage} command can be used to ensure that new sections and the table of contents begins on a right hand page. The back page always ends as an odd page. 

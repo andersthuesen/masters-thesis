@@ -146,6 +146,8 @@ In a similar fashion, we transform our poses by applying \cref{eq:transform-poin
 The resulting transformation of the point cloud and poses in aligning the floor with the XY-plane is illustrated in \cref{fig:rotate-floor-planes}.
 
 \section{Motion and scene representation}
+
+
 We follow the work by \cite{liang2024intergen} and represent each pose in the motion sequence using their proposed non-canonical representation, but disregard the binary foot-ground contact features:
 \begin{equation}
     \vect{x}_t = \left[\vect{j}_g^p,\ \vect{j}_g^v,\ \vect{j}^r \right]
@@ -157,6 +159,8 @@ where $\vect{j}_g^p$ are the global joint positions, $\vect{j}_v^p$ the global j
 
 % We use a 6D continuous representation of the joint angles as according to \cite{Zhou_2019_CVPR}.
 % We represent the motion similar to 
+
+% TODO: Write about 6D representations
 
 
 \section{Diffusion model}
@@ -171,10 +175,11 @@ For textual descriptions, we use the CLIP model to encode the text, and the resu
 Object point clouds are processed by clustering the coordinates into groups of 64, which are then embedded using a linear layer. These embeddings are integrated into the model to provide spatial context.
 
 \begin{figure}[H]
-    \hspace*{-3cm}
-    \includegraphics[width=\linewidth+3cm]{figures/diffusion-model.pdf}
+    \hspace*{-1cm}
+    \includegraphics[width=\linewidth+1cm]{figures/diffusion-model.pdf}
     \caption{Diffusion architecture}
     \label{fig:diffusion-model}
 \end{figure}
 
 
+% TODO define loss functions

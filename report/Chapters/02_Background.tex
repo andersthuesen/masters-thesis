@@ -1,4 +1,4 @@
-\chapter{Background} \label{sec:methods}
+\chapter{Background theory} \label{sec:methods}
 
 \section{Skinned Multi-Person Linear Model (SMPL)}
 \begin{figure}[h]
@@ -28,21 +28,6 @@ The skinning function, $W$, which can be either LBS or Dual-Quaternion Blend Ski
 
 Overall, the SMPL model's parametric nature and its capability to accurately represent a wide range of human anatomies and movements establish it as a valuable tool in the fields of computer graphics, animation, and related areas.
 
-\section{Human Pose Estimation and Mesh Recovery}
-Human Pose Estimation (HPE) and Mesh Recovery (HMR) are pivotal areas within computer vision and graphics, involving the inference of three-dimensional human body shapes and their articulated poses from images or videos. These tasks have widespread applications, including virtual reality, motion capture, animation, and human-computer interaction.
-
-HPE traditionally refers to predicting the positions of key joints in a human body. Advances in this field have transitioned from 2D pose estimation, where joint positions are determined in image space, to 3D pose estimation, which involves inferring joint positions in three-dimensional space. HMR extends beyond pose estimation by reconstructing a detailed 3D mesh of the human body, capturing the surface geometry and volume in addition to joint locations. The SMPL model is often used in this context, providing a standardized framework for representing human body shapes and poses, thereby enabling more accurate and consistent mesh recovery. Additionally, the SMPL model reduces the number of parameters required to represent the human body, simplifying the computational complexity while maintaining a high level of detail.
-
-One traditional approach to HPE involves fitting 3D models to 2D keypoints extracted from images. This method, exemplified by techniques such as SMPLify by \cite{BogoSMPLify2016}, first detects 2D joint positions (bottom-up) using a keypoint detector. These detected keypoints are then used (top-down) to fit a pre-defined 3D human body model, such as SMPL. This fitting process involves optimizing the model parameters to minimize the difference between the projected 3D keypoints and the detected 2D keypoints in the image. Such methods often require a strong prior to avoid generating highly implausible poses, as the optimization process can otherwise lead to unrealistic human body configurations. An example of such a prior is vPoser (\cite{SMPL-X:2019}), which uses a variational autoencoder to learn a latent space of plausible human poses, thereby helping to constrain the optimization process to more realistic pose configurations.
-
-More recent approaches bypass the intermediate step of 2D keypoint detection and directly regress the parameters of 3D models from images. This end-to-end regression is performed using deep convolutional neural networks (CNNs) that predict the 3D pose and shape parameters directly from input images. HMR (\cite{hmrKanazawa17}) represent this category, where the models are trained to predict the SMPL parameters directly, thereby streamlining the pipeline and potentially increasing the robustness to errors in 2D keypoint detection.
-
-Above methods perform HPE on a per-image basis without considering temporal information. Each frame is processed independently, which simplifies the modeling process but can lead to inconsistencies in predictions across consecutive frames.
-Temporal models, on the other hand, leverage information from multiple frames to ensure consistent and stable pose estimations over time. This is particularly important in video analysis where the continuity of human motion must be preserved. VIBE (\cite{kocabas2019vibe}) is an example of a temporal model that uses recurrent neural networks (GRUs) to incorporate temporal information, resulting in more stable and accurate pose estimations in videos.
-
-Deterministic models provide a single estimate of the human pose for a given input, without accounting for uncertainties. Most early HPE methods fall into this category, where the predicted 
-pose is a fixed output of the model's inference process.
-Probabilistic models, in contrast, explicitly model the uncertainty in pose estimation, providing a distribution over possible poses rather than a single deterministic output. This approach allows the model to capture ambiguities inherent in 2D-to-3D mapping. ProHMR (\cite{kolotouros2021prohmr}) is a representative of probabilistic models, where the network outputs a probability distribution over 3D poses, enabling it to better handle ambiguities and provide more informative predictions.
 
 
 \section{Denoising Diffusion Probabilistic Models (DDPM)}
@@ -228,7 +213,7 @@ Returning to the factorization of the conditional probability, taking the gradie
 \end{equation}
 where $s$ controls guidance strength, it is possible to guide the diffusion sampling e.g. in order to generate images of a specific category, hence the name classifier guidance. 
 
-In contrast to classifier guidance, an alternative method known as classifier-free guidance, proposed by \cite{ho2021classifierfree}, eliminates the need for a separate guidance network. This method leverages the same generative model to perform conditional generation by incorporating the conditioning signal, $y$, during the training process. Specifically, the model is trained with the conditioning signal but occasionally discards it with a certain probability, $p$. This technique allows the model to learn both the conditional and unconditional generation processes.
+In contrast to classifier guidance, an alternative method known as classifier-free guidance, proposed by \cite{ho2021classifierfree}, eliminates the need for a separate guidance network. This method leverages the same generative model to perform conditional generation by incorporating the conditioning signal, $y$, during the training process. Specifically, the model is trained with the conditioning signal but occasionally discards it with a certain probability, $p_\text{uncond}$. This technique allows the model to learn both the conditional and unconditional generation processes.
 
 During the forward diffusion process, the model is trained to predict the noise added to the data both conditionally, $\vect{\epsilon}_\theta(\vect{x}_t, t, y)$, and unconditionally, $\vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset)$. The conditional prediction uses the conditioning signal $y$ (e.g., class labels), while the unconditional prediction is made without any conditioning.
 
@@ -238,7 +223,7 @@ At inference time, classifier-free guidance combines these predictions to steer 
 \end{equation}
 Here, $s$ is a scaling factor that controls the strength of the guidance. This formulation allows the model to flexibly adjust the influence of the conditioning signal on the generation process, effectively guiding the reverse diffusion towards samples that match the desired condition.
 
-By leveraging the same network for both conditional and unconditional noise predictions, classifier-free guidance simplifies the implementation and improves the efficiency of the conditional generation process. This method has demonstrated significant improvements in generating high-quality samples that adhere to the specified conditions, making it a powerful alternative to traditional classifier guidance approaches.
+By leveraging the same network for both conditional and unconditional noise predictions, classifier-free guidance simplifies the implementation and improves the efficiency of the conditional generation process. This method has demonstrated significant improvements in generating high-quality samples (\cite{ho2021classifierfree}) that adhere to the specified conditions, making it a powerful alternative to traditional classifier guidance approaches.
 
 
 \section{Tranformer architecture}
@@ -246,65 +231,49 @@ By leveraging the same network for both conditional and unconditional noise pred
     \centering
     \includegraphics[width=0.4\linewidth]{figures/transformer.png}
     \caption{The transformer (Image from \cite{transformer2017}.)}
+    \label{fig:transformer}
 \end{figure}
-The transformer model, introduced by \cite{transformer2017}, revolutionized natural language processing (NLP) and machine translation. This model was designed as an alternative to the traditional recurrent sequence models, such as the seq2seq model by \cite{seq2seq}, which had been widely used in NLP tasks.
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\linewidth]{figures/seq2seq.eps}
-%     \caption{The seq2seq model by \cite{seq2seq}.}
-%     \label{fig:seq2seq}
-% \end{figure}
-The seq2seq model (as illustrated in \cref{fig:seq2seq}) encodes an input sequence into a context vector and then decodes the output sequence from this vector in a sequential manner. This approach often results in an information bottleneck, particularly when dealing with long-range dependencies within the data.
+Ever since its publication, the Transformer (\cite{transformer2017}) has revolutionized the field of deep learning. Despite being initially designed for Natural Language Processing (NLP), Transformers have demonstrated their versatility and effectiveness across a wide range of domains. Beyond NLP, Transformers have been successfully applied to other areas such as computer vision, where models like Vision Transformers (ViTs) (\cite{dosovitskiy2020vit}) leverage the same principles to process image data. In addition, fields such as speech recognition (\cite{conformer2020}), time-series forecasting (\cite{haoyietal-informer-2021}), and even protein folding (\cite{Jumper2021}) have seen breakthroughs thanks to the adoption of Transformer-based models. 
 
-In contrast, the transformer model utilizes an attention mechanism, enabling more effective communication between tokens without relying on sequential processing of hidden states. The architecture comprises an encoder and a decoder. The encoder uses multi-headed self-attention to create semantic representations for each token in the input sequence, allowing the model to process the entire context simultaneously.
+In contrast to models such as RNNs, GRUs and LSTMs relying on sequential processing of hidden states, the transformer model utilizes an attention mechanism for communication. The attention mechanism enables the model to capture long-range dependencies more effectively and has significantly improved the performance of various NLP tasks, including translation, summarization, and question answering (\cite{devlin2018bert}). Furthermore, due to the parallel nature of attention, the Transformer architecture has been subject for huge scaling with models exceeding billion of parameters (\cite{radford_language_2019}, \cite{touvron2023llama2openfoundation}, \cite{anil2023palm2technicalreport}). 
 
-The decoder then uses these representations through cross-attention and causal self-attention mechanisms. Cross-attention integrates information from the encoder's output, while causal self-attention ensures that the model only considers previously generated tokens by masking out future tokens in the training phase. At inference time, the output tokens are generated autoregressively. 
+The architecture comprises an encoder and a decoder as illustrated in~\cref{fig:transformer}. The encoder uses multi-headed self-attention to create semantic representations for each element in the input sequence, allowing the model to process the entire context simultaneously. Through cross-attention, the decoder integrates information from the encoder's output, while causal self-attention ensures that the model only considers previously generated tokens by masking out future tokens in the training phase. This enables autoregressive generation at inference time. 
 
-One of the key strengths of the transformer model is its training efficiency, owing to the parallelizable nature of the attention mechanism. During the generation process, tokens are produced in an autoregressive fashion, with each generated token serving as context for the subsequent one.
-
-The transformer's attention mechanism is based on scaled dot-product attention, defined by the following equation:
-
+The transformer's attention mechanism is based on computing the scaled dot-product: 
 \begin{equation}
-    \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{Q K^T}{\sqrt{d_k}} \right) V
+    \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{d_k}} \right) \mathbf{V},
 \end{equation}
-$Q$, $K$ and $V$ are the query, key, and value matrices, respectively, and $d_k$ is the dimension of the key vectors.
+where $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ are the query, key, and value matrices, respectively, and $d_k$ is the dimension of the key vectors. Hence, scaled dot-product attention calculates the attention score between all query and key vectors to identify the corresponding value vectors where the key-query alignment is strong. The softmax function and normalization constant, $d_k$, ensure that the attention output maintains an appropriate scale. However, one might want to allow the model to attend to multiple items. Multi-headed attention achieves this by using multiple attention mechanisms in parallel, each focusing on different parts of the input. Mathematically, it is formulated as:
+\begin{equation}
+    \begin{aligned}
+        & \text{MultiHead}(\vect{Q}, \vect{K}, \vect{V})=\operatorname{Concat}\left(\text{head}_1, \ldots, \text{head}_{\mathrm{h}}\right) \vect{W}^O \\
+        & \text {where head}_{\mathrm{i}}=\operatorname{Attention}\left(\vect{Q} \vect{W}_i^Q, \vect{K} \vect{W}_i^K, \vect{V} \vect{W}_i^V\right) \\
+        &
+    \end{aligned}
+\end{equation}
+where $\vect{W}^O \in \mathbb{R}^{h d_v \times d_\text{model}}$ is the output projection matrix and $\vect{W}_i^Q, \vect{W}_i^K \in \mathbb{R}^{d_\text{model} \times d_k}$, $\vect{W}_i^V \in \mathbb{R}^{d_\text{model} \times d_k}$ and $W_o \in \mathbb{R}^{h d_v \times d_\text{model}}$ are linear projection matrices reducing the dimensionality to $d_k = d_v = d_\text{model} / h$ where $h$ is the number of heads. In other words, the query, key and value vectors are projected down to multiple heads between which the attention is computed before being concatenated and finally reprojected into the model dimensions. 
 
-For causal self-attention, the model masks future tokens for each key to prevent information leakage, ensuring the model attends only to past and present tokens during both training and inference.
-
-Since the transformer architecture does not inherently encode positional information, Vaswani et al. introduced a sinusoidal positional encoding scheme. This scheme incorporates positional information into each element of the input sequence, defined as:
-
-
-
-
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[t]{0.6\linewidth}
+        \includegraphics[width=\linewidth]{figures/positional_encoding.pdf}
+        \caption{Sinusoidal positional encoding with values from $1$ (white) to -1 (black). $d_\text{model}$ = 196 and max length, $L=64$.}
+        \label{fig:positional-encoding}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.35\linewidth}
+        \includegraphics[width=\linewidth]{figures/positional_encoding_similarity.pdf}
+        \caption{Normalized dot-product of encodings at positions $i$ and $j$.}
+        \label{fig:positional-encoding-similarity}
+    \end{subfigure}
+\end{figure}
+Since the transformer architecture does not naturally encode positional information, \cite{transformer2017} introduce an additive sinusoidal encoding (\cref{fig:positional-encoding}) to the model's input embeddings:
+\begin{equation}
+    \textbf{PE}(i, \delta)= \begin{cases}\sin \left(\frac{i}{10000^{2 \delta^{\prime} / d_\text{model}}}\right) & \text { if } \delta=2 \delta^{\prime} \\ \cos \left(\frac{i}{10000^{2 \delta^{\prime} / d_\text{model}}}\right) & \text { if } \delta=2 \delta^{\prime}+1\end{cases}.
+\end{equation}
+for $\delta=1,\ldots,d_\text{model}$ and $i = 1,\ldots,L$. Considering the the query-key matrix dot-product with added positional encodings:
+\begin{equation}
+    \left(\vect{Q} + \textbf{PE} \right) \left( \vect{K} + \textbf{PE}  \right)^T = \vect{Q} \vect{K}^T+\vect{Q} \textbf{PE}^T+\textbf{PEK}^T+\textbf{PEPE}^T. \quad \includegraphics[width=5mm]{figures/pepe.jpg}
+\end{equation}
+This expansion reveals the various interactions between the query, key, and positional encodings. Specifically, the term $\vect{Q} \vect{K}^T$ computes the standard attention score based on the query and key. The term $\vect{Q} \textbf{PE}^T$ captures the interaction between the content of the query and positional encodings, while $\textbf{PE} \vect{K}^T$ captures the interaction between the positional encodings and the content of the key. Finally, $\textbf{PE} \textbf{PE}^T$ represents the self-interaction of the positional encodings. An example of this is illustrated in~\cref{fig:positional-encoding-similarity} showing the normalized dot-product similarity of positional encodings at relative distances. These combined interactions enable the model to learn to attend to items at both absolute and content-dependent offsets, relavant for the objective at hand. 
 \section{Human Motion Generation}
-
-
-
-% Generative models for human motion have many applications
-
-
-
-% Human Motion Diffusion Model
-% Single person text conditioned (CLIP) motion generation model
-
-
-% InterGen
-% Two person text conditioned (CLIP) motion diffusion model
-% Introduces new pairwise losses to help the model learn human interactions
-% Model architecture is inflexible only supporting exactly two person generation.
-
-
-% Human interact with their environment
-% We include a point cloud of objects
-
-
-
-Generating realistic human motion has several applications...
-% TODO
-
-\subsection{Human Motion Diffusion Model (MDM)}
-
-
-
-
-\subsection{InterGen}
