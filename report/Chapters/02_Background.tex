@@ -44,6 +44,7 @@ A DDPM is a parametarized Markov chain trained using variational inference to re
 The forward process is defined as follows:
 \begin{equation}    
     q(\vect{x}_{1:T} \mid \vect{x}_{0}) = \prod_{t=1}^T q(\vect{x}_{t} \mid \vect{x}_{t-1}), \quad q(\vect{x}_{t} \mid \vect{x}_{t-1}) = \mathcal{N}(x_{t}; \sqrt{1 - \beta_t}\vect{x}_t,\beta_t \vect{I} )
+    \label{eq:diffusion}
 \end{equation}
 with $T$ being the discritized number of diffusion steps before all original information is completely discarded. The goal of the inverse or backwards process then becomes to iteratively remove the noise, in order to arrivate at the original data. More formally, the process is defined as:
 \begin{equation}
@@ -276,4 +277,46 @@ for $\delta=1,\ldots,d_\text{model}$ and $i = 1,\ldots,L$. Considering the the q
     \left(\vect{Q} + \textbf{PE} \right) \left( \vect{K} + \textbf{PE}  \right)^T = \vect{Q} \vect{K}^T+\vect{Q} \textbf{PE}^T+\textbf{PEK}^T+\textbf{PEPE}^T. \quad \includegraphics[width=5mm]{figures/pepe.jpg}
 \end{equation}
 This expansion reveals the various interactions between the query, key, and positional encodings. Specifically, the term $\vect{Q} \vect{K}^T$ computes the standard attention score based on the query and key. The term $\vect{Q} \textbf{PE}^T$ captures the interaction between the content of the query and positional encodings, while $\textbf{PE} \vect{K}^T$ captures the interaction between the positional encodings and the content of the key. Finally, $\textbf{PE} \textbf{PE}^T$ represents the self-interaction of the positional encodings. An example of this is illustrated in~\cref{fig:positional-encoding-similarity} showing the normalized dot-product similarity of positional encodings at relative distances. These combined interactions enable the model to learn to attend to items at both absolute and content-dependent offsets, relavant for the objective at hand. 
-\section{Human Motion Generation}
+
+
+\section{Human Motion Diffusion}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/mdm_comb.pdf}
+    \caption{\textbf{(Left)} MDM architecture. \textbf{(Right)} MDM Sampling process.}
+    \label{fig:mdm}
+\end{figure}
+The Motion Diffusion Model (MDM) (\cite{tevet2023human}) provides a generative model for human motion conditioned on natural language descriptions using classifier-free guided diffusion models. The authors model human motion as a sequence of poses, $x^{i} \in \mathbb{R}^{J \times D}$, represented by either their joint rotations or positions where $J$ is the number of joints and $D$ is the dimensions of the representation and $i = 1, \ldots, N$ is the current frame of the motion.
+
+Throught the diffusion process
+\begin{equation}
+    q(\vect{x}_t^{(1:N)} \mid \vect{x}_{t-1}^{(1:N)}) = \mathcal{N}\left( \sqrt{\alpha_t} \vect{x}_{t-1}^{(1:N)} \mid (1 - \alpha_t) \vect{I} \right),
+\end{equation} 
+the motion sequence is gradually degraded until becoming pure noise $x_T^{1:N} \sim \mathcal{N}(0, 1)$ at the final timestep $t=T$ of the noise schedule, in correspondence with \cref{eq:diffusion}. To reverse the diffusion process, the authors suggest parameterizing the score function, $G(\vect{x}_t^{(1:N)}, t, c)$ to predict the signal instead of the noise, where $c$ is the conditioning signal. In addition to the \textit{simple} loss function given by:
+\begin{equation}
+    \mathcal{L}_{\text {simple }}=E_{x_0 \sim q\left(x_0 \mid c\right), t \sim[1, T]}\left[\left\|x_0-G\left(x_t, t, c\right)\right\|_2^2\right]
+\end{equation}
+the authors introduce several geometric loss functions. This aligns with previous work on motion generative models (\cite{petrovich2021actionconditioned3dhumanmotion}, \cite{Shi_2020}) to help enforce physical constraints necessary for realistic motion, preventing artifacts such as teleportation and foot sliding. These include joint velocities and foot ground contact:
+\begin{equation}
+    \begin{gathered}
+        \mathcal{L}_{\mathrm{pos}}=\frac{1}{N} \sum_{i=1}^N\left\|F K\left(x_0^i\right)-F K\left(\hat{x}_0^i\right)\right\|_2^2 \\
+        \mathcal{L}_{\text {foot }}=\frac{1}{N-1} \sum_{i=1}^{N-1}\left\|\left(F K\left(\hat{x}_0^{i+1}\right)-F K\left(\hat{x}_0^i\right)\right) \cdot f_i\right\|_2^2 \\
+        \mathcal{L}_{\text {vel }}=\frac{1}{N-1} \sum_{i=1}^{N-1}\left\|\left(x_0^{i+1}-x_0^i\right)-\left(\hat{x}_0^{i+1}-\hat{x}_0^i\right)\right\|_2^2
+    \end{gathered}
+\end{equation}
+where $FK$ is the forward-kinematic function in case joint rotation representions and the identity function otherwise and $f_i \in \{ 0, 1 \}$ is the binary foot contact indicators, punishing non-zero foot velocities when in contact with the ground. Hence, the final loss object becomes:
+\begin{equation}
+    \mathcal{L} = \mathcal{L}_\text{simple} + \lambda_\text{pos} \mathcal{L}_\text{pos} + \lambda_\text{vel} \mathcal{L}_\text{vel} + \lambda_\text{foot} \mathcal{L}_\text{foot}.
+\end{equation}
+
+
+Conforming to classifier-free guidance, the conditioning signal is dropped $p=10\%$ of the time by setting $c=\emptyset$ 
+
+
+
+In training the denoising network, parameterized by a transformer network, the conditioning is dropped 10\% of the time by setting $c=\emptyset$ 
+
+
+
+
+The denoising network is parameterized by a transformer network taking 

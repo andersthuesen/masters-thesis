@@ -2423,12 +2423,15 @@
     <bcf:citekey order="48" intorder="1">touvron2023llama2openfoundation</bcf:citekey>
     <bcf:citekey order="49" intorder="1">anil2023palm2technicalreport</bcf:citekey>
     <bcf:citekey order="50" intorder="1">transformer2017</bcf:citekey>
-    <bcf:citekey order="51" intorder="1">goel2023humans</bcf:citekey>
-    <bcf:citekey order="52" intorder="1">depthanything</bcf:citekey>
-    <bcf:citekey order="53" intorder="1">SilbermanECCV12</bcf:citekey>
+    <bcf:citekey order="51" intorder="1">tevet2023human</bcf:citekey>
+    <bcf:citekey order="52" intorder="1">petrovich2021actionconditioned3dhumanmotion</bcf:citekey>
+    <bcf:citekey order="53" intorder="1">Shi_2020</bcf:citekey>
     <bcf:citekey order="54" intorder="1">goel2023humans</bcf:citekey>
     <bcf:citekey order="55" intorder="1">depthanything</bcf:citekey>
-    <bcf:citekey order="56" intorder="1">liang2024intergen</bcf:citekey>
+    <bcf:citekey order="56" intorder="1">SilbermanECCV12</bcf:citekey>
+    <bcf:citekey order="57" intorder="1">goel2023humans</bcf:citekey>
+    <bcf:citekey order="58" intorder="1">depthanything</bcf:citekey>
+    <bcf:citekey order="59" intorder="1">liang2024intergen</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

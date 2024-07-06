@@ -13,20 +13,20 @@
 \contentsline {subsection}{\numberline {3.2.1}Variance schedules}{10}{subsection.0.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Classifier and Classifier-Free Guidance (CFG)}{11}{subsection.0.3.2.2}%
 \contentsline {section}{\numberline {3.3}Tranformer architecture}{12}{section.0.3.3}%
-\contentsline {section}{\numberline {3.4}Human Motion Generation}{14}{section.0.3.4}%
-\contentsline {chapter}{\numberline {4}Data}{15}{chapter.0.4}%
-\contentsline {section}{\numberline {4.1}HumanML3D}{15}{section.0.4.1}%
-\contentsline {section}{\numberline {4.2}InterHuman}{15}{section.0.4.2}%
-\contentsline {section}{\numberline {4.3}Teton (raw) dataset}{15}{section.0.4.3}%
-\contentsline {chapter}{\numberline {5}Methods}{17}{chapter.0.5}%
-\contentsline {section}{\numberline {5.1}3D scene reconstruction}{17}{section.0.5.1}%
-\contentsline {section}{\numberline {5.2}Human pose sequence optimization}{17}{section.0.5.2}%
-\contentsline {section}{\numberline {5.3}Unification of datasets}{18}{section.0.5.3}%
-\contentsline {section}{\numberline {5.4}Motion and scene representation}{19}{section.0.5.4}%
-\contentsline {section}{\numberline {5.5}Diffusion model}{19}{section.0.5.5}%
-\contentsline {chapter}{\numberline {6}Results}{21}{chapter.0.6}%
-\contentsline {chapter}{\numberline {7}Discussion \& Conclusion}{23}{chapter.0.7}%
-\contentsline {chapter}{Bibliography}{25}{chapter*.13}%
-\contentsline {chapter}{\numberline {A}Appendices}{29}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Derivation of posterior distribution}{29}{section.A.1}%
-\contentsline {section}{\numberline {A.2}$L_{t-1}$ closed form derivation}{29}{section.A.2}%
+\contentsline {section}{\numberline {3.4}Human Motion Diffusion}{14}{section.0.3.4}%
+\contentsline {chapter}{\numberline {4}Data}{17}{chapter.0.4}%
+\contentsline {section}{\numberline {4.1}HumanML3D}{17}{section.0.4.1}%
+\contentsline {section}{\numberline {4.2}InterHuman}{17}{section.0.4.2}%
+\contentsline {section}{\numberline {4.3}Teton (raw) dataset}{17}{section.0.4.3}%
+\contentsline {chapter}{\numberline {5}Methods}{19}{chapter.0.5}%
+\contentsline {section}{\numberline {5.1}3D scene reconstruction}{19}{section.0.5.1}%
+\contentsline {section}{\numberline {5.2}Human pose sequence optimization}{19}{section.0.5.2}%
+\contentsline {section}{\numberline {5.3}Unification of datasets}{20}{section.0.5.3}%
+\contentsline {section}{\numberline {5.4}Motion and scene representation}{21}{section.0.5.4}%
+\contentsline {section}{\numberline {5.5}Diffusion model}{21}{section.0.5.5}%
+\contentsline {chapter}{\numberline {6}Results}{23}{chapter.0.6}%
+\contentsline {chapter}{\numberline {7}Discussion \& Conclusion}{25}{chapter.0.7}%
+\contentsline {chapter}{Bibliography}{27}{chapter*.14}%
+\contentsline {chapter}{\numberline {A}Appendices}{31}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Derivation of posterior distribution}{31}{section.A.1}%
+\contentsline {section}{\numberline {A.2}$L_{t-1}$ closed form derivation}{31}{section.A.2}%

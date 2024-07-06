@@ -3504,6 +3504,136 @@
       \verb https://arxiv.org/abs/2305.10403
       \endverb
     \endentry
+    \entry{petrovich2021actionconditioned3dhumanmotion}{misc}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=9864e678a582dc0033767c505283ace8}{%
+           family={Petrovich},
+           familyi={P\bibinitperiod},
+           given={Mathis},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=2,uniquepart=given,hash=54960bfd1d66de256b111681241131bb}{%
+           family={Black},
+           familyi={B\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=2}}%
+        {{un=0,uniquepart=base,hash=ae9ab57e4b78bc8d8d15dd0850fae037}{%
+           family={Varol},
+           familyi={V\bibinitperiod},
+           given={Gül},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{3b8790f9e26bcce06a2b059a04b496a8}
+      \strng{fullhash}{3b8790f9e26bcce06a2b059a04b496a8}
+      \strng{fullhashraw}{3b8790f9e26bcce06a2b059a04b496a8}
+      \strng{bibnamehash}{3b8790f9e26bcce06a2b059a04b496a8}
+      \strng{authorbibnamehash}{3b8790f9e26bcce06a2b059a04b496a8}
+      \strng{authornamehash}{3b8790f9e26bcce06a2b059a04b496a8}
+      \strng{authorfullhash}{3b8790f9e26bcce06a2b059a04b496a8}
+      \strng{authorfullhashraw}{3b8790f9e26bcce06a2b059a04b496a8}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.CV}
+      \field{eprinttype}{arXiv}
+      \field{title}{Action-Conditioned 3D Human Motion Synthesis with Transformer VAE}
+      \field{year}{2021}
+      \verb{eprint}
+      \verb 2104.05670
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2104.05670
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2104.05670
+      \endverb
+    \endentry
+    \entry{Shi_2020}{article}{}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=17ef7b9ba69ad6fd0abbce123f4305ae}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Mingyi},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=769548eecf1ec8f5523b7a76dc6fc0b7}{%
+           family={Aberman},
+           familyi={A\bibinitperiod},
+           given={Kfir},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3b50a230f9dd108433d683b1417c549f}{%
+           family={Aristidou},
+           familyi={A\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=824488aff6706925802b1c75da7ab577}{%
+           family={Komura},
+           familyi={K\bibinitperiod},
+           given={Taku},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5efdafaa0ac0d2a845edb7db0c1f18f6}{%
+           family={Lischinski},
+           familyi={L\bibinitperiod},
+           given={Dani},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cdf44d78713bc27a81394749a9d8bbdc}{%
+           family={Cohen-Or},
+           familyi={C\bibinithyphendelim O\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5f2cdf2c163110e212cb66e7aa399101}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Baoquan},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery (ACM)}%
+      }
+      \strng{namehash}{7890f5030ecf416248d427469cb19a8f}
+      \strng{fullhash}{2ef3b40e5fb9a42cf1c99563b842135b}
+      \strng{fullhashraw}{2ef3b40e5fb9a42cf1c99563b842135b}
+      \strng{bibnamehash}{7890f5030ecf416248d427469cb19a8f}
+      \strng{authorbibnamehash}{7890f5030ecf416248d427469cb19a8f}
+      \strng{authornamehash}{7890f5030ecf416248d427469cb19a8f}
+      \strng{authorfullhash}{2ef3b40e5fb9a42cf1c99563b842135b}
+      \strng{authorfullhashraw}{2ef3b40e5fb9a42cf1c99563b842135b}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1557-7368}
+      \field{journaltitle}{ACM Transactions on Graphics}
+      \field{month}{9}
+      \field{number}{1}
+      \field{title}{MotioNet: 3D Human Motion Reconstruction from Monocular Video with Skeleton Consistency}
+      \field{volume}{40}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 15}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1145/3407659
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1145/3407659
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1145/3407659
+      \endverb
+    \endentry
     \entry{depthanything}{inproceedings}{}{}
       \name{author}{6}{}{%
         {{un=0,uniquepart=base,hash=f1eeb2dd1fc5922091709e59023496f5}{%
