@@ -5,9 +5,9 @@
     \begin{tabular}{| l | c c c c |} 
         \hline
         \textbf{Dataset} & \textbf{\# Sequences} & \textbf{Multi-person} & \textbf{Text descriptions} & \textbf{Scene object} \\ \hline
-        HumanML3D &  & \xmark & \cmark & \xmark \\
-        InterHuman & 7779 & \cmark (exactly 2) & \cmark & \xmark \\
-        Teton (processed) & 27.656 & \cmark & \xmark & \cmark \\
+        HumanML3D & 14,616 & \xmark & \cmark (44,970) & \xmark \\
+        InterHuman & 7,779 & \cmark (exactly 2) & \cmark (16,756) & \xmark \\
+        Teton & 27,656 & \cmark & \xmark & \cmark \\
         \hline
     \end{tabular}
     \caption{Overview of different dataset properties.}
@@ -21,16 +21,14 @@ The HumanML3D dataset combines the HumanAct12 and AMASS datasets, integrating hu
 \section{InterHuman}
 The InterHuman dataset is a comprehensive, large-scale 3D dataset designed to capture human interactive motions involving two individuals. It includes approximately 107 million frames detailing a wide range of human interactions, from professional activities to daily social behaviors. Each motion sequence is paired with natural language annotations, totaling 23,337 descriptions, which provide context and detail for the captured interactions, enhancing the dataset’s utility for training and evaluating models.
 
-7779 sequences resulting in 6.56h 
-
-
+% 7779 sequences resulting in 6.56h 
 
 \section{Teton (raw) dataset}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\linewidth]{figures/example-frame.png}
-    \caption{Examples from the Teton dataset}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\linewidth]{figures/example-frame.png}
+%     \caption{Examples from the Teton dataset}
+% \end{figure}
 The Teton dataset contains approximately 50,000 image sequences hierarchically organized by hospital/carehome site, room and timestamp. Each sequence consists of 100 frames recorded at approximately 10 frames per second, resulting in a sequence duration of about 10 seconds and totaling roughly 140 hours of data. 
 
 Each person in the frame has been manually annotated with their class (person, staff, patient), center point, bounding box, keypoints and current action (e.g., "laying in bed", "standing on floor"). Using an image similarity threshold, the 100 frames are reduced to a smaller set of key frames. Each key frame is annotated with segmentation masks for people in the frame as well as the floor, walls and furniture (e.g., beds, sofas and chairs).

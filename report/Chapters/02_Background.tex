@@ -21,14 +21,64 @@ where $T_P(\vec{\beta}, \vec{\theta})$ denotes the vertices of the rest pose, in
 Here, $\vect{\bar{T}}$ represents the template mesh, $B_S(\vec{\beta})$ accounts for shape-dependent deformations, and $B_P(\vec{\theta})$ represents pose-dependent deformations.
 
 The joint locations, $J(\vec{\beta})$, are derived from the shaped template vertices using a learned regression matrix $\mathcal{J}$, and can be formulated as:
-\begin{equation}
+\begin{equation} \label{eq:smpl-joints}
     J(\vec{\beta}) = \mathcal{J}(\vect{\bar{T}} + B_S(\vec{\beta}))
 \end{equation}
 The skinning function, $W$, which can be either LBS or Dual-Quaternion Blend Skinning (DQBS), applies these deformations to the skeletal structure, with $\mathcal{W}$ representing the blend weights.
 
-Overall, the SMPL model's parametric nature and its capability to accurately represent a wide range of human anatomies and movements establish it as a valuable tool in the fields of computer graphics, animation, and related areas.
+\section{Human Motion Estimation}
+% TODO: Write about HuMoR
 
+\section{Tranformer architecture}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{figures/transformer.png}
+    \caption{The transformer (Image from \cite{transformer2017}.)}
+    \label{fig:transformer}
+\end{figure}
+Ever since its publication, the Transformer (\cite{transformer2017}) has revolutionized the field of deep learning. Despite being initially designed for Natural Language Processing (NLP), Transformers have demonstrated their versatility and effectiveness across a wide range of domains. Beyond NLP, Transformers have been successfully applied to other areas such as computer vision, where models like Vision Transformers (ViTs) (\cite{dosovitskiy2020vit}) leverage the same principles to process image data. In addition, fields such as speech recognition (\cite{conformer2020}), time-series forecasting (\cite{haoyietal-informer-2021}), and even protein folding (\cite{Jumper2021}) have seen breakthroughs thanks to the adoption of Transformer-based models. 
 
+In contrast to models such as RNNs, GRUs and LSTMs relying on sequential processing of hidden states, the transformer model utilizes an attention mechanism for communication. The attention mechanism enables the model to capture long-range dependencies more effectively and has significantly improved the performance of various NLP tasks, including translation, summarization, and question answering (\cite{devlin2018bert}). Furthermore, due to the parallel nature of attention, the Transformer architecture has been subject for huge scaling with models exceeding billion of parameters (\cite{radford_language_2019}, \cite{touvron2023llama2openfoundation}, \cite{anil2023palm2technicalreport}). 
+
+The architecture comprises an encoder and a decoder as illustrated in~\cref{fig:transformer}. The encoder uses multi-headed self-attention to create semantic representations for each element in the input sequence, allowing the model to process the entire context simultaneously. Through cross-attention, the decoder integrates information from the encoder's output, while causal self-attention ensures that the model only considers previously generated tokens by masking out future tokens in the training phase. This enables autoregressive generation at inference time. 
+
+The transformer's attention mechanism is based on computing the scaled dot-product: 
+\begin{equation}
+    \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{d_k}} \right) \mathbf{V},
+\end{equation}
+where $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ are the query, key, and value matrices, respectively, and $d_k$ is the dimension of the key vectors. Hence, scaled dot-product attention calculates the attention score between all query and key vectors to identify the corresponding value vectors where the key-query alignment is strong. The softmax function and normalization constant, $d_k$, ensure that the attention output maintains an appropriate scale. However, one might want to allow the model to attend to multiple items. Multi-headed attention achieves this by using multiple attention mechanisms in parallel, each focusing on different parts of the input. Mathematically, it is formulated as:
+\begin{equation}
+    \begin{aligned}
+        & \text{MultiHead}(\vect{Q}, \vect{K}, \vect{V})=\operatorname{Concat}\left(\text{head}_1, \ldots, \text{head}_{\mathrm{h}}\right) \vect{W}^O \\
+        & \text {where head}_{\mathrm{i}}=\operatorname{Attention}\left(\vect{Q} \vect{W}_i^Q, \vect{K} \vect{W}_i^K, \vect{V} \vect{W}_i^V\right) \\
+        &
+    \end{aligned}
+\end{equation}
+where $\vect{W}^O \in \mathbb{R}^{h d_v \times d_\text{model}}$ is the output projection matrix and $\vect{W}_i^Q, \vect{W}_i^K \in \mathbb{R}^{d_\text{model} \times d_k}$, $\vect{W}_i^V \in \mathbb{R}^{d_\text{model} \times d_k}$ and $W_o \in \mathbb{R}^{h d_v \times d_\text{model}}$ are linear projection matrices reducing the dimensionality to $d_k = d_v = d_\text{model} / h$ where $h$ is the number of heads. In other words, the query, key and value vectors are projected down to multiple heads between which the attention is computed before being concatenated and finally reprojected into the model dimensions. 
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[t]{0.6\linewidth}
+        \includegraphics[width=\linewidth]{figures/positional_encoding.pdf}
+        \caption{Sinusoidal positional encoding with values from $1$ (white) to -1 (black). $d_\text{model}$ = 196 and max length, $L=64$.}
+        \label{fig:positional-encoding}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.35\linewidth}
+        \includegraphics[width=\linewidth]{figures/positional_encoding_similarity.pdf}
+        \caption{Normalized dot-product of encodings at positions $i$ and $j$.}
+        \label{fig:positional-encoding-similarity}
+    \end{subfigure}
+\end{figure}
+Since the transformer architecture does not naturally encode positional information, \cite{transformer2017} introduce an additive sinusoidal encoding (\cref{fig:positional-encoding}) to the model's input embeddings:
+\begin{equation}
+    \textbf{PE}(i, \delta)= \begin{cases}\sin \left(\frac{i}{10000^{2 \delta^{\prime} / d_\text{model}}}\right) & \text { if } \delta=2 \delta^{\prime} \\ \cos \left(\frac{i}{10000^{2 \delta^{\prime} / d_\text{model}}}\right) & \text { if } \delta=2 \delta^{\prime}+1\end{cases}.
+\end{equation}
+for $\delta=1,\ldots,d_\text{model}$ and $i = 1,\ldots,L$. Considering the the query-key matrix dot-product with added positional encodings:
+\begin{equation}
+    \left(\vect{Q} + \textbf{PE} \right) \left( \vect{K} + \textbf{PE}  \right)^T = \vect{Q} \vect{K}^T+\vect{Q} \textbf{PE}^T+\textbf{PEK}^T+\textbf{PEPE}^T. \quad \includegraphics[width=5mm]{figures/pepe.jpg}
+\end{equation}
+This expansion reveals the various interactions between the query, key, and positional encodings. Specifically, the term $\vect{Q} \vect{K}^T$ computes the standard attention score based on the query and key. The term $\vect{Q} \textbf{PE}^T$ captures the interaction between the content of the query and positional encodings, while $\textbf{PE} \vect{K}^T$ captures the interaction between the positional encodings and the content of the key. Finally, $\textbf{PE} \textbf{PE}^T$ represents the self-interaction of the positional encodings. An example of this is illustrated in~\cref{fig:positional-encoding-similarity} showing the normalized dot-product similarity of positional encodings at relative distances. These combined interactions enable the model to learn to attend to items at both absolute and content-dependent offsets, relavant for the objective at hand. 
 
 \section{Denoising Diffusion Probabilistic Models (DDPM)}
 \begin{figure}[H]
@@ -178,20 +228,6 @@ where $s$ controls the offset of the noise schedule. The authors set $s=0.008$ a
 
 
 \subsection{Classifier and Classifier-Free Guidance (CFG)}
-% When sampling from generative models, one often wants to conditionally generate samples from the data distribution of different sub categories. One method for doing so with diffusion models is classifier guidance. Here the generation process relies on an external model guiding the reverse diffusion process towards the sub category date manifold. We first define the score-function as the gradient of the log-likelihood:
-% \begin{equation}
-%     s_\theta(\vect{x}) = \grad_{\vect{x}} \log p_\text{data}(\vect{x})
-% \end{equation}
-
-% \begin{equation}
-%     \dot{\vect{x}} = 
-% \end{equation}
-
-% \begin{equation}
-%     \grad_{\vect{x}_t} \log p_\theta\left(\vect{x}_t\right)=-\frac{1}{\sqrt{1-\bar{\alpha}_t}} \vect{\epsilon}_\theta\left(\vect{x}_t\right)
-% \end{equation}
-
-% \cite{dharial2021diffusion}
 In practice, it is often desirable to steer the generation process in order to output data belonging to a specific class, such as cats or dogs in the context of image generation, or incorporating some other information relevant for the output. This process can be framed within the context of probability theory as conditional generation, where the aim is to maximize the probability of the data, $\vect{x}$, given some conditioning signal, $y$, (e.g. a class label. According to Bayes' rule, the conditional probability can be expressed as:
 \begin{equation}
     p(\vect{x} \mid y) = \frac{p(\vect{x}, y)}{p(y)} \propto p(y \mid \vect{x}) p(\vect{x})
@@ -209,7 +245,7 @@ Returning to the factorization of the conditional probability, taking the gradie
     \grad_{\vect{x}_t} \log p(\vect{x}_t \mid y ) = \grad_{\vect{x}_t} \log p(y \mid \vect{x}_t) + \underbrace{\grad_{\vect{x}_t} \log p(\vect{x}_t)}_{s(\vect{x}_t, t)}
 \end{equation}
 \cite{dharial2021diffusion} trains a classifier, $f_\phi(y \mid \vect{x}_t) \approx p(y \mid \vect{x}_t)$, seperately to predict the class label of noisy images. By using the reformulated denoising function:
-\begin{equation}
+\begin{equation} \label{eq:classifier-guidance}
     \bar{\vect{\epsilon}}_{\theta}(\vect{x}_t, t) = \vect{\epsilon}_\theta(\vect{x}_t, t) - \sqrt{1 - \bar{\alpha}_t} \grad_{\vect{x}_t} \log f_\phi(y \mid \vect{x}_t)
 \end{equation}
 where $s$ controls guidance strength, it is possible to guide the diffusion sampling e.g. in order to generate images of a specific category, hence the name classifier guidance. 
@@ -220,75 +256,31 @@ During the forward diffusion process, the model is trained to predict the noise 
 
 At inference time, classifier-free guidance combines these predictions to steer the generation process towards the desired condition. This is achieved by interpolating between the conditional and unconditional predictions:
 \begin{equation}
-\bar{\vect{\epsilon}}_\theta(\vect{x}_t, t, y) = \vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset) + s \cdot (\vect{\epsilon}_\theta(\vect{x}_t, t, y) - \vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset))
+    \bar{\vect{\epsilon}}_\theta(\vect{x}_t, t, y) = \vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset) + s \cdot (\vect{\epsilon}_\theta(\vect{x}_t, t, y) - \vect{\epsilon}_\theta(\vect{x}_t, t, y = \emptyset))
+    \label{eq:classifer-free}
 \end{equation}
 Here, $s$ is a scaling factor that controls the strength of the guidance. This formulation allows the model to flexibly adjust the influence of the conditioning signal on the generation process, effectively guiding the reverse diffusion towards samples that match the desired condition.
 
 By leveraging the same network for both conditional and unconditional noise predictions, classifier-free guidance simplifies the implementation and improves the efficiency of the conditional generation process. This method has demonstrated significant improvements in generating high-quality samples (\cite{ho2021classifierfree}) that adhere to the specified conditions, making it a powerful alternative to traditional classifier guidance approaches.
 
 
-\section{Tranformer architecture}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.4\linewidth]{figures/transformer.png}
-    \caption{The transformer (Image from \cite{transformer2017}.)}
-    \label{fig:transformer}
-\end{figure}
-Ever since its publication, the Transformer (\cite{transformer2017}) has revolutionized the field of deep learning. Despite being initially designed for Natural Language Processing (NLP), Transformers have demonstrated their versatility and effectiveness across a wide range of domains. Beyond NLP, Transformers have been successfully applied to other areas such as computer vision, where models like Vision Transformers (ViTs) (\cite{dosovitskiy2020vit}) leverage the same principles to process image data. In addition, fields such as speech recognition (\cite{conformer2020}), time-series forecasting (\cite{haoyietal-informer-2021}), and even protein folding (\cite{Jumper2021}) have seen breakthroughs thanks to the adoption of Transformer-based models. 
-
-In contrast to models such as RNNs, GRUs and LSTMs relying on sequential processing of hidden states, the transformer model utilizes an attention mechanism for communication. The attention mechanism enables the model to capture long-range dependencies more effectively and has significantly improved the performance of various NLP tasks, including translation, summarization, and question answering (\cite{devlin2018bert}). Furthermore, due to the parallel nature of attention, the Transformer architecture has been subject for huge scaling with models exceeding billion of parameters (\cite{radford_language_2019}, \cite{touvron2023llama2openfoundation}, \cite{anil2023palm2technicalreport}). 
-
-The architecture comprises an encoder and a decoder as illustrated in~\cref{fig:transformer}. The encoder uses multi-headed self-attention to create semantic representations for each element in the input sequence, allowing the model to process the entire context simultaneously. Through cross-attention, the decoder integrates information from the encoder's output, while causal self-attention ensures that the model only considers previously generated tokens by masking out future tokens in the training phase. This enables autoregressive generation at inference time. 
-
-The transformer's attention mechanism is based on computing the scaled dot-product: 
-\begin{equation}
-    \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{d_k}} \right) \mathbf{V},
-\end{equation}
-where $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ are the query, key, and value matrices, respectively, and $d_k$ is the dimension of the key vectors. Hence, scaled dot-product attention calculates the attention score between all query and key vectors to identify the corresponding value vectors where the key-query alignment is strong. The softmax function and normalization constant, $d_k$, ensure that the attention output maintains an appropriate scale. However, one might want to allow the model to attend to multiple items. Multi-headed attention achieves this by using multiple attention mechanisms in parallel, each focusing on different parts of the input. Mathematically, it is formulated as:
-\begin{equation}
-    \begin{aligned}
-        & \text{MultiHead}(\vect{Q}, \vect{K}, \vect{V})=\operatorname{Concat}\left(\text{head}_1, \ldots, \text{head}_{\mathrm{h}}\right) \vect{W}^O \\
-        & \text {where head}_{\mathrm{i}}=\operatorname{Attention}\left(\vect{Q} \vect{W}_i^Q, \vect{K} \vect{W}_i^K, \vect{V} \vect{W}_i^V\right) \\
-        &
-    \end{aligned}
-\end{equation}
-where $\vect{W}^O \in \mathbb{R}^{h d_v \times d_\text{model}}$ is the output projection matrix and $\vect{W}_i^Q, \vect{W}_i^K \in \mathbb{R}^{d_\text{model} \times d_k}$, $\vect{W}_i^V \in \mathbb{R}^{d_\text{model} \times d_k}$ and $W_o \in \mathbb{R}^{h d_v \times d_\text{model}}$ are linear projection matrices reducing the dimensionality to $d_k = d_v = d_\text{model} / h$ where $h$ is the number of heads. In other words, the query, key and value vectors are projected down to multiple heads between which the attention is computed before being concatenated and finally reprojected into the model dimensions. 
-
-\begin{figure}[ht]
-    \centering
-    \begin{subfigure}[t]{0.6\linewidth}
-        \includegraphics[width=\linewidth]{figures/positional_encoding.pdf}
-        \caption{Sinusoidal positional encoding with values from $1$ (white) to -1 (black). $d_\text{model}$ = 196 and max length, $L=64$.}
-        \label{fig:positional-encoding}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.35\linewidth}
-        \includegraphics[width=\linewidth]{figures/positional_encoding_similarity.pdf}
-        \caption{Normalized dot-product of encodings at positions $i$ and $j$.}
-        \label{fig:positional-encoding-similarity}
-    \end{subfigure}
-\end{figure}
-Since the transformer architecture does not naturally encode positional information, \cite{transformer2017} introduce an additive sinusoidal encoding (\cref{fig:positional-encoding}) to the model's input embeddings:
-\begin{equation}
-    \textbf{PE}(i, \delta)= \begin{cases}\sin \left(\frac{i}{10000^{2 \delta^{\prime} / d_\text{model}}}\right) & \text { if } \delta=2 \delta^{\prime} \\ \cos \left(\frac{i}{10000^{2 \delta^{\prime} / d_\text{model}}}\right) & \text { if } \delta=2 \delta^{\prime}+1\end{cases}.
-\end{equation}
-for $\delta=1,\ldots,d_\text{model}$ and $i = 1,\ldots,L$. Considering the the query-key matrix dot-product with added positional encodings:
-\begin{equation}
-    \left(\vect{Q} + \textbf{PE} \right) \left( \vect{K} + \textbf{PE}  \right)^T = \vect{Q} \vect{K}^T+\vect{Q} \textbf{PE}^T+\textbf{PEK}^T+\textbf{PEPE}^T. \quad \includegraphics[width=5mm]{figures/pepe.jpg}
-\end{equation}
-This expansion reveals the various interactions between the query, key, and positional encodings. Specifically, the term $\vect{Q} \vect{K}^T$ computes the standard attention score based on the query and key. The term $\vect{Q} \textbf{PE}^T$ captures the interaction between the content of the query and positional encodings, while $\textbf{PE} \vect{K}^T$ captures the interaction between the positional encodings and the content of the key. Finally, $\textbf{PE} \textbf{PE}^T$ represents the self-interaction of the positional encodings. An example of this is illustrated in~\cref{fig:positional-encoding-similarity} showing the normalized dot-product similarity of positional encodings at relative distances. These combined interactions enable the model to learn to attend to items at both absolute and content-dependent offsets, relavant for the objective at hand. 
 
 
 \section{Human Motion Diffusion}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figures/mdm_comb.pdf}
-    \caption{\textbf{(Left)} MDM architecture. \textbf{(Right)} MDM Sampling process.}
+    \caption{\textbf{(Left)} MDM architecture. \textbf{(Right)} MDM Sampling process. (Image taken from \cite{tevet2023human})}
     \label{fig:mdm}
 \end{figure}
-The Motion Diffusion Model (MDM) (\cite{tevet2023human}) provides a generative model for human motion conditioned on natural language descriptions using classifier-free guided diffusion models. The authors model human motion as a sequence of poses, $x^{i} \in \mathbb{R}^{J \times D}$, represented by either their joint rotations or positions where $J$ is the number of joints and $D$ is the dimensions of the representation and $i = 1, \ldots, N$ is the current frame of the motion.
+The Motion Diffusion Model (MDM) (\cite{tevet2023human}) provides a generative model for single human motion conditioned on natural language descriptions using classifier-free guided diffusion models. The authors model human motion as a sequence of poses, $x^{i} \in \mathbb{R}^{J \times D}$, represented by either their joint rotations or positions where $J$ is the number of joints and $D$ is the dimensions of the representation and $i = 1, \ldots, N$ is the current frame of the motion. Other examples of pose representations include that of the HumanML3D dataset (\cite{Guo_2022_CVPR}):
+\begin{equation}
+    \vect{x}^{(i)} = \left(\dot{r}^a, \dot{r}^x, \dot{r}^z, r^y, \vect{j}^p, \vect{j}^v, \vect{j}^r, \vect{c}^f\right)
+    \label{eq:hml3d-repr}
+\end{equation}
+where $\dot{r}^a \in \mathbb{R}$ is the angular velocity along the Y-axis; $(\dot{r}^x, \dot{r}^z)$ linear velocities in the XZ-plane; $r^y \in \mathbb{R}$ the height; $\vect{j}^p \in \mathbb{R}^{3J}$, $\vect{j}^v \in \mathbb{R}^{3J}$ and $\vect{j}^r \in \mathbb{R}^{6J}$ the joint positions, velocities and 6D rotations all in the local coordinate system and finally $\vect{c}^f \in \mathbb{R}^{4}$ the binary foot ground contact indicators obtained from thresholding the feet velocities and heights.
 
-Throught the diffusion process
+Through the diffusion process:
 \begin{equation}
     q(\vect{x}_t^{(1:N)} \mid \vect{x}_{t-1}^{(1:N)}) = \mathcal{N}\left( \sqrt{\alpha_t} \vect{x}_{t-1}^{(1:N)} \mid (1 - \alpha_t) \vect{I} \right),
 \end{equation} 
@@ -309,14 +301,48 @@ where $FK$ is the forward-kinematic function in case joint rotation represention
     \mathcal{L} = \mathcal{L}_\text{simple} + \lambda_\text{pos} \mathcal{L}_\text{pos} + \lambda_\text{vel} \mathcal{L}_\text{vel} + \lambda_\text{foot} \mathcal{L}_\text{foot}.
 \end{equation}
 
+To guide the model in generating motion consistent with the input text description, the authors use classifier-free guidance where the conditioning signal is dropped $p=10\%$ of the time during training by setting $c=\emptyset$ and applied when guiding the sampling process as in \cref{eq:classifer-free}. The authors use a frozen \textit{CLIP-ViT-B/32} model (\cite{radford2021learning}) for constructing the description vector embeddings used as conditioning signal.
 
-Conforming to classifier-free guidance, the conditioning signal is dropped $p=10\%$ of the time by setting $c=\emptyset$ 
+The MDM denoising network utilizes an encoder transformer, as illustrated in \cref{fig:mdm}. This network receives three inputs: the CLIP description embedding ($c$), the current diffusion timestamp ($t$), and the embedded pose representations ($\vect{x}_t^{(i)}$). Both $c$ and $t$ are linearly projected into $d_\text{model}$ dimensions and subsequently combined. Each pose representation in the motion sequence is also linearly embedded into $d_\text{model}$ dimensions. To capture the sequential relationships between poses, a sinusoidal positional encoding is added to these embeddings encoding their respective frame indices.
 
+% Talk about InterGen
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/intergen-dm-ro.pdf}
+    \caption{Illustration of Distance Map (right), floor-distance threshold (gray cylinder) and Relative Orientation (cyan and magenta arrows). (Image credit: \cite{liang2024intergen})}
+    \label{fig:intergen-losses}
+\end{figure}
 
-In training the denoising network, parameterized by a transformer network, the conditioning is dropped 10\% of the time by setting $c=\emptyset$ 
+While single human motion generation has numerous use cases, certain applications necessitate generation of multi-human motion, which requires a comprehensive understanding of human interactions. InterGen (\cite{liang2024intergen}) expands upon the work of MDM by extending the single human motion diffusion model to accommodate two-person motion generation. The authors exploit that symmetric property of multi-person motion, $p(\vect{x}^{(a)}, \vect{x}_t^{(b)}) \equiv p(\vect{x}^{(b)}, \vect{x}^{(a)}$ yielding the score function:
+\begin{align}
+    \nabla_{\vect{x}_t} \log p_t\left(\vect{x}_t\right) &= \left[
+        \nabla_{\vect{x}_t^{(a)}} \log p_t\left(\vect{x}_t^{(a)}, \vect{x}_t^{(b)}\right), 
+        \nabla_{\vect{x}_t^{(b)}} \log p_t\left(\vect{x}_t^{(b)}, \vect{x}_t^{(a)}\right)
+    \right] \\
+    & = \left[
+        \nabla_{\vect{x}_t^{(b)}} \log p_t\left(\vect{x}_t^{(b)}, \vect{x}_t^{(a)}\right),
+        \nabla_{\vect{x}_t^{(a)}} \log p_t\left(\vect{x}_t^{(a)}, \vect{x}_t^{(b)}\right) 
+    \right],
+\end{align}
+by sharing the weights, $\theta$, between the two denoising networks $D_\theta^{(a)}$ and $D_\theta^{(b)}$, each cooperatively restoring their respective motions, $\vect{x}^{(a)}$ and $\vect{x}^{(b)}$ by integrating the hidden states, $\vect{h}^{(b)}, \vect{h}^{(a)}$, of the other network though a cross-attention mechanism. Though the motion representation in \cref{eq:hml3d-repr} is overparameterized and neural network friendly, it fails to capture the inter-person distances as joints are anchored to the local coordinate system. InterGen instead represents the joint positions and velocities in the global coordinate system:
+\begin{equation}
+    \vect{x}^{(i)} = \left( \vect{j}_g^p, \vect{j}_g^v, \vect{j}^r, \vect{c}^f \right),
+\end{equation}
+where $\vect{j}_g^p, \vect{j}_g^v \in \mathbb{R}^{3J}$ are the global joint positions and velocities while $\vect{j}^r \in \mathbb{R}^{6J}$ and $\vect{c}^f \in \mathbb{R}^4$ remains the same 6D local joint rotations and foot ground contact indicators as in the HumanML3D representation. Besides the previously introduced joint position, velocity and foot geometric losses, InterGen includes additional bone length (BL), masked joint distance map (DM) and relative orientation (RO) losses given by:
+\begin{gather}
+    \mathcal{L}_\text{BL}=\left\|B\left(\hat{\vect{x}}_a\right)-B\left(\vect{x}_a\right)\right\|_2^2+\left\|B\left(\hat{\vect{x}}_b\right)-B\left(\vect{x}_b\right)\right\|_2^2  \\
+    \mathcal{L}_\text{DM} = \left\|\left(M\left(\hat{\mathbf{x}}_a, \hat{\mathbf{x}}_b\right)-M\left(\mathbf{x}_a, \mathbf{x}_b\right)\right) \odot I\left(M_{x z}\left(\mathbf{x}_a, \mathbf{x}_b\right)<\bar{M}\right)\right\|_2^2 \\
+    \mathcal{L}_\text{RO} = \left\|O\left(I K\left(\hat{\mathbf{x}}_a\right), I K\left(\hat{\mathbf{x}}_b\right)\right)-O\left(I K\left(\mathbf{x}_a\right), I K\left(\mathbf{x}_b\right)\right)\right\|_2^2
+\end{gather}
+to help the model learn the interdependent relationships of the combined motion, where $B$ calculates the bone-lengths, $M(\vect{x}^{(a)}, \vect{x}^{(b)})$ the pairwise bipartiate distance map between each joint in the two poses, thresholded by the the floor-distance $M_{xz}$ being less than $\hat{M}$ (authors use 1m in their implementation). A visual interpretation is illustrated in \cref{fig:intergen-losses}. 
 
-
-
-
-The denoising network is parameterized by a transformer network taking 
+These geometric losses are all combined into a regularization loss term:
+\begin{equation}
+    \mathcal{L}_\text{reg} = \lambda_\text{vel} \mathcal{L}_\text{vel} + \lambda_\text{foot} \mathcal{L}_\text{foot} + \lambda_\text{BL} \mathcal{L}_\text{BL} + \lambda_\text{RO} \mathcal{L}_\text{RO}
+\end{equation}
+where $\lambda_\text{vel}$, $\lambda_\text{foot}$, $\lambda_\text{BL}$ and $\lambda_\text{RO}$ weighs the relative importance of each loss term. Hence, the the overall loss objective becomes:
+\begin{equation}
+    \mathcal{L} = \mathcal{L}_\text{simple} + \lambda_\text{reg} \mathbb{E}_t \left[ I(t \leq \bar{T}) \mathcal{L}_\text{reg} \right]
+\end{equation}
+with regularization loss term masked out for $t < \bar{T}$ as the authors find it yields better results in terms of motion quality and diversity. Intuitively, this can be understood as not "punishing" the model too much early in the denoising phase where joint positions are still relatively noisy and subject to change.
