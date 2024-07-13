@@ -1,7 +1,7 @@
 \chapter{Methods}
 In this section we explore different methods for reconstructing the 3D scene of hospital and carehome video sequences. We approach this by first considering the 3D environment of the hospital and care home rooms, using current state-of-the-art monocular depth estimation models for extracting point clouds of the rooms. Combining the point clouds with given segmentation labels enables isolation and fitting of the floor plane to be used in estimating the camera extrinsics and thereby aligning the scenes in a shared global coordinate system. We then move on to restoring the people and their motion in the scene by qualitatively comparing regression- and optimization-based human pose estimation methods. % In addition, we explore the use of motion diffusion models for motion extraction, by guiding the generation process in a classifer-guided manner to align the 2D joint projections with labelled keypoints.
 
-Finally, we present our own motion diffusion model trained with classifier-free guidance for text conditioned multi-human motion generation, simplifying the architecture of InterGen by treating the pose embeddings with a learned identity encoding, enabling flexible generation of multi-human interactions. In evaluating its motion generation capabilities with MDM and InterGen, we compare both motion quality (FID score), diversity and multi-modality against the InterGen and MDM models using established evaluation methods.
+Finally, we present our own motion diffusion model trained with classifier-free guidance for text conditioned multi-human motion generation, simplifying the architecture of InterGen by treating the pose embeddings with a learned identity encoding, enabling flexible generation of multi-human interactions. % In evaluating its motion generation capabilities with MDM and InterGen, we compare both motion quality (FID score), diversity and multi-modality against the InterGen and MDM models using established evaluation methods.
 
 
 \section{Restoring 3D Environment}
@@ -11,12 +11,12 @@ Finally, we present our own motion diffusion model trained with classifier-free 
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\linewidth]{figures/floor.png}
         \label{fig:floor-mask}
-        \caption{Example of floor segmentation mask.}
+        \caption{Floor segmentation mask.}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.5\textwidth}
         \includegraphics[width=\linewidth]{figures/depth.pdf}
-        \caption{Upscaled metric depth map.}
+        \caption{Estimated metric depth map.}
     \end{subfigure}
 \end{figure}
 
@@ -117,7 +117,7 @@ where $\hat{\vect{j}}^{(t)} = \vect{j}^{(t-1)} + \vect{v}^{(t-1)}$ is the predic
 
 
 \section{Optimization-based pose estimation from keypoints}
-As baseline optimization-based method, the SMPLify-X framework is naively to the temporal dimension by introducing a smooth loss objective, as previously defined in \cref{eq:smooth-motion}. This extension relates sequences of keypoints over time, ensuring a coherent reconstruction of 3D motion. 
+As baseline optimization-based method, the SMPLify-X framework is naively adapted to the temporal dimension by introducing a smooth loss objective, as previously defined in \cref{eq:smooth-motion}. This extension relates sequences of keypoints over time, ensuring a coherent reconstruction of 3D motion. 
 
 We jointly optimize the translation, root orientation, body pose and shape as well as the 2D keypoint reprojection error, driving the motion. The overall objective function is formulated as follows:
 \begin{equation}
@@ -143,17 +143,18 @@ We represent the root body orientation using a 6D representation in favor of Eul
 % \end{equation}
 % As our motion diffusion model generates motion in the world coordinate system, we first estimate the camera pose by aligning the floor with the XY-plane as in \cref{section:floor-plane}.
 
-% \section{Multi-human Motion Diffusion Model}
-% \begin{figure}[H]
-%     \hspace*{-1cm}
-%     \includegraphics[width=\linewidth+1cm]{figures/diffusion-model.pdf}
-%     \caption{Architecture of our proposed Multi-Human Motion Diffusion model.}
-%     \label{fig:diffusion-model}
-% \end{figure}
-% Due to its static dual-denoising architecture, the Intergen model is inherently limited in only supporting generations of exactly two person interactions. We investigate relaxing this constraint by instead employing a generic transformer encoder as denoisning network operating on the flattened motion sequence. As this results in the model loosing its inductive bias, we treat each pose encoding, $\vect{x}_i$, with a learned identity embedding to help the model differentiate between multiple people. At each denoising step, the model samples without replacement one of $\mathcal{I}$ unique identity embedding per person and adds this to all pose embeddings for that individual. We include the same loss functions as InterGen, but adapt these for N-way pairwise comparison. The model is trained using classifer-free guidance, by masked out the description embedding 10\% of the time. An illustration of the model is seen in \cref{fig:diffusion-model}. 
+\section{Multi-human Motion Diffusion Model}
+\begin{figure}[H]
+    \hspace*{-1cm}
+    \includegraphics[width=\linewidth+1cm]{figures/diffusion-model.pdf}
+    \caption{Architecture of our proposed Multi-Human Motion Diffusion model.}
+    \label{fig:diffusion-model}
+\end{figure}
+Due to its static dual-denoising architecture, the Intergen model is inherently limited in only supporting generations of exactly two person interactions. We investigate relaxing this constraint by instead employing a generic transformer encoder as denoisning network operating on the flattened motion sequence, $\vect{x}_1^{(1)}, \ldots \vect{x}_N^{(1)}, \vect{x}_1^{(P)}, \ldots, \vect{x}_N^{(P)}$. However, as this means the model looses its inductive bias of the dual-architecture reflecting the two-person interactions, it could result in the model not being able to differentiate people in the generated motion. To circumvent this, we add to each persons pose embeddings, $\vect{x}_i^{(p)}$, an identity encoding,  $\xi^{(p)}$, sampled once per person without replacement out of a pool of $K$ learned encodings.
 
+We include the same loss functions and loss weights as InterGen but adapt these for N-way pairwise comparison. Our model architecture consists of 16 layers and 16 heads with a latent dimension of $d_\text{model} = 1024$. The model is trained using classifier-free guidance by masking out the description embedding 10\% of the time. Training is conducted over 500 epochs using a cosine learning schedule, with 10 warmup epochs and a maximum learning rate of $1e^{-4}$, on the combined HumanML3D and InterHuman training data.
 
-
+An illustration of the model architecture is seen in \cref{fig:diffusion-model}. 
 
 
 

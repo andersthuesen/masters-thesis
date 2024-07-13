@@ -26,9 +26,6 @@ The joint locations, $J(\vec{\beta})$, are derived from the shaped template vert
 \end{equation}
 The skinning function, $W$, which can be either LBS or Dual-Quaternion Blend Skinning (DQBS), applies these deformations to the skeletal structure, with $\mathcal{W}$ representing the blend weights.
 
-\section{Human Motion Estimation}
-% TODO: Write about HuMoR
-
 \section{Tranformer architecture}
 \begin{figure}[H]
     \centering
@@ -76,7 +73,7 @@ Since the transformer architecture does not naturally encode positional informat
 \end{equation}
 for $\delta=1,\ldots,d_\text{model}$ and $i = 1,\ldots,L$. Considering the the query-key matrix dot-product with added positional encodings:
 \begin{equation}
-    \left(\vect{Q} + \textbf{PE} \right) \left( \vect{K} + \textbf{PE}  \right)^T = \vect{Q} \vect{K}^T+\vect{Q} \textbf{PE}^T+\textbf{PEK}^T+\textbf{PEPE}^T. \quad \includegraphics[width=5mm]{figures/pepe.jpg}
+    \left(\vect{Q} + \textbf{PE} \right) \left( \vect{K} + \textbf{PE}  \right)^T = \vect{Q} \vect{K}^T+\vect{Q} \textbf{PE}^T+\textbf{PEK}^T+\textbf{PEPE}^T. % \quad \includegraphics[width=5mm]{figures/pepe.jpg}
 \end{equation}
 This expansion reveals the various interactions between the query, key, and positional encodings. Specifically, the term $\vect{Q} \vect{K}^T$ computes the standard attention score based on the query and key. The term $\vect{Q} \textbf{PE}^T$ captures the interaction between the content of the query and positional encodings, while $\textbf{PE} \vect{K}^T$ captures the interaction between the positional encodings and the content of the key. Finally, $\textbf{PE} \textbf{PE}^T$ represents the self-interaction of the positional encodings. An example of this is illustrated in~\cref{fig:positional-encoding-similarity} showing the normalized dot-product similarity of positional encodings at relative distances. These combined interactions enable the model to learn to attend to items at both absolute and content-dependent offsets, relavant for the objective at hand. 
 
@@ -273,7 +270,7 @@ By leveraging the same network for both conditional and unconditional noise pred
     \caption{\textbf{(Left)} MDM architecture. \textbf{(Right)} MDM Sampling process. (Image taken from \cite{tevet2023human})}
     \label{fig:mdm}
 \end{figure}
-The Motion Diffusion Model (MDM) (\cite{tevet2023human}) provides a generative model for single human motion conditioned on natural language descriptions using classifier-free guided diffusion models. The authors model human motion as a sequence of poses, $x^{i} \in \mathbb{R}^{J \times D}$, represented by either their joint rotations or positions where $J$ is the number of joints and $D$ is the dimensions of the representation and $i = 1, \ldots, N$ is the current frame of the motion. Other examples of pose representations include that of the HumanML3D dataset (\cite{Guo_2022_CVPR}):
+The Motion Diffusion Model (MDM) (\cite{tevet2023human}) provides a generative model for single human motion conditioned on natural language descriptions using classifier-free guided diffusion models. The authors model human motion as a sequence of poses, $\vect{x}^{(i)} \in \mathbb{R}^{J \times D}$, represented by either their joint rotations or positions where $J$ is the number of joints and $D$ is the dimensions of the representation and $i = 1, \ldots, N$ is the current frame of the motion. Other examples of pose representations include that of the HumanML3D dataset (\cite{Guo_2022_CVPR}):
 \begin{equation}
     \vect{x}^{(i)} = \left(\dot{r}^a, \dot{r}^x, \dot{r}^z, r^y, \vect{j}^p, \vect{j}^v, \vect{j}^r, \vect{c}^f\right)
     \label{eq:hml3d-repr}

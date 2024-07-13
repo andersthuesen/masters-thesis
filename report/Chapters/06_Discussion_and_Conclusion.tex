@@ -1,17 +1,17 @@
 \chapter{Discussion}
 
+We demonstrate qualitatively good results in reconstructing the 3D environment using current state-of-the-art monocular metric depth estimation models, suggesting the feasibility of this method. However, more careful evaluation is needed, such as benchmarking the estimated depths against actual room scans in the hospital and care home domain.
 
+In motion estimation, we find that the regression-based method, which operates on image bounding boxes, yields the most robust pose estimations. On the other hand, the optimization-based approach provides the most accurate results but is sensitive to poor keypoint annotations. We also test a hybrid method, optimizing an initially regressed pose against the keypoint annotations, to strike a good balance. If time had allowed, it would be interesting to further compare the results with temporal methods such as VIBE (\cite{kocabas2019vibe}) or HuMoR (\cite{rempe2021humor}). 
 
-Despite 
+From our motion generation results, we notice a general pattern of the motion not adhering to the given prompt for many examples, though still generating plausible and realistic motion. This suggests that the model hasn't fully learned the relationship between the prompts and the resulting motions. This issue might be resolved with increased training time, as the tested model was not fully converged due to limited time.
 
+The model might also be overfitting to the data, learning to output the memorized motion closest to the noisy input. This could be a side effect of predicting the signal instead of the noise, making it easier for the model to ignore the input. Predicting the noise instead of the signal might help prevent overfitting, as the noisy input would need to be propagated through the network before being subtracted from the memorized signal to correctly predict the residual noise. Other preventative measures include data augmentation. We initially experimented with applying random rotations and translations but refrained from doing so to more closely reproduce the results of MDM and InterGen. We also performed experiments repurposing an unconditional motion diffusion model for motion estimation, guided by a keypoint loss function, but did not succeed. However, we consistently observed that when applying classifier guidance, the keypoint loss would decrease during the first three-quarters of the denoising process, only to sharply increase afterward. This further supports our belief that the model is overfitting in the later denoising stages.
 
+Although the model is theoretically capable of generating interactive motion for more than two people, in practice, we observe several critical flaws. For instance, poses often collapse or merge, occupying the same space. This conflicts with the purpose of introducing identity encoding, which should help the model differentiate between individuals. One explanation for this issue is that the model has simply learned to differentiate people by their joint positions, ignoring the identity encoding. To validate the effectiveness and usefulness of identity encoding, it may be necessary to train the model on more crowded motions, where such encoding would become more beneficial.
 
-Both perform poorly
-Keypoints are wrong as they legs are believed to be occluded by blanket.
-
-
-Example 2
-We again notice 
+To properly evaluate the motion generation quality and diversity for comparisons with other methods, quantative metrics such as the Fréchet Inception Distance (FID), Diversity and Multimodality metrics as introduced by \cite{Guo_2020} are typically reported. However, due to incompatibility of the code, requiring extensive modifications, this became infeasible within the last phase of the thesis.
 
 
 \chapter{Conclusion}
+In conclusion, we compared different methods for restoring 3D scenes from 2D videos of hospital and care-home scenarios. We divided the problem into two parts: 3D reconstruction of the environment and restoration of human motion using both regression-based and optimization-based methods. Additionally, we demonstrated how diffusion models can be trained to generate realistic human motion and extended the InterGen model to generate interactions among a variable number of humans. We found that our model is likely overfitting and that the generated motions generally fail to adhere to the given prompts. We also suggested several measures to address these issues. Further quantitative evaluation is needed to conclusively determine the effectiveness of all three methods. 

@@ -643,7 +643,7 @@
       \endverb
     \endentry
     \entry{Guo_2022_CVPR}{inproceedings}{}{}
-      \name{author}{7}{}{%
+      \name{author}{7}{ul=2}{%
         {{un=0,uniquepart=base,hash=e053cf028522c39af65dd862da2d8ed1}{%
            family={Guo},
            familyi={G\bibinitperiod},
@@ -687,12 +687,12 @@
            giveni={L\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{203b115999f73097be6ab32411fb1f42}
+      \strng{namehash}{ea9f037471f65dff2c468aa7f51dc210}
       \strng{fullhash}{59e095d72c24444db8330a72d129145a}
       \strng{fullhashraw}{59e095d72c24444db8330a72d129145a}
-      \strng{bibnamehash}{203b115999f73097be6ab32411fb1f42}
-      \strng{authorbibnamehash}{203b115999f73097be6ab32411fb1f42}
-      \strng{authornamehash}{203b115999f73097be6ab32411fb1f42}
+      \strng{bibnamehash}{ea9f037471f65dff2c468aa7f51dc210}
+      \strng{authorbibnamehash}{ea9f037471f65dff2c468aa7f51dc210}
+      \strng{authornamehash}{ea9f037471f65dff2c468aa7f51dc210}
       \strng{authorfullhash}{59e095d72c24444db8330a72d129145a}
       \strng{authorfullhashraw}{59e095d72c24444db8330a72d129145a}
       \field{sortinit}{1}
@@ -3897,42 +3897,6 @@
       \field{title}{Depth Anything: Unleashing the Power of Large-Scale Unlabeled Data}
       \field{year}{2024}
     \endentry
-    \entry{SilbermanECCV12}{inproceedings}{}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=c31b6774e4cb80c31f547e7cc0a75d55}{%
-           family={Nathan\bibnamedelima Silberman},
-           familyi={N\bibinitperiod\bibinitdelim S\bibinitperiod},
-           given={Pushmeet\bibnamedelima Kohli},
-           giveni={P\bibinitperiod\bibinitdelim K\bibinitperiod},
-           givenun=0,
-           suffix={Derek\bibnamedelima Hoiem},
-           suffixi={D\bibinitperiod\bibinitdelim H\bibinitperiod},
-           suffixun=0}}%
-        {{un=0,uniquepart=base,hash=a6784304d1cc890b2cb6c6c7f2f3fd76}{%
-           family={Fergus},
-           familyi={F\bibinitperiod},
-           given={Rob},
-           giveni={R\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{667af4a3c2b9f36b20baf22667e30601}
-      \strng{fullhash}{667af4a3c2b9f36b20baf22667e30601}
-      \strng{fullhashraw}{667af4a3c2b9f36b20baf22667e30601}
-      \strng{bibnamehash}{667af4a3c2b9f36b20baf22667e30601}
-      \strng{authorbibnamehash}{667af4a3c2b9f36b20baf22667e30601}
-      \strng{authornamehash}{667af4a3c2b9f36b20baf22667e30601}
-      \strng{authorfullhash}{667af4a3c2b9f36b20baf22667e30601}
-      \strng{authorfullhashraw}{667af4a3c2b9f36b20baf22667e30601}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{ECCV}
-      \field{title}{Indoor Segmentation and Support Inference from RGBD Images}
-      \field{year}{2012}
-    \endentry
     \entry{Zhou_2019_CVPR}{inproceedings}{}{}
       \name{author}{5}{}{%
         {{un=1,uniquepart=given,hash=3625efaf108a2751cfdacddd7a073c3d}{%
@@ -3984,6 +3948,146 @@
       \field{month}{6}
       \field{title}{On the Continuity of Rotation Representations in Neural Networks}
       \field{year}{2019}
+    \endentry
+    \entry{rempe2021humor}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=70083f613a6d915cb12fdd6cfdc0c528}{%
+           family={Rempe},
+           familyi={R\bibinitperiod},
+           given={Davis},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dcba82656b645d2b6fae05ed46d178a0}{%
+           family={Birdal},
+           familyi={B\bibinitperiod},
+           given={Tolga},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ae15403d73bb9a613bdf9c281d73496}{%
+           family={Hertzmann},
+           familyi={H\bibinitperiod},
+           given={Aaron},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=97818b77246970c2c7705d5072d62a59}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Jimei},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=23cb3a4b1c3caea702e56b406468939f}{%
+           family={Sridhar},
+           familyi={S\bibinitperiod},
+           given={Srinath},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=03578abbf51650fbfaf563c532898f30}{%
+           family={Guibas},
+           familyi={G\bibinitperiod},
+           given={Leonidas\bibnamedelima J.},
+           giveni={L\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a3e410549ac4b76c213ab0c1d2cc2e22}
+      \strng{fullhash}{6a618ea3161b554772df34390e94e87b}
+      \strng{fullhashraw}{6a618ea3161b554772df34390e94e87b}
+      \strng{bibnamehash}{a3e410549ac4b76c213ab0c1d2cc2e22}
+      \strng{authorbibnamehash}{a3e410549ac4b76c213ab0c1d2cc2e22}
+      \strng{authornamehash}{a3e410549ac4b76c213ab0c1d2cc2e22}
+      \strng{authorfullhash}{6a618ea3161b554772df34390e94e87b}
+      \strng{authorfullhashraw}{6a618ea3161b554772df34390e94e87b}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Computer Vision (ICCV)}
+      \field{title}{HuMoR: 3D Human Motion Model for Robust Pose Estimation}
+      \field{year}{2021}
+    \endentry
+    \entry{Guo_2020}{inproceedings}{}{}
+      \name{author}{8}{ul=2}{%
+        {{un=0,uniquepart=base,hash=e053cf028522c39af65dd862da2d8ed1}{%
+           family={Guo},
+           familyi={G\bibinitperiod},
+           given={Chuan},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7bd1f345a00043a3e04db718529d7aca}{%
+           family={Zuo},
+           familyi={Z\bibinitperiod},
+           given={Xinxin},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99de65e5476005b6deb7b87170202067}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Sen},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e1630328168b7178510de12d31a3ab87}{%
+           family={Zou},
+           familyi={Z\bibinitperiod},
+           given={Shihao},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0110e769faca847959177ebcb933dd30}{%
+           family={Sun},
+           familyi={S\bibinitperiod},
+           given={Qingyao},
+           giveni={Q\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9621b1fe1f3e97cb373c351dabf3c686}{%
+           family={Deng},
+           familyi={D\bibinitperiod},
+           given={Annan},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7b587a0158e17870c6735fdecb76df92}{%
+           family={Gong},
+           familyi={G\bibinitperiod},
+           given={Minglun},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=32165ed8ffb4fd6b671241e6ec264826}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{0bfa7c13e00f03600d4f541e285bf362}
+      \strng{fullhash}{4c585a2cb644cc9bb1e409aee1aebca2}
+      \strng{fullhashraw}{4c585a2cb644cc9bb1e409aee1aebca2}
+      \strng{bibnamehash}{0bfa7c13e00f03600d4f541e285bf362}
+      \strng{authorbibnamehash}{0bfa7c13e00f03600d4f541e285bf362}
+      \strng{authornamehash}{0bfa7c13e00f03600d4f541e285bf362}
+      \strng{authorfullhash}{4c585a2cb644cc9bb1e409aee1aebca2}
+      \strng{authorfullhashraw}{4c585a2cb644cc9bb1e409aee1aebca2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 28th ACM International Conference on Multimedia}
+      \field{month}{10}
+      \field{series}{MM ’20}
+      \field{title}{Action2Motion: Conditioned Generation of 3D Human Motions}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.1145/3394171.3413635
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1145/3394171.3413635
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1145/3394171.3413635
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

@@ -28,7 +28,7 @@ This thesis explores this approach in two parts. First, we investigate the use o
 
 \chapter{Related Work}
 \section{Human Pose Estimation}
-Accurately estimating human poses is key in understanding their spatial relationships and interactions with the surrounding environment. Advances in this field have transitioned from 2D pose estimation, where joint positions are determined in image space, to 3D pose estimation, which involves inferring joint positions in three-dimensional space. The SMPL model (\cite{SMPL:2015}) is often used in this context, providing a standardized framework for representing human body shapes and poses, thereby enabling more accurate and consistent mesh recovery. Additionally, the SMPL model reduces the number of parameters required to represent the human body, simplifying the computational complexity while maintaining a high level of detail.
+Accurately estimating human poses is key to understanding their spatial relationships and interactions with the surrounding environment. Advances in this field have transitioned from 2D pose estimation, where joint positions are determined in image space, to 3D pose estimation, which involves inferring joint positions in three-dimensional space. The SMPL model (\cite{SMPL:2015}) is often used in this context, providing a standardized framework for representing human body shapes and poses, thereby enabling more accurate and consistent mesh recovery. Additionally, the SMPL model reduces the number of parameters required to represent the human body, simplifying the computational complexity while maintaining a high level of detail.
 
 Traditional approaches typically involve fitting 3D models to 2D keypoints extracted from images. This method, exemplified by techniques such as SMPLify (\cite{BogoSMPLify2016}), first detects 2D joint positions (bottom-up) using a keypoint detector. These detected keypoints are then used (top-down) to fit a pre-defined 3D human body model, such as SMPL. This fitting process involves optimizing the model parameters to minimize the difference between the projected 3D keypoints and the detected 2D keypoints in the image. Such methods often require a strong prior to avoid generating highly implausible poses, as the optimization process can otherwise lead to unrealistic human body configurations. An example of such a prior is vPoser (\cite{SMPL-X:2019}), which uses a Variational Autoencoder (VAE) to learn a latent space of plausible human poses. Regularizing the latent pose space it is possible constrain the optimization process to more realistic pose configurations. Although these optimization-based methods provide accurate model-keypoint fits, they are often slow due to their iterative nature and sensitive to initialization. 
 
@@ -47,26 +47,12 @@ Generating realistic human motion has many applications in computer graphics, vi
 
 Building on the foundation of MDM, InterGen (\cite{liang2024intergen}) extends the capabilities of motion generation to interactions between two individuals. The architecture of InterGen directly reflects the two-person domain, by employing two cooperative denoising networks communicating via a cross-attention mechanism and sharing the same weights. The authors also introduce new pairwise loss functions such as relative orientation and inter-person joint distances, designed to help the model learn the intricacies of human interactions, making it particularly suitable for applications involving social dynamics and collaborative activities. 
 
-Addressing the critical challenge of physical plausibility in motion generation, PhysDiff \cite{yuan2023physdiff} incorporates a physical projection layer into the diffusion sampling process. This ensures that the generated motions conform to the laws of physics, which is essential for applications where physical realism is paramount. PhysDiff strategically applies these physical constraints later in the diffusion process, avoiding early imposition that could degrade motion quality. The primary concern is that constraining the diffusion process too much in the early steps can push it significantly off from the initial Gaussian distribution. Since the denoising network is not trained to handle these deviations, this can result in suboptimal motion quality. By applying physical constraints at a later stage, PhysDiff ensures that the generated motions remain within a plausible range while maintaining high fidelity and diversity.
-
-
-
-% text2motion
-% Human Motion Diffusion
-
-%This thesis explores three innovative models—Human Motion Diffusion, InterGen, and PhysDiff—that collectively enhance the state of the art in human motion generation.
-
-
-
-% History of motion generation
-
+Addressing the challenge of physical plausibility in motion generation, PhysDiff \cite{yuan2023physdiff} incorporates a physical projection layer into the diffusion sampling process. This ensures that the generated motions conform to the laws of physics. PhysDiff strategically applies these physical constraints later in the diffusion process, avoiding early imposition that could degrade motion quality. The primary concern is that constraining the diffusion process too much in the early steps can push it significantly off from the initial Gaussian distribution. Since the denoising network is not trained to handle these deviations, this can result in suboptimal motion quality. By applying physical constraints at a later stage, PhysDiff ensures that the generated motions remain within a plausible range while maintaining high fidelity and diversity.
 
 
 % Generative models for human motion have many applications
 
 % The generation of realistic human motion is a pivotal area of research in fields such as computer graphics, animation, virtual reality, and human-computer interaction. With the advent of advanced machine learning techniques, particularly diffusion models, substantial progress has been made in synthesizing lifelike human movements. 
-
-
 
 %Addressing the critical challenge of physical plausibility in motion generation, PhysDiff \cite{yuan2023physdiff} incorporates a physical projection layer into the diffusion sampling process. This ensures that the generated motions conform to the laws of physics, which is essential for applications where physical realism is paramount. PhysDiff strategically applies these physical constraints later in the diffusion process, avoiding early imposition that could degrade motion quality. The primary concern is that constraining the diffusion process too much in the early steps can push it significantly off from the initial Gaussian distribution. Since the denoising network is not trained to handle these deviations, this can result in suboptimal motion quality. By applying physical constraints at a later stage, PhysDiff ensures that the generated motions remain within a plausible range while maintaining high fidelity and diversity.
 
@@ -78,13 +64,10 @@ Addressing the critical challenge of physical plausibility in motion generation,
 % MIME: Human-Aware 3D Scene Generation
 % https://arxiv.org/pdf/2212.04360
 
-
-
 % "Guided Motion Diffusion for Controllable Human Motion Synthesis"
 
 % "Generating Human Interaction Motions in Scenes with Text Control"
 % https://research.nvidia.com/labs/toronto-ai/tesmo/
-
 
 
 \section{Synthetic data augmentation}

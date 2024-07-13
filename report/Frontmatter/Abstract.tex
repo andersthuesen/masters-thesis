@@ -1,9 +1,3 @@
 \section*{Abstract}
 \addcontentsline{toc}{section}{Abstract}
-
-\blindtext
-
-
-
-
-
+Due to demographic shifts, hospitals and care homes face increasing pressure. Teton.ai aims to mitigate this pressure with a computer vision-based patient monitoring system that alerts staff to falls, etc. However, accurately recognizing rare critical events poses challenges due to the scarcity of training data. This thesis explores reconstructing 3D scenes from 2D videos of hospital and care home scenarios, aiming to provide a foundation for synthetically generating training data to improve action recognition accuracy for these critical events. We qualitatively demonstrate how monocular metric depth estimation models can restore a 3D point cloud of the environment. Additionally, we compare regression-based, optimization-based, and hybrid pose estimation methods in restoring the humans in the scene. Finally, we improve the flexibility of the diffusion-based InterGen model (\cite{liang2024intergen}) to generate interactions among a variable number of people. Although promising, we find that this approach has several flaws, including overfitting, lack of adherence to prompts, and pose collapse. We address these issues and provide directions for further research.
